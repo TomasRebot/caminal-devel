@@ -1,26 +1,37 @@
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
 //require('./bootstrap');
 
+
+window.axios = require('axios');
 window.Vue = require('vue');
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+require('animate.css/animate.css');
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default
+Vue.mixin({
+  data: function() {
+    return {
+      Vue   : Vue,                  //convertimos la instancia Vue en global
+      axios : axios,   //quizas trae inconvenientes si deseamos implementar una nueva
+    }             
+  }
+})
 
 //aca se agregan las carpetas creadas para los diversos tipos de componentes
+//pero en permisos recibimos un array de strings con los nombres de los componentes 
+//a los cuales tenemos autorizacion!
+var permisos = [  'DashboardComponent',
+                  'PermisoComponent',
+                  'RoleComponent',
+                  'UsuarioComponent',
+                  'AgregarStockComponent',
+                  'CrearMedicamentoComponent',
+                  'ListaMedicamentosComponent',
+                  'BotonmenuComponent',
+                  'MenulateralComponent',
+                  'EditarMedicamentoComponent',
+                  'EliminarMedicamentoComponent'
+                  ]; //recibidos al loguearse
 
 const folders = [
      req = require.context('./components/', true, /\.(js|vue)$/i),
@@ -30,23 +41,26 @@ const folders = [
 
 ];
 //se recorre cada carpeta y se incluyen sus archivos correspondientes
+
 folders.forEach(function(req) {
-    return req.keys().map(key => { const name = key.match(/\w+/)[0];
-        return Vue.component(name, req(key).default)
+    return req.keys().map(key => { 
+        const name = key.match(/\w+/)[0];
+        if ( name.indexOf('Component') == -1 ) {return;} //evitamos agregar string que no son componentes
+          if ( permisos.indexOf(name) == -1 ) {return;}  //consultamos si el componente existe dentro del array
+                                                        //de permisos para renderizarlo
+          return Vue.component(name, req(key).default);
    });
   });
-  //fin de la secuencia
+//fin de la secuencia
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+
+//console.log( 'CrearMedicamentoComponent' in Vue.options.components ? 'existe' : 'no existe' )
+
+
 
 const app = new Vue({
     el: '#app',
     components: {
-      //'index' : index,
     },
     template: '<dashboard-component/>',
 });

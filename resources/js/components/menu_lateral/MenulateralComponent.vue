@@ -1,7 +1,7 @@
 <template>
 <div id="panel-lateral">
 
-<div class="col-md-3 left_col">
+<div class="col-md-3 left_col" >
     <div class="left_col scroll-view">
       <div class="navbar nav_title" style="border: 0;">
         <a href="index.html" class="site_title"><i class="fa fa-plus-square"></i> <span> Farmacia </span></a>
@@ -30,9 +30,11 @@
                 :titulo   = "boton.titulo"
                 :submenu  = "boton.submenu"
                 :key      = "key"
-                @cambiar-vista = "showView">
+                @cambiar-vista = "showView"
+                v-if      = "comprobarPermiso(boton.submenu)">
             </botonmenu-component>
-            <!-- /item del menu -->
+            <!-- /item del menu
+                v-if      = "comprobarPermisos(boton.submenu)" -->
           </ul>
         </div>
       </div>
@@ -106,18 +108,19 @@
     name: 'panel-lateral',
     components: {
       //  'btn-opcion-vista' : btnViewButton,
-   },
-data(){
+    },
+    mounted(){
+    },
+    data(){
       return {
         botonesPanel: [
-          { 'titulo' : 'Medicamentos' , 'submenu' : [ {  'nombre': 'Crear', 'accion' : 'crear-medicamento-component' },
-                                                      {  'nombre': 'Lista', 'accion' : 'lista-medicamentos-component'},],
+          { 'titulo' : 'Medicamentos' , 'submenu' : [ {  'nombre': 'Crear'      , 'componente' : 'CrearMedicamentoComponent' },
+                                                      {  'nombre': 'Lista'      , 'componente' : 'ListaMedicamentosComponent'},],
           },
-          { 'titulo' : 'Configuracion' , 'submenu' : [{  'nombre' : 'Usuarios', 'accion' :  'usuario-component' },
-                                                      {   'nombre' : 'Roles'    , 'accion' : 'role-component'},
-                                                      {   'nombre' : 'Permisos'    , 'accion' : 'permiso-component'},],
+          { 'titulo' : 'Configuracion' , 'submenu' : [{  'nombre' : 'Usuarios'  , 'componente' :  'UsuarioComponent' },
+                                                      {  'nombre' : 'Roles'     , 'componente' : 'RoleComponent'},
+                                                      {  'nombre' : 'Permisos'  , 'componente' : 'PermisoComponent'},],
           },
-
         ],
       }
     },
@@ -131,7 +134,15 @@ data(){
           if ($(".sidebar").hasClass("toggled")) {
             $('.sidebar .collapse').collapse('hide');
           };
-      }
+      },
+      comprobarPermiso: function( submenu ){
+
+        return  submenu.some( function(menu) {
+                    return menu.componente in Vue.options.components;
+                });
+        
+        //return componente in Vue.options.components ? true : false;
+      },
     },
   }
 

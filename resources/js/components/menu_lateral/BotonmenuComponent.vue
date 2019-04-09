@@ -3,9 +3,11 @@
     <li id="item_menu">
         <a><i class="fa fa-user"></i>{{titulo}}<span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
-            <li v-for 	= "(item,key) in submenu" :key="key">
+            <li v-for 	= "(item,key) in submenu" 
+                :key    = "key" 
+                v-if    = "comprobarPermiso(item.componente)">
                 <a 	class 	= ""
-                    @click 	= "cambiarVista(item.accion)">
+                    @click 	= "cambiarVista(item.componente)">
                     {{ item.nombre }}
                 </a>
             </li>
@@ -23,12 +25,14 @@
 			return{}
 		},
 		mounted(){
-            console.log(this.submenu)
 		},
 		methods: {
-			cambiarVista: function( accion ){
-				this.$emit('cambiar-vista' , accion)
-			}
+			cambiarVista: function( componente ){
+				this.$emit('cambiar-vista' , componente)
+			},
+            comprobarPermiso: function( componente ){
+                return componente in Vue.options.components ? true : false;
+            },
         },
         computed: {
             getIcono(){
