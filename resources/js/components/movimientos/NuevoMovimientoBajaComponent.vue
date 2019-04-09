@@ -1,0 +1,1 @@
+NuevoMovimientoBajaComponent.vue

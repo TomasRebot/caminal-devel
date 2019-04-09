@@ -26,10 +26,10 @@
           <ul class="nav side-menu">
             <!-- item del menu -->
             <botonmenu-component
-                v-for = "(boton , key) in botonesPanel"
-                :titulo = "boton.titulo"
+                v-for     = "(boton , key) in botonesPanel"
+                :titulo   = "boton.titulo"
                 :submenu  = "boton.submenu"
-                :key    = "key"
+                :key      = "key"
                 @cambiar-vista = "showView">
             </botonmenu-component>
             <!-- /item del menu -->
@@ -110,6 +110,9 @@
 data(){
       return {
         botonesPanel: [
+          { 'titulo' : 'Medicamentos' , 'submenu' : [ {  'nombre': 'Crear', 'accion' : 'crear-medicamento-component' },
+                                                      {  'nombre': 'Lista', 'accion' : 'lista-medicamentos-component'},],
+          },
           { 'titulo' : 'Configuracion' , 'submenu' : [{  'nombre' : 'Usuarios', 'accion' :  'usuario-component' },
                                                       {   'nombre' : 'Roles'    , 'accion' : 'role-component'},
                                                       {   'nombre' : 'Permisos'    , 'accion' : 'permiso-component'},],
