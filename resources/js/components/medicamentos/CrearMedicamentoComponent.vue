@@ -1,9 +1,16 @@
 <template>
     <div class="row" id="crear-medicamento">
-        <agregar-stock-component v-if="agregar_stock"></agregar-stock-component>
+        <nuevo-movimiento-alta-component    v-if            = "agregar_stock" 
+                                            :animacion      = "animacion"
+                                            @volver-inicio  = "volverInicio"/>
 
 
-        <div class="col-md-12 col-sm-12 col-xs-12" v-if="!agregar_stock">
+        <div    class   = "col-md-12 col-sm-12 col-xs-12" 
+                v-if    = "!agregar_stock"
+                :class  = "{ 'animated fadeInRight'  : true,
+                             'animated fadeOutRight' : activarAnimacionSalidaComponentePadre || ejecutar_animacion_salida}"  
+                :style  = "style_object_animacion">
+            <!-- INICIO FORMULARIO CREACION MEDICAMENTO -->
             <div class="x_panel">
                 <div class="x_title">
                     <h2> Formulario de creacion de nuevo medicamento</h2>
@@ -12,7 +19,7 @@
 
                 <div class="x_content">
 
-                    <form class="form-horizontal form-label-left" @submit.prevent="agregarMedicamento">
+                    <form class="form-horizontal form-label-left" @submit.prevent="agregarMedicamento" novalidate="">
 
                         <p> Ingrese los datos necesarios
                         </p>
@@ -40,7 +47,11 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
-                                <button class="btn btn-primary">Cancelar</button>
+                                <button class   = "btn btn-primary" 
+                                        type    = "button"
+                                        @click  = "volverInicio">
+                                    Cancelar
+                                </button>
                                 <button :class="{   'btn btn-success' : habilitarBotonCrear,
                                                     'btn btn-danger'  : !habilitarBotonCrear}">
                                     Crear
@@ -49,7 +60,8 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div>            
+            <!-- FIN FORMULARIO CREACION MEDICAMENTO -->
         </div>
     </div>
 </template>
@@ -57,10 +69,16 @@
 <script>
     export default {
         name: 'crear-medicamento',
+        props: [ 'ejecutarSalida' , 'animacion' ], 
         mounted() {
         },
         data(){
             return{
+                ejecutar_animacion_salida : false,
+                style_object_animacion    : {
+                    '-webkit-animation-duration': this.animacion.duracion,
+                    '-webkit-animation-delay'   : this.animacion.delay, 
+                },
                 agregar_stock   : false,
                 campos_formulario: [
                     //codigo
@@ -103,8 +121,20 @@
         },
         methods: {
             agregarMedicamento: function(){
-                if ( !this.habilitarBotonCrear ) { return; }
-                this.agregar_stock = true;
+                //if ( !this.habilitarBotonCrear ) { return; }
+                if ( 'NuevoMovimientoAltaComponent' in Vue.options.components ) {
+                    this.ejecutar_animacion_salida = true;
+                    setTimeout(() => {
+                        this.agregar_stock = true 
+                    }, this.animacion.duracion * 1000);
+                }                    
+            },
+            volverInicio: function(){
+                var a = this.ejecutar_animacion_salida;
+                this.ejecutar_animacion_salida = !a ? true : false;
+                setTimeout(() => {
+                    this.$emit('volver-inicio')
+                }, this.animacion.duracion * 1000);
             },
         },
         computed:{
@@ -117,7 +147,12 @@
                     }
                 });
                 return habilitar;
-            }
+            },
+            activarAnimacionSalidaComponentePadre(){
+                if (this.ejecutarSalida) {
+                    return true;
+                }
+            },
         }
     }
 </script>

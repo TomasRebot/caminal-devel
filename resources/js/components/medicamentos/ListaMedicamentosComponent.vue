@@ -1,11 +1,9 @@
 <template>
 	<div 	id 		= "lista-medicamentos">
-
 		<div 	class="col-md-12 col-sm-12 col-xs-12"
-        		:class  = "{ 'animated fadeInLeft'  : animacion.entrada,
-        				     'animated fadeOutRight' : animacion.salida }"  
-            	:style  = "{ '-webkit-animation-duration': '1.2s',
-                     	     '-webkit-animation-delay'   : '0.3s', }"
+        		:class  = "{ 'animated fadeInRight'  : true,
+        				     'animated fadeOutRight' : activarAnimacionSalidaComponentePadre || ejecutar_animacion_salida}"  
+            	:style  = "style_object_animacion"
          	  	v-if 	= "frm_listar_medicamentos">
 	        <div class="x_panel">
 	          	<div class="x_title">
@@ -152,16 +150,21 @@
 	         	</div>
 	    	</div>
 	  	</div>
-
 	  	<div>
 	  		<editar-medicamento-component 
 	  				:medicamento 	= "medicamento_a_manipular" 
-	  				@regresar 		= "mostrarLista"
-	  				 v-if 			= "frm_editar_medicamento"/>
+	  				@regresar 		= "volverVistaListadoMedicamentos"
+	  				v-if 			= "frm_editar_medicamento"
+	  				:animacion 		= "animacion"
+	  				:class  = "{'animated fadeOutRight' : activarAnimacionSalidaComponentePadre}"  
+	  				:style  = "style_object_animacion"/>
 		 	<eliminar-medicamento-component
 			 		:medicamento 	= "medicamento_a_manipular" 
-			 		@regresar 		= "mostrarLista"
-			 		v-if 			= "frm_eliminar_medicamento" />
+			 		@regresar 		= "volverVistaListadoMedicamentos"
+			 		v-if 			= "frm_eliminar_medicamento"
+	  				:animacion 		= "animacion" 
+	  				:class  = "{'animated fadeOutRight' : activarAnimacionSalidaComponentePadre}"  
+	  				:style  = "style_object_animacion"/>
 
 	  	</div>
   	</div>
@@ -172,15 +175,30 @@
 
 	export default {
 		name: 'lista-medicamentos',
+		props: [ 'ejecutarSalida' , 'animacion' ], // si se cambia la vista desde el Dashboard
+		mounted(){
+			axios.get( 'administracion/medicamentos/').then(
+				response => {
+					var r = response.data;
+					if (r.success) {
+						this.form = r.lista_medicamentos.sort(this.sort_by('codigo', true, function(a){return a}));
+						this.datos_filtrados = this.form;
+						this.paginar();
+				}
+			})
+		},
 		data(){
 			return {
-				animacion: {
-					entrada: true,
-					salida: false,
+				ejecutar_animacion_salida : false,
+				style_object_animacion 	  : {
+					'-webkit-animation-duration': this.animacion.duracion,
+                    '-webkit-animation-delay'   : this.animacion.delay, 
 				},
+				//vistas
 				frm_listar_medicamentos : true,
 				frm_editar_medicamento 	: false,
 				frm_eliminar_medicamento: false,
+				//fin vistas
 				form: [],
 				paginacion: {
 					currentPage	: 1,
@@ -205,17 +223,6 @@
 				],
 				medicamento_a_manipular: false, // para pasar a la vista de edicion o para eliminarlo
 			}
-		},
-		mounted(){
-			axios.get( 'administracion/medicamentos/').then(
-				response => {
-					var r = response.data;
-					if (r.success) {
-						this.form = r.lista_medicamentos.sort(this.sort_by('codigo', true, function(a){return a}));
-						this.datos_filtrados = this.form;
-						this.paginar();
-				}
-			})
 		},
 		methods: {
 			ordenar_por: function( campo , segundo_campo ){
@@ -311,36 +318,49 @@
 				});
 			},
 			editarMedicamento: function( medicamento ){
+				/** Vista de edicion de medicamento
+				* cambiamos a la vista para editar 
+				* un medicamento seleccionado
+				* en "activarAnimacion" pasamos el true 
+				* para activar la animacion de salida,
+				* y el nombre de la vista que queremos mostrar
+				*/
 				this.medicamento_a_manipular 	= medicamento;
-				this.activarAnimacion( true , 'editar')
+				this.activarAnimacion('editar')
 			},
 			eliminarMedicamento: function( medicamento ){
+				/** Vista para eliminar un medicamento
+				* cambiamos a la vista para editar 
+				* un medicamento seleccionado
+				*/
 				this.medicamento_a_manipular 	= medicamento;
-				this.activarAnimacion( true , 'eliminar')
+				this.activarAnimacion('eliminar')
 			},
-			mostrarLista: function(){
-				console.log('mostrar lista')
-				this.animacion.salida 			= false;
+			volverVistaListadoMedicamentos: function(){
+				/** Vista de listado de medicamentos
+				* se apreto en regresar en algun de los otros
+				* formularios ('editar','eliminar')
+				* y regresamos a la lista
+				*/
+				this.ejecutar_animacion_salida  = false;
 				this.medicamento_a_manipular 	= false;
 				this.frm_editar_medicamento 	= false;
       			this.frm_eliminar_medicamento 	= false;
 
-				this.animacion.entrada 			= true;
+								
 				this.frm_listar_medicamentos 	= true;
 			},
-			activarAnimacion: async function(activar , vista){
-				var a = this.animacion;
-				a.salida  = activar;
-				a.entrada = !activar;
+			activarAnimacion: function(vista){
+				this.ejecutar_animacion_salida  = true;
+								
 				setTimeout(() => {
-						this.mostrar_tabla_medicamentos = false;
-						this.frm_listar_medicamentos 	= false;
+						this.frm_listar_medicamentos 		= false;
 			      		if ( vista == 'editar') {
 							this.frm_editar_medicamento 	= true;
 			      		} else if ( vista == 'eliminar'){
 			      			this.frm_eliminar_medicamento 	= true;
 			      		}
-			    }, 1200);
+			    }, this.animacion.duracion * 1000);
 			}	
 		},
 		watch:{
@@ -368,6 +388,11 @@
 	        					item.cant_blister.toString().toLowerCase().includes(this.buscar.toLowerCase())
 			      	})
 		      	}
+			},
+			activarAnimacionSalidaComponentePadre(){
+				if (this.ejecutarSalida) {
+					return true;
+				}
 			}
 		}
 	}

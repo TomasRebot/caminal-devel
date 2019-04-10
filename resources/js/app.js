@@ -30,12 +30,16 @@ var permisos = [  'DashboardComponent',
                   'BotonmenuComponent',
                   'MenulateralComponent',
                   'EditarMedicamentoComponent',
-                  'EliminarMedicamentoComponent'
+                  'EliminarMedicamentoComponent',
+                  'NuevoMovimientoAltaComponent',
+                  'InicioDashboardComponent'
                   ]; //recibidos al loguearse
 
 const folders = [
      req = require.context('./components/', true, /\.(js|vue)$/i),
+     req = require.context('./components/inicio_dashboard', true, /\.(js|vue)$/i),
      req = require.context('./components/configuracion', true, /\.(js|vue)$/i),
+     req = require.context('./components/movimientos', true, /\.(js|vue)$/i),
      req = require.context('./components/medicamentos', true, /\.(js|vue)$/i),
      req = require.context('./components/menu_lateral', true, /\.(js|vue)$/i),
 

@@ -4,7 +4,12 @@
 <div class="col-md-3 left_col" >
     <div class="left_col scroll-view">
       <div class="navbar nav_title" style="border: 0;">
-        <a href="index.html" class="site_title"><i class="fa fa-plus-square"></i> <span> Farmacia </span></a>
+        <a @click="showView('InicioDashboardComponent')" class="site_title">
+          <i class="fa fa-plus-square"></i> 
+          <span> 
+            Farmacia 
+          </span>
+        </a>
       </div>
       <div class="clearfix"></div>
       <!-- menu aprofile quick info -->
@@ -68,8 +73,9 @@
         </div>
         <ul class="nav navbar-nav navbar-right" >
             <li class="">
-                <a href="" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <img src="" alt="">
+                    Soy un usuario!
                     <span class=" fa fa-angle-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -136,12 +142,9 @@
           };
       },
       comprobarPermiso: function( submenu ){
-
         return  submenu.some( function(menu) {
                     return menu.componente in Vue.options.components;
                 });
-        
-        //return componente in Vue.options.components ? true : false;
       },
     },
   }

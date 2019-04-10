@@ -1,10 +1,9 @@
 <template>
 	<div    class   = "row" 
             id      = "editar-medicamento"
-            :class  = "{ 'animated fadeInLeft'  : true,
-                         'animated fadeOutRight' : animacion_salida }"  
-            :style  = "{ '-webkit-animation-duration': '1.2s',
-                         '-webkit-animation-delay'   : '0.3s', }">
+            :class  = "{ 'animated fadeInRight'      : true,
+                         'animated fadeOutRight'     : ejecutar_animacion_salida }"  
+            :style  = "style_object_animacion">
 
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -64,10 +63,14 @@
 	
 	export default{
 		name: 'editar-medicamento',
-		props: [ 'medicamento' ],
+		props: [ 'medicamento' , 'animacion'],
 		data(){
             return{
-                animacion_salida: false,
+                ejecutar_animacion_salida : false,
+                style_object_animacion    : {
+                    '-webkit-animation-duration': this.animacion.duracion,
+                    '-webkit-animation-delay'   : this.animacion.delay, 
+                },
                 campos_formulario: [
                     //codigo
                     {   clave     : 'codigo' , 
@@ -112,7 +115,6 @@
             var m = this.medicamento;
 
 
-            console.log(m)
         	$(c).each(function(index, campo){
                 Object.keys(m).some( function( prop ){
                     if (campo.clave == prop) { campo.model = m[prop] }
@@ -130,11 +132,17 @@
         	editarMedicamento: function(){
 
         	},
-            regresarListaMedicamentos: function(){
-                this.animacion_salida = true;
+            regresarListaMedicamentos: function(){                
+                /** Efecto de salida de formulario
+                * se ejecuta el TimeOut cuando termine la animacion de salida
+                * devolviendo a la vista de "Lista de medicamentos"
+                * el tiempo de salida se calcula por la duracion de la animacion
+                * estalecida
+                */
+                this.ejecutar_animacion_salida = true;
                 setTimeout(() => {
                         this.$emit('regresar');
-                }, 1200);
+                }, this.animacion.duracion * 1000);
             },
         },
         computed: {
