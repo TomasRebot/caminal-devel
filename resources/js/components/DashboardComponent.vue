@@ -9,7 +9,6 @@
                 <!--
                     este es un componente dinamico, muy falopero
                 -->
-
             </component>
         </div>
     </div>
@@ -43,7 +42,6 @@
                 } , tiempo_cambio);   
             },
             volverInicio: function(){
-                console.log('llego')
                 this.vista_actual = 'InicioDashboardComponent';
             },
         }

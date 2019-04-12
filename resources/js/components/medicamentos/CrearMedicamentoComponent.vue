@@ -1,13 +1,15 @@
 <template>
     <div class="row" id="crear-medicamento">
-        <nuevo-movimiento-alta-component    v-if            = "agregar_stock" 
-                                            :animacion      = "animacion"
-                                            @volver-inicio  = "volverInicio"/>
+        <agregar-stock-medicamento-component     
+                                    v-if            = "agregar_stock" 
+                                    :animacion      = "animacion"
+                                    :ejecutar-salida= "ejecutarSalida"
+                                    @volver-inicio  = "volverInicio"/>
 
 
         <div    class   = "col-md-12 col-sm-12 col-xs-12" 
                 v-if    = "!agregar_stock"
-                :class  = "{ 'animated fadeInRight'  : true,
+                :class  = "{ 'animated fadeInRight'  : ejecutar_animacion_entrada,
                              'animated fadeOutRight' : activarAnimacionSalidaComponentePadre || ejecutar_animacion_salida}"  
                 :style  = "style_object_animacion">
             <!-- INICIO FORMULARIO CREACION MEDICAMENTO -->
@@ -25,7 +27,7 @@
                         </p>
                         <span class="section">Informacion</span>
 
-                        <div class="item form-group" v-for= "campo in campos_formulario">
+                        <div class="item form-group" v-for= "(campo , key) in campos_formulario" :key="key">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" :for="'label-' + campo.label"> 
                                 {{ campo.label }} <span class="required">*</span>
                             </label>
@@ -71,9 +73,13 @@
         name: 'crear-medicamento',
         props: [ 'ejecutarSalida' , 'animacion' ], 
         mounted() {
+            setTimeout(() => {
+                this.ejecutar_animacion_entrada = false;
+            }, this.animacion.duracion * 1000);
         },
         data(){
             return{
+                ejecutar_animacion_entrada: true,
                 ejecutar_animacion_salida : false,
                 style_object_animacion    : {
                     '-webkit-animation-duration': this.animacion.duracion,
@@ -122,7 +128,7 @@
         methods: {
             agregarMedicamento: function(){
                 //if ( !this.habilitarBotonCrear ) { return; }
-                if ( 'NuevoMovimientoAltaComponent' in Vue.options.components ) {
+                if ( 'AgregarStockMedicamentoComponent' in Vue.options.components ) {
                     this.ejecutar_animacion_salida = true;
                     setTimeout(() => {
                         this.agregar_stock = true 

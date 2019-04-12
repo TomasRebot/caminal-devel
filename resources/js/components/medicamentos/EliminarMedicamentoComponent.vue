@@ -1,7 +1,7 @@
 <template>
 	<div 	class 	= "row"
 			id 		= "eliminar-medicamento" 
-        	:class  = "{ 'animated fadeInRight'  : true,
+        	:class  = "{ 'animated fadeInRight'  : ejecutar_animacion_entrada,
         				 'animated fadeOutRight' : ejecutar_animacion_salida }"  
             :style  = "style_object_animacion">
 
@@ -20,7 +20,7 @@
                         </p>
                         <span class="section">Informacion:</span>
 
-                        <div class="item form-group" v-for= "campo in campos_formulario">
+                        <div class="item form-group" v-for= "(campo , key) in campos_formulario" :key="key">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12"> 
                                 {{ campo.label }} <span class="required">*</span>
                             </label>
@@ -56,9 +56,31 @@
 	
 	export default{
 		name: 'eliminar-medicamento',
-		props: [ 'medicamento' , 'animacion' ],
+        props: [ 'medicamento' , 'animacion' ],
+        mounted(){
+            setTimeout(() => {
+                this.ejecutar_animacion_entrada = false;
+            }, this.animacion.duracion * 1000);
+            
+        	let c = this.campos_formulario;
+            var m = this.medicamento;
+
+        	$(c).each(function(index, campo){
+                Object.keys(m).some( function( prop ){
+                    if (campo.clave == prop) { campo.contenido = m[prop] }
+                    if (prop == 'perfil') {
+        				if (campo.clave == 'nombre') {
+        					campo.contenido = m[prop]['nombre'];
+    					} else if( campo.clave == 'clasificacion') {
+                            campo.contenido = m[prop]['clasificacion'];
+                        }
+    				}
+        		});
+            });
+        },
 		data(){
             return{
+                ejecutar_animacion_entrada: true,
                 ejecutar_animacion_salida : false,
                 style_object_animacion    : {
                     '-webkit-animation-duration': this.animacion.duracion,
@@ -87,23 +109,6 @@
                         contenido   : '' } ,
                 ],
             }
-        },
-        mounted(){
-        	let c = this.campos_formulario;
-            var m = this.medicamento;
-
-        	$(c).each(function(index, campo){
-                Object.keys(m).some( function( prop ){
-                    if (campo.clave == prop) { campo.contenido = m[prop] }
-                    if (prop == 'perfil') {
-        				if (campo.clave == 'nombre') {
-        					campo.contenido = m[prop]['nombre'];
-    					} else if( campo.clave == 'clasificacion') {
-                            campo.contenido = m[prop]['clasificacion'];
-                        }
-    				}
-        		});
-            });
         },
         methods: {
         	eliminarMedicamento: function(){

@@ -17,7 +17,7 @@ Vue.mixin({
   }
 })
 
-//aca se agregan las carpetas creadas para los diversos tipos de componentes
+//aca se agregan las carpetas creadas para los diversos tipos de componentes 
 //pero en permisos recibimos un array de strings con los nombres de los componentes 
 //a los cuales tenemos autorizacion!
 var permisos = [  'DashboardComponent',
@@ -31,13 +31,20 @@ var permisos = [  'DashboardComponent',
                   'MenulateralComponent',
                   'EditarMedicamentoComponent',
                   'EliminarMedicamentoComponent',
-                  'NuevoMovimientoAltaComponent',
-                  'InicioDashboardComponent'
+                  'IngresoMedicamentoComponent',
+                  'EntregaMedicamentoComponent',
+                  'InicioDashboardComponent',
+                  'CrearMedicoComponent',
+                  'CrearClienteComponent',
+                  'BuscarClienteComponent',
+                  'BajaMedicamentoClearingComponent',
+                  'AgregarStockMedicamentoComponent'
                   ]; //recibidos al loguearse
 
 const folders = [
      req = require.context('./components/', true, /\.(js|vue)$/i),
      req = require.context('./components/inicio_dashboard', true, /\.(js|vue)$/i),
+     req = require.context('./components/usuarios', true, /\.(js|vue)$/i),
      req = require.context('./components/configuracion', true, /\.(js|vue)$/i),
      req = require.context('./components/movimientos', true, /\.(js|vue)$/i),
      req = require.context('./components/medicamentos', true, /\.(js|vue)$/i),

@@ -31,12 +31,11 @@
           <ul class="nav side-menu">
             <!-- item del menu -->
             <botonmenu-component
-                v-for     = "(boton , key) in botonesPanel"
+                v-for     = "(boton , key) in getItemsMenu"
                 :titulo   = "boton.titulo"
                 :submenu  = "boton.submenu"
                 :key      = "key"
-                @cambiar-vista = "showView"
-                v-if      = "comprobarPermiso(boton.submenu)">
+                @cambiar-vista = "showView">
             </botonmenu-component>
             <!-- /item del menu
                 v-if      = "comprobarPermisos(boton.submenu)" -->
@@ -120,12 +119,19 @@
     data(){
       return {
         botonesPanel: [
-          { 'titulo' : 'Medicamentos' , 'submenu' : [ {  'nombre': 'Crear'      , 'componente' : 'CrearMedicamentoComponent' },
-                                                      {  'nombre': 'Lista'      , 'componente' : 'ListaMedicamentosComponent'},],
+          { 'titulo' : 'Medicamentos' , 'submenu' : [ {'nombre': 'Crear'      , 'componente' : 'CrearMedicamentoComponent'},
+                                                      {'nombre': 'Lista'      , 'componente' : 'ListaMedicamentosComponent'},],
           },
-          { 'titulo' : 'Configuracion' , 'submenu' : [{  'nombre' : 'Usuarios'  , 'componente' :  'UsuarioComponent' },
-                                                      {  'nombre' : 'Roles'     , 'componente' : 'RoleComponent'},
-                                                      {  'nombre' : 'Permisos'  , 'componente' : 'PermisoComponent'},],
+          { 'titulo' : 'Operaciones'  , 'submenu' : [ {'nombre': 'Entrega a cliente'   , 'componente' :'EntregaMedicamentoComponent'},
+                                                      {'nombre': 'Entrega por clearing', 'componente' :'BajaMedicamentoClearingComponent'},
+                                                      {'nombre': 'Ingreso medicamentos', 'componente' : 'IngresoMedicamentoComponent'}],
+          },
+          { 'titulo' : 'Usuarios'     , 'submenu' : [ {'nombre': 'Crear cliente', 'componente': 'CrearClienteComponent'},
+                                                      {'nombre': 'Crear Medico' , 'componente': 'CrearMedicoComponent'}],
+          },
+          { 'titulo' : 'Configuracion' , 'submenu' : [{'nombre' : 'Usuarios'  , 'componente' :  'UsuarioComponent' },
+                                                      {'nombre' : 'Roles'     , 'componente' : 'RoleComponent'},
+                                                      {'nombre' : 'Permisos'  , 'componente' : 'PermisoComponent'},],
           },
         ],
       }
@@ -145,6 +151,15 @@
         return  submenu.some( function(menu) {
                     return menu.componente in Vue.options.components;
                 });
+      },
+    },
+    computed:{
+      getItemsMenu(){
+        return this.botonesPanel.filter( boton=>{
+          return boton.submenu.some( menu=>{
+            return menu.componente in Vue.options.components;
+          })
+        });
       },
     },
   }

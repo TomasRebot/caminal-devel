@@ -1,7 +1,7 @@
 <template>
-	<div 	id 		= "lista-medicamentos">
+	<div 	id = "lista-medicamentos" class="row">
 		<div 	class="col-md-12 col-sm-12 col-xs-12"
-        		:class  = "{ 'animated fadeInRight'  : true,
+        		:class  = "{ 'animated fadeInRight'  : ejecutar_animacion_entrada,
         				     'animated fadeOutRight' : activarAnimacionSalidaComponentePadre || ejecutar_animacion_salida}"  
             	:style  = "style_object_animacion"
          	  	v-if 	= "frm_listar_medicamentos">
@@ -24,7 +24,7 @@
 	                    						class 			= "form-control input-sm" 
 	                    						v-model 		= "paginacion.perPage"
 	                    						@change 		= "cambiarCantidadPorPagina">
-	                    						<option v-for="n in 5" v-bind:value="n*5">
+	                    						<option v-for="(n , key) in 5" :value="n*5" :key="key">
 												    {{ n*5 }}
 											  	</option>
 	                    				</select>
@@ -61,7 +61,7 @@
 	                  							aria-sort 	= "ascending" 
 	                  							aria-label	= "Name: activate to sort column descending" 
 	                  							style 		= "width: 264px;"
-	                  							v-for 		= "campo in key_tabla">
+	                  							v-for 		= "(campo , key) in key_tabla" :key="key">
 	                  							<div class="row" @click ="ordenar_por(campo.key , campo.titulo)">
 	                  								<div class="col-sm-6">
 	                  									{{ campo.titulo }}
@@ -74,7 +74,7 @@
 	                  					</tr>
 	                  				</thead>
 	                  				<tbody>
-	                  					<tr role="row" class="odd" v-for="d in getLista">
+	                  					<tr role="row" class="odd" v-for="(d ,key) in getLista" :key="key">
 				                          	<td class="sorting_1"> {{ d.codigo }} </td>
 				                          	<td> {{d.perfil.nombre}} </td>
 				                          	<td> {{d.perfil.clasificacion}} </td>
@@ -87,7 +87,7 @@
 			                          					@click 	= "editarMedicamento(d)">
 			                          				<i class="fa fa-edit"></i>
 			                          			</button>
-			                          			&nbsp
+			                          			&nbsp;
 			                          			<button type 	= "button" 
 			                          					class 	= "btn btn-danger"
 			                          					v-if 	= "'EliminarMedicamentoComponent' in Vue.options.components"
@@ -150,23 +150,20 @@
 	         	</div>
 	    	</div>
 	  	</div>
-	  	<div>
-	  		<editar-medicamento-component 
-	  				:medicamento 	= "medicamento_a_manipular" 
-	  				@regresar 		= "volverVistaListadoMedicamentos"
-	  				v-if 			= "frm_editar_medicamento"
-	  				:animacion 		= "animacion"
-	  				:class  = "{'animated fadeOutRight' : activarAnimacionSalidaComponentePadre}"  
-	  				:style  = "style_object_animacion"/>
-		 	<eliminar-medicamento-component
-			 		:medicamento 	= "medicamento_a_manipular" 
-			 		@regresar 		= "volverVistaListadoMedicamentos"
-			 		v-if 			= "frm_eliminar_medicamento"
-	  				:animacion 		= "animacion" 
-	  				:class  = "{'animated fadeOutRight' : activarAnimacionSalidaComponentePadre}"  
-	  				:style  = "style_object_animacion"/>
-
-	  	</div>
+		<editar-medicamento-component 
+				:medicamento 	= "medicamento_a_manipular" 
+				@regresar 		= "volverVistaListadoMedicamentos"
+				v-if 			= "frm_editar_medicamento"
+				:animacion 		= "animacion"
+				:class  = "{'animated fadeOutRight' : activarAnimacionSalidaComponentePadre}"  
+				:style  = "style_object_animacion"/>
+		<eliminar-medicamento-component
+				:medicamento 	= "medicamento_a_manipular" 
+				@regresar 		= "volverVistaListadoMedicamentos"
+				v-if 			= "frm_eliminar_medicamento"
+				:animacion 		= "animacion" 
+				:class  = "{'animated fadeOutRight' : activarAnimacionSalidaComponentePadre}"  
+				:style  = "style_object_animacion"/>
   	</div>
 </template>
 
@@ -176,7 +173,10 @@
 	export default {
 		name: 'lista-medicamentos',
 		props: [ 'ejecutarSalida' , 'animacion' ], // si se cambia la vista desde el Dashboard
-		mounted(){
+		mounted(){			
+            setTimeout(() => {
+                this.ejecutar_animacion_entrada = false;
+            }, this.animacion.duracion * 1000);
 			axios.get( 'administracion/medicamentos/').then(
 				response => {
 					var r = response.data;
@@ -189,6 +189,7 @@
 		},
 		data(){
 			return {
+				ejecutar_animacion_entrada: true,
 				ejecutar_animacion_salida : false,
 				style_object_animacion 	  : {
 					'-webkit-animation-duration': this.animacion.duracion,
@@ -347,8 +348,11 @@
 				this.frm_editar_medicamento 	= false;
       			this.frm_eliminar_medicamento 	= false;
 
-								
+				this.ejecutar_animacion_entrada = true;
 				this.frm_listar_medicamentos 	= true;
+				setTimeout(() => {
+					this.ejecutar_animacion_entrada = false;
+				}, this.animacion.duracion * 1000);
 			},
 			activarAnimacion: function(vista){
 				this.ejecutar_animacion_salida  = true;
