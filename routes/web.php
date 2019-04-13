@@ -1,5 +1,5 @@
 <?php
-
+//URL::forceScheme('https');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +29,10 @@ Route::group(['prefix' => 'administracion' , 'middleware' => [/*'auth' , 'check.
 
 	Route::resource('stock' , 'StockController')->names([
 	    'store' 	=> 'stock.store',
+	]);
+
+	Route::resource('clientes' , 'ClientesController')->names([
+	    'index' 	=> 'show.all.clientes',
 	]);
 
 	Route::resource('movimientos', 'MovimientosController')->names([
