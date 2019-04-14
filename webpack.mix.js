@@ -17,7 +17,7 @@ mix.styles([
     'resources/assets/css/custom.css',
 ], 'public/css/all.css')
 .scripts([
-    'resources/assets/js/jquery.js',
+    'resources/assets/js/jquery.min.js',
     'resources/assets/js/bootstrap.js',
     'resources/assets/js/custom.js',
 

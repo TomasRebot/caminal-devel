@@ -1,17 +1,15 @@
 <template>
     <div class="row" id="crear-medicamento">
-        <agregar-stock-medicamento-component     
-                                    v-if            = "agregar_stock" 
+        <agregar-stock-medicamento-component
+                                    v-if            = "agregar_stock"
                                     :animacion      = "animacion"
                                     :ejecutar-salida= "ejecutarSalida"
                                     @volver-inicio  = "volverInicio"/>
 
 
-        <div    class   = "col-md-12 col-sm-12 col-xs-12" 
+        <div    class   = "col-md-12 col-sm-12 col-xs-12 animated fadeInRight"
                 v-if    = "!agregar_stock"
-                :class  = "{ 'animated fadeInRight'  : ejecutar_animacion_entrada,
-                             'animated fadeOutRight' : activarAnimacionSalidaComponentePadre || ejecutar_animacion_salida}"  
-                :style  = "style_object_animacion">
+>
             <!-- INICIO FORMULARIO CREACION MEDICAMENTO -->
             <div class="x_panel">
                 <div class="x_title">
@@ -28,15 +26,15 @@
                         <span class="section">Informacion</span>
 
                         <div class="item form-group" v-for= "(campo , key) in campos_formulario" :key="key">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" :for="'label-' + campo.label"> 
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" :for="'label-' + campo.label">
                                 {{ campo.label }} <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input  :id         = "'label-' + campo.clave" 
-                                        class       = "form-control col-md-7 col-xs-12" 
-                                        :name       = "'label-' + campo.clave" 
-                                        :placeholder= "campo.descripcion" 
-                                        required    = "required" 
+                                <input  :id         = "'label-' + campo.clave"
+                                        class       = "form-control col-md-7 col-xs-12"
+                                        :name       = "'label-' + campo.clave"
+                                        :placeholder= "campo.descripcion"
+                                        required    = "required"
                                         :type       = "campo.type"
                                         v-model     = "campo.model">
                                     <span :id="'feedback' + campo.key" v-if="campo.status">
@@ -49,7 +47,7 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
-                                <button class   = "btn btn-primary" 
+                                <button class   = "btn btn-primary"
                                         type    = "button"
                                         @click  = "volverInicio">
                                     Cancelar
@@ -62,7 +60,7 @@
                         </div>
                     </form>
                 </div>
-            </div>            
+            </div>
             <!-- FIN FORMULARIO CREACION MEDICAMENTO -->
         </div>
     </div>
@@ -71,7 +69,7 @@
 <script>
     export default {
         name: 'crear-medicamento',
-        props: [ 'ejecutarSalida' , 'animacion' ], 
+        props: [ 'ejecutarSalida' , 'animacion' ],
         mounted() {
             setTimeout(() => {
                 this.ejecutar_animacion_entrada = false;
@@ -83,44 +81,68 @@
                 ejecutar_animacion_salida : false,
                 style_object_animacion    : {
                     '-webkit-animation-duration': this.animacion.duracion,
-                    '-webkit-animation-delay'   : this.animacion.delay, 
+                    '-webkit-animation-delay'   : this.animacion.delay,
                 },
                 agregar_stock   : false,
                 campos_formulario: [
                     //codigo
-                    {   clave     : 'codigo' , 
-                        model   : '', 
-                        label   : 'Codigo' , 
-                        type    : 'number', 
-                        descripcion : 'Ingrese el codigo de medicamento.', 
+                    {   clave     : 'codigo' ,
+                        model   : '',
+                        label   : 'Codigo' ,
+                        type    : 'number',
+                        descripcion : 'Ingrese el codigo de medicamento.',
                         state   : null  } ,
                     //nombre
                     {   clave     : 'nombre',
-                        model   : '', 
-                        label   : 'Nombre', 
-                        type    : 'text'  , 
+                        model   : '',
+                        label   : 'Nombre',
+                        type    : 'text'  ,
                         descripcion: 'Ingrese el nombre.',
                         state: null } ,
                     //clasificacion
                     {   clave     : 'clasificacion',
-                        model   : '', 
-                        label   : 'Clasificacion', 
-                        type    : 'text'  , 
-                        descripcion : 'Ingrese la clasificacion.', 
+                        model   : '',
+                        label   : 'Clasificacion',
+                        type    : 'text'  ,
+                        descripcion : 'Ingrese la clasificacion.',
                         state   : null } ,
                     //descripcion
-                    {   clave     : 'descripcion',    
-                        model   : '', 
-                        label   : 'Descripcion', 
+                    {   clave     : 'descripcion',
+                        model   : '',
+                        label   : 'Descripcion',
                         type    : 'text'  ,
                         descripcion : 'Ingrese su descripcion.' ,
                         state   : null  } ,
                     //cant por blister
                     {   clave     : 'cant_blister',
-                        model   : '', 
-                        label   : 'Cantidad blister', 
-                        type    : 'number', 
-                        descripcion : 'Ingrese la cantidad por blister.', 
+                        model   : '',
+                        label   : 'Cantidad blister',
+                        type    : 'number',
+                        descripcion : 'Ingrese la cantidad por blister.',
+                        state: null } ,
+                    {   clave     : 'cant_blister',
+                        model   : '',
+                        label   : 'Cantidad blister',
+                        type    : 'number',
+                        descripcion : 'Ingrese la cantidad por blister.',
+                        state: null } ,
+                    {   clave     : 'cant_blister',
+                        model   : '',
+                        label   : 'Cantidad blister',
+                        type    : 'number',
+                        descripcion : 'Ingrese la cantidad por blister.',
+                        state: null } ,
+                    {   clave     : 'cant_blister',
+                        model   : '',
+                        label   : 'Cantidad blister',
+                        type    : 'number',
+                        descripcion : 'Ingrese la cantidad por blister.',
+                        state: null } ,
+                    {   clave     : 'cant_blister',
+                        model   : '',
+                        label   : 'Cantidad blister',
+                        type    : 'number',
+                        descripcion : 'Ingrese la cantidad por blister.',
                         state: null } ,
                 ],
             }
@@ -131,9 +153,9 @@
                 if ( 'AgregarStockMedicamentoComponent' in Vue.options.components ) {
                     this.ejecutar_animacion_salida = true;
                     setTimeout(() => {
-                        this.agregar_stock = true 
+                        this.agregar_stock = true
                     }, this.animacion.duracion * 1000);
-                }                    
+                }
             },
             volverInicio: function(){
                 var a = this.ejecutar_animacion_salida;

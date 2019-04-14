@@ -7,18 +7,20 @@ window.axios = require('axios');
 window.Vue = require('vue');
 
 require('animate.css/animate.css');
+window.Swal =require('sweetalert2');
 
 Vue.mixin({
   data: function() {
     return {
       Vue   : Vue,                  //convertimos la instancia Vue en global
       axios : axios,   //quizas trae inconvenientes si deseamos implementar una nueva
-    }             
+      Swal: Swal,
+    }
   }
 })
 
-//aca se agregan las carpetas creadas para los diversos tipos de componentes 
-//pero en permisos recibimos un array de strings con los nombres de los componentes 
+//aca se agregan las carpetas creadas para los diversos tipos de componentes
+//pero en permisos recibimos un array de strings con los nombres de los componentes
 //a los cuales tenemos autorizacion!
 var permisos = [  'DashboardComponent',
                   'PermisoComponent',
@@ -29,12 +31,12 @@ var permisos = [  'DashboardComponent',
                   'ListaMedicamentosComponent',
                   'BotonmenuComponent',
                   'MenulateralComponent',
-                  'EditarMedicamentoComponent',
+                  //'EditarMedicamentoComponent',
                   'EliminarMedicamentoComponent',
                   'IngresoMedicamentoComponent',
                   'EntregaMedicamentoComponent',
                   'InicioDashboardComponent',
-                  'CrearMedicoComponent',
+                  //'CrearMedicoComponent',
                   'CrearClienteComponent',
                   'BuscarClienteComponent',
                   'BajaMedicamentoClearingComponent',
@@ -54,7 +56,7 @@ const folders = [
 //se recorre cada carpeta y se incluyen sus archivos correspondientes
 
 folders.forEach(function(req) {
-    return req.keys().map(key => { 
+    return req.keys().map(key => {
         const name = key.match(/\w+/)[0];
         if ( name.indexOf('Component') == -1 ) {return;} //evitamos agregar string que no son componentes
           if ( permisos.indexOf(name) == -1 ) {return;}  //consultamos si el componente existe dentro del array

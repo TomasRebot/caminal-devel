@@ -1,9 +1,6 @@
 <template>
-	<div id="inicio-dashboard" class="row">
-		<div 	class 	= "col-md-6 col-sm-6 col-xs-12"  
-          :style  = "style_object_animacion"
-				  :class  = "{ 'animated fadeInRight'  : true,
-	                         'animated fadeOutRight' : activarAnimacionSalidaComponentePadre || ejecutar_animacion_salida}">
+		<div  id="inicio-dashboard"	class 	= "col-md-6 col-sm-6 col-xs-12 animated fadeInRight"
+          :style  = "style_object_animacion">
       <div class="x_panel">
         <div class="x_title">
           <h2> SOY EL INICIO <small>Float left</small></h2>
@@ -52,20 +49,19 @@
         </div>
       </div>
     </div>
-	</div>
 </template>
 
 <script>
-	
+
 	export default{
 		name: 'inicio-dashboard',
-        props: [ 'ejecutarSalida' , 'animacion' ], 
+        props: [ 'ejecutarSalida' , 'animacion' ],
 		data(){
 			return {
 				ejecutar_animacion_salida : false,
         style_object_animacion    : {
             '-webkit-animation-duration': this.animacion.duracion,
-            '-webkit-animation-delay'   : this.animacion.delay, 
+            '-webkit-animation-delay'   : this.animacion.delay,
         },
 			}
 		},

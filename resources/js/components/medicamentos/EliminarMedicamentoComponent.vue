@@ -1,8 +1,8 @@
 <template>
 	<div 	class 	= "row"
-			id 		= "eliminar-medicamento" 
+			id 		= "eliminar-medicamento"
         	:class  = "{ 'animated fadeInRight'  : ejecutar_animacion_entrada,
-        				 'animated fadeOutRight' : ejecutar_animacion_salida }"  
+        				 'animated fadeOutRight' : ejecutar_animacion_salida }"
             :style  = "style_object_animacion">
 
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -21,7 +21,7 @@
                         <span class="section">Informacion:</span>
 
                         <div class="item form-group" v-for= "(campo , key) in campos_formulario" :key="key">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12"> 
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                 {{ campo.label }} <span class="required">*</span>
                             </label>
 
@@ -36,7 +36,7 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
-                                <button class   = "btn btn-primary" 
+                                <button class   = "btn btn-primary"
                                         @click  = "regresarListaMedicamentos">
                                     Cancelar
                                 </button>
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-	
+
 	export default{
 		name: 'eliminar-medicamento',
         props: [ 'medicamento' , 'animacion' ],
@@ -61,7 +61,7 @@
             setTimeout(() => {
                 this.ejecutar_animacion_entrada = false;
             }, this.animacion.duracion * 1000);
-            
+
         	let c = this.campos_formulario;
             var m = this.medicamento;
 
@@ -84,28 +84,28 @@
                 ejecutar_animacion_salida : false,
                 style_object_animacion    : {
                     '-webkit-animation-duration': this.animacion.duracion,
-                    '-webkit-animation-delay'   : this.animacion.delay, 
+                    '-webkit-animation-delay'   : this.animacion.delay,
                 },
                 campos_formulario: [
                     //codigo
-                    {   clave     	: 'codigo' , 
-                        label   	: 'Codigo' , 
+                    {   clave     	: 'codigo' ,
+                        label   	: 'Codigo' ,
                         contenido   : '' } ,
                     //nombre
                     {   clave     	: 'nombre',
-                        label   	: 'Nombre', 
+                        label   	: 'Nombre',
                         contenido   : '' } ,
                     //clasificacion
                     {   clave     	: 'clasificacion',
-                        label   	: 'Clasificacion', 
+                        label   	: 'Clasificacion',
                         contenido   : '' } ,
                     //descripcion
-                    {   clave     	: 'descripcion',    
-                        label   	: 'Descripcion', 
+                    {   clave     	: 'descripcion',
+                        label   	: 'Descripcion',
                         contenido   : '' } ,
                     //cant por blister
                     {   clave     	: 'cant_blister',
-                        label   	: 'Cantidad blister', 
+                        label   	: 'Cantidad blister',
                         contenido   : '' } ,
                 ],
             }

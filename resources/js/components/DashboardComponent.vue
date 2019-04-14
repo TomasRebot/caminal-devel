@@ -2,7 +2,7 @@
     <div id="dashboard">
         <menulateral-component @cambiar-vista = "cambiarVista"/>
         <div class="right_col" role="main">
-            <component  :is         = "vista_actual" 
+            <component  :is         = "vista_actual"
                         :animacion  = "detalles_animacion_componentes"
                         :ejecutar-salida    = "ejecutar_salida"
                         @volver-inicio      = "volverInicio">
@@ -23,7 +23,7 @@
             return {
                 vista_actual : 'InicioDashboardComponent',
                 detalles_animacion_componentes : {
-                    duracion: 1.0,
+                    duracion: 0.5,
                     delay   : 0.05,
                 },
                 ejecutar_salida: false,
@@ -39,7 +39,7 @@
                 setTimeout(()=>{
                     this.ejecutar_salida= false;
                     this.vista_actual   = vista;
-                } , tiempo_cambio);   
+                } , tiempo_cambio);
             },
             volverInicio: function(){
                 this.vista_actual = 'InicioDashboardComponent';

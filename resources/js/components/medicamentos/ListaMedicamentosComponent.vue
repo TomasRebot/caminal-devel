@@ -2,7 +2,7 @@
 	<div 	id = "lista-medicamentos" class="row">
 		<div 	class="col-md-12 col-sm-12 col-xs-12"
         		:class  = "{ 'animated fadeInRight'  : ejecutar_animacion_entrada,
-        				     'animated fadeOutRight' : activarAnimacionSalidaComponentePadre || ejecutar_animacion_salida}"  
+        				     'animated fadeOutRight' : activarAnimacionSalidaComponentePadre || ejecutar_animacion_salida}"
             	:style  = "style_object_animacion"
          	  	v-if 	= "frm_listar_medicamentos">
 	        <div class="x_panel">
@@ -18,10 +18,10 @@
 	                	<div class="row">
 	                		<div class="col-sm-6">
 	                			<div class="dataTables_length" id="datatable_length">
-	                    			<label>Por pagina: 
-	                    				<select name 			= "datatable_length" 
-	                    						aria-controls 	= "datatable" 
-	                    						class 			= "form-control input-sm" 
+	                    			<label>Por pagina:
+	                    				<select name 			= "datatable_length"
+	                    						aria-controls 	= "datatable"
+	                    						class 			= "form-control input-sm"
 	                    						v-model 		= "paginacion.perPage"
 	                    						@change 		= "cambiarCantidadPorPagina">
 	                    						<option v-for="(n , key) in 5" :value="n*5" :key="key">
@@ -36,10 +36,10 @@
 								<div id="datatable_filter" class="dataTables_filter">
 									<label>
 											Buscar:
-										<input  type 			= "search" 
-												class 			= "form-control input-sm" 
-												placeholder 	= "" 
-												aria-controls	= "datatable" 
+										<input  type 			= "search"
+												class 			= "form-control input-sm"
+												placeholder 	= ""
+												aria-controls	= "datatable"
 												v-model			= "buscar">
 									</label>
 								</div>
@@ -52,14 +52,14 @@
 								<table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
 	                  				<thead>
 	                  					<tr role="row">
-	                  						<th 
-	                  							class 		= "sorting_asc" 
-	                  							tabindex 	= "0" 
-	                  							aria-controls="datatable" 
-	                  							rowspan 	= "1" 
-	                  							colspan 	= "1" 
-	                  							aria-sort 	= "ascending" 
-	                  							aria-label	= "Name: activate to sort column descending" 
+	                  						<th
+	                  							class 		= "sorting_asc"
+	                  							tabindex 	= "0"
+	                  							aria-controls="datatable"
+	                  							rowspan 	= "1"
+	                  							colspan 	= "1"
+	                  							aria-sort 	= "ascending"
+	                  							aria-label	= "Name: activate to sort column descending"
 	                  							style 		= "width: 264px;"
 	                  							v-for 		= "(campo , key) in key_tabla" :key="key">
 	                  							<div class="row" @click ="ordenar_por(campo.key , campo.titulo)">
@@ -69,7 +69,7 @@
 	                  								<div class="col-sm-6 text-right">
 	                  									<i class="fa fa-arrows-v"></i>
 	                  								</div>
-	                  							</div>          
+	                  							</div>
 	                  						</th>
 	                  					</tr>
 	                  				</thead>
@@ -80,15 +80,15 @@
 				                          	<td> {{d.perfil.clasificacion}} </td>
 				                          	<td> {{d.descripcion}} </td>
 				                          	<td> {{d.cant_blister}} </td>
-				                          	<td class="text-center"> 
-			                          			<button type 	= "button" 
-			                          					class 	= "btn btn-warning" 
+				                          	<td class="text-center">
+			                          			<button type 	= "button"
+			                          					class 	= "btn btn-warning"
 			                          					v-if 	= "'EditarMedicamentoComponent' in Vue.options.components"
 			                          					@click 	= "editarMedicamento(d)">
 			                          				<i class="fa fa-edit"></i>
 			                          			</button>
 			                          			&nbsp;
-			                          			<button type 	= "button" 
+			                          			<button type 	= "button"
 			                          					class 	= "btn btn-danger"
 			                          					v-if 	= "'EliminarMedicamentoComponent' in Vue.options.components"
 			                          					@click 	= "eliminarMedicamento(d)">
@@ -106,7 +106,7 @@
 	        			<!-- BARRA NAVEGACION PAGINAS REGISTROS -->
 	    				<div class="row">
 	    					<div class="col-sm-5">
-	    						<div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">		
+	    						<div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
 	    							Pagina <b>{{ paginacion.currentPage }}</b> de <b>{{ paginacion.totalPage }}</b> en {{datos_filtrados.length}} registros.
 	    						</div>
 							</div>
@@ -114,17 +114,17 @@
 								<div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
 									<ul class="pagination">
 										<li class="paginate_button previous " id="datatable_previous">
-											<button 
-												aria-controls 	= "datatable" 
-												data-dt-idx 	= "0" 
+											<button
+												aria-controls 	= "datatable"
+												data-dt-idx 	= "0"
 												tabindex 		= "0"
-												@click 			= "paginaAnterior">			
+												@click 			= "paginaAnterior">
 												Previous
 											</button>
 										</li>
 										<li class="paginate_button active">
-											<!--a 	aria-controls="datatable" 
-												data-dt-idx="1" 
+											<!--a 	aria-controls="datatable"
+												data-dt-idx="1"
 												tabindex="0"
 												v-for="n in paginacion.totalPage"
 												@click="cambiarPagina(n)">
@@ -132,9 +132,9 @@
 											</a-->
 										</li>
 										<li class="paginate_button next" id="datatable_next">
-											<button 	
-												aria-controls 	= "datatable" 
-												data-dt-idx 	= "7" 
+											<button
+												aria-controls 	= "datatable"
+												data-dt-idx 	= "7"
 												tabindex 		= "0"
 												@click 			= "paginaSiguiente">
 												Next
@@ -144,36 +144,36 @@
 								</div>
 							</div>
 						</div>
-	        			<!-- ...................................... -->						
+	        			<!-- ...................................... -->
 	        			<!-- FIN BARRA NAVEGACION PAGINAS REGISTROS -->
 					</div>
 	         	</div>
 	    	</div>
 	  	</div>
-		<editar-medicamento-component 
-				:medicamento 	= "medicamento_a_manipular" 
+		<editar-medicamento-component
+				:medicamento 	= "medicamento_a_manipular"
 				@regresar 		= "volverVistaListadoMedicamentos"
 				v-if 			= "frm_editar_medicamento"
 				:animacion 		= "animacion"
-				:class  = "{'animated fadeOutRight' : activarAnimacionSalidaComponentePadre}"  
+				:class  = "{'animated fadeOutRight' : activarAnimacionSalidaComponentePadre}"
 				:style  = "style_object_animacion"/>
 		<eliminar-medicamento-component
-				:medicamento 	= "medicamento_a_manipular" 
+				:medicamento 	= "medicamento_a_manipular"
 				@regresar 		= "volverVistaListadoMedicamentos"
 				v-if 			= "frm_eliminar_medicamento"
-				:animacion 		= "animacion" 
-				:class  = "{'animated fadeOutRight' : activarAnimacionSalidaComponentePadre}"  
+				:animacion 		= "animacion"
+				:class  = "{'animated fadeOutRight' : activarAnimacionSalidaComponentePadre}"
 				:style  = "style_object_animacion"/>
   	</div>
 </template>
 
 <script>
-	
+
 
 	export default {
 		name: 'lista-medicamentos',
 		props: [ 'ejecutarSalida' , 'animacion' ], // si se cambia la vista desde el Dashboard
-		mounted(){			
+		mounted(){
             setTimeout(() => {
                 this.ejecutar_animacion_entrada = false;
             }, this.animacion.duracion * 1000);
@@ -193,7 +193,7 @@
 				ejecutar_animacion_salida : false,
 				style_object_animacion 	  : {
 					'-webkit-animation-duration': this.animacion.duracion,
-                    '-webkit-animation-delay'   : this.animacion.delay, 
+                    '-webkit-animation-delay'   : this.animacion.delay,
 				},
 				//vistas
 				frm_listar_medicamentos : true,
@@ -238,9 +238,9 @@
 				}
 				// aca no preguntar, la funcion para ordenar por campo fue extraida de internet
 				// y modificada infimamente
-				this.datos_filtrados = this.datos_filtrados.sort(	this.sort_by( 	campo , 
-																	this.sort_fields.reverse, 
-																	function(a){ 
+				this.datos_filtrados = this.datos_filtrados.sort(	this.sort_by( 	campo ,
+																	this.sort_fields.reverse,
+																	function(a){
 																		if (segundo_campo.toLowerCase() == 'nombre') {
 																			a = a.nombre;
 																		} else if(segundo_campo.toLowerCase() == 'clasificacion'){
@@ -255,15 +255,15 @@
 				this.paginar();
 			},
 			sort_by:  function(field, reverse, primer){
-			   	var key = primer ? 
-		       		function(x) {return primer(x[field])} : 
+			   	var key = primer ?
+		       		function(x) {return primer(x[field])} :
 		       		function(x) {return x[field]};
 
 			   	reverse = !reverse ? 1 : -1;
 
 			   	return function (a, b) {
 			       return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
-		     	} 
+		     	}
 			},
 			paginaAnterior: function(){
 				if (this.paginacion.currentPage > 1) {
@@ -275,7 +275,7 @@
 					this.paginacion.currentPage++;
 				}
 			},
-			cambiarCantidadPorPagina(){ 
+			cambiarCantidadPorPagina(){
 				/** Recarga la tabla con la nueva division de registros por pagina.
 				* renderiza la cantidad de registros que se selecciono para mostrar
 				*/
@@ -295,7 +295,7 @@
 				*/
 				let $this 	= this;
 				let $p 		= this.paginacion;
-				
+
 				this.datos_paginados 		= [];
 				this.paginacion.currentPage = 1;
 				$p.index 		= 0;
@@ -320,9 +320,9 @@
 			},
 			editarMedicamento: function( medicamento ){
 				/** Vista de edicion de medicamento
-				* cambiamos a la vista para editar 
+				* cambiamos a la vista para editar
 				* un medicamento seleccionado
-				* en "activarAnimacion" pasamos el true 
+				* en "activarAnimacion" pasamos el true
 				* para activar la animacion de salida,
 				* y el nombre de la vista que queremos mostrar
 				*/
@@ -331,7 +331,7 @@
 			},
 			eliminarMedicamento: function( medicamento ){
 				/** Vista para eliminar un medicamento
-				* cambiamos a la vista para editar 
+				* cambiamos a la vista para editar
 				* un medicamento seleccionado
 				*/
 				this.medicamento_a_manipular 	= medicamento;
@@ -356,7 +356,7 @@
 			},
 			activarAnimacion: function(vista){
 				this.ejecutar_animacion_salida  = true;
-								
+
 				setTimeout(() => {
 						this.frm_listar_medicamentos 		= false;
 			      		if ( vista == 'editar') {
@@ -365,7 +365,7 @@
 			      			this.frm_eliminar_medicamento 	= true;
 			      		}
 			    }, this.animacion.duracion * 1000);
-			}	
+			}
 		},
 		watch:{
 			buscar: function () {
