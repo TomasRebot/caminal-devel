@@ -1,13 +1,11 @@
 
 
-//require('./bootstrap');
-
-
 window.axios = require('axios');
 window.Vue = require('vue');
 
 require('animate.css/animate.css');
-window.Swal =require('sweetalert2');
+
+window.Swal = require('sweetalert2');
 
 Vue.mixin({
   data: function() {
@@ -31,12 +29,12 @@ var permisos = [  'DashboardComponent',
                   'ListaMedicamentosComponent',
                   'BotonmenuComponent',
                   'MenulateralComponent',
-                  //'EditarMedicamentoComponent',
+                  'EditarMedicamentoComponent',
                   'EliminarMedicamentoComponent',
                   'IngresoMedicamentoComponent',
                   'EntregaMedicamentoComponent',
                   'InicioDashboardComponent',
-                  //'CrearMedicoComponent',
+                  'CrearMedicoComponent',
                   'CrearClienteComponent',
                   'BuscarClienteComponent',
                   'BajaMedicamentoClearingComponent',
@@ -51,6 +49,9 @@ const folders = [
      req = require.context('./components/movimientos', true, /\.(js|vue)$/i),
      req = require.context('./components/medicamentos', true, /\.(js|vue)$/i),
      req = require.context('./components/menu_lateral', true, /\.(js|vue)$/i),
+     req = require.context('./components/movimientos/step_entrega_cliente', true, /\.(js|vue)$/i),
+     req = require.context('./components/movimientos/step_entrega_clearing', true, /\.(js|vue)$/i),
+     req = require.context('./components/movimientos/step_ingreso_medicamento', true, /\.(js|vue)$/i),
 
 ];
 //se recorre cada carpeta y se incluyen sus archivos correspondientes
@@ -58,6 +59,11 @@ const folders = [
 folders.forEach(function(req) {
     return req.keys().map(key => {
         const name = key.match(/\w+/)[0];
+        if (name=="BuscarClienteComponent" || name=="BuscarMedicamentoComponent" || name=="ConfirmarEntregaComponent" ||
+            name=="BuscarInstitucionComponent" || name=="BuscarProveedorComponent" || name=="ConfirmarClearingComponent" ||
+            name=="ConfiguracionIngresoComponent") {
+          return Vue.component(name, req(key).default);
+        }
         if ( name.indexOf('Component') == -1 ) {return;} //evitamos agregar string que no son componentes
           if ( permisos.indexOf(name) == -1 ) {return;}  //consultamos si el componente existe dentro del array
                                                         //de permisos para renderizarlo

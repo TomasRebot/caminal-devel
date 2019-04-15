@@ -1,18 +1,16 @@
 <template>
-
-    <li id="item_menu">
-        <a><i class="fa fa-user"></i>{{titulo}}<span class="fa fa-chevron-down"></span></a>
-        <ul class="nav child_menu">
-            <li v-for 	= "(item,key) in getItemsSubMenu" 
-                :key    = "key">
-                <a 	class 	= ""
-                    @click 	= "cambiarVista(item.componente)">
-                    {{ item.nombre }}
-                </a>
-            </li>
-        </ul>
-    </li>
-
+<li id="item_menu">
+    <a><i class="fa fa-user"></i>{{titulo}}<span class="fa fa-chevron-down"></span></a>
+    <ul class="nav child_menu">
+        <li v-for 	= "(item,key) in getItemsSubMenu" 
+            :key    = "key">
+            <a 	class 	= ""
+                @click 	= "cambiarVista(item.componente)">
+                {{ item.nombre }}
+            </a>
+        </li>
+    </ul>
+</li>
 </template>
 
 <script>

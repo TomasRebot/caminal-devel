@@ -1,14 +1,10 @@
 <template>
-<div id="lista-medicamentos" class="row">
-	<div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight" v-if="frm_listar_medicamentos">
+<div id="buscar-medicamento" class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight">
 		<div class="x_panel">
 			<div class="x_title">
-				<h4>Listado de medicamentos</h4>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
-					<a class="btn btn-sm btn-success">Nuevo</a>
-					<a id="deleteMultipleUsers" class="btn btn-sm btn-danger" @click="eliminarMedicamentos">Eliminar</a>
-					&nbsp;
 					<label> Buscar: 
 						<input type="search" class="form-control input-sm" v-model="buscar">
 					</label>
@@ -20,38 +16,29 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<div class=""> <!-- se le saco la clase "table-responsive" -->
+				<div class=""> <!-- se saco la clase "table-responsive" -->
 					<table class="table table-striped jambo_table bulk_action">
 						<thead>
 							<tr class="headings">
-								<th>
-									<input type="checkbox" id="check-all" v-model="check_all" @click="seleccionarTodo">
-								</th>
 								<th class="column-title" @click ="ordenar_por('codigo')">CODIGO </th>
 								<th class="column-title" @click ="ordenar_por('perfil','nombre')">NOMBRE </th>
 								<th class="column-title" @click ="ordenar_por('perfil','clasificacion')">CLASIFICACION </th>
 								<th class="column-title" @click ="ordenar_por('descripcion')">DESCRIPCION </th>
 								<th class="column-title no-link last" @click ="ordenar_por('cant_blister')"><span class="nobr">CANT. POR BLISTER</span></th>
-								<th class="bulk-actions" colspan="7">
-									<a class="antoo" style="color:#fff; font-weight:500;">Usuarios  <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr class="even pointer" v-for="(medicamento ,key) in getLista" :key="key">
-								<td class="a-center ">
-									<input type="checkbox" :value="medicamento.id" v-model="medicamentos_seleccionados">
-								</td>								
-								<td @click="editarMedicamento(medicamento)"><a> {{medicamento.codigo}} </a></td>
-								<td @click="editarMedicamento(medicamento)"><a> {{medicamento.perfil.nombre}} </a></td>
-								<td @click="editarMedicamento(medicamento)"><a> {{medicamento.perfil.clasificacion}} </a></td>
-								<td @click="editarMedicamento(medicamento)"><a> {{medicamento.descripcion}} </a></td>
+								<td @click="seleccionarMedicamento(medicamento)"><a> {{medicamento.codigo}} </a></td>
+								<td @click="seleccionarMedicamento(medicamento)"><a> {{medicamento.perfil.nombre}} </a></td>
+								<td @click="seleccionarMedicamento(medicamento)"><a> {{medicamento.perfil.clasificacion}} </a></td>
+								<td @click="seleccionarMedicamento(medicamento)"><a> {{medicamento.descripcion}} </a></td>
 								<td class="last"><a><label class='badge badge-success'> {{medicamento.cant_blister}} </label></a>
 								</td>
 							</tr>
 						</tbody>
-					</table> <!-- BARRA NAVEGACION PAGINAS REGISTROS -->
-					<div class="row">
+					</table>
+					<div class="row" v-if="paginacion.totalPage>1"> <!-- BARRA NAVEGACION PAGINAS REGISTROS -->
 						<div class="col-sm-5">
 							<div>
 								Pagina <b>{{ paginacion.currentPage }}</b> de <b>{{ paginacion.totalPage }}</b> en {{datos_filtrados.length}} registros.
@@ -85,34 +72,41 @@
 					</div> <!-- FIN BARRA NAVEGACION PAGINAS REGISTROS -->
 				</div>
 			</div>
+			<div class="clearfix"></div>
+			<div class="row"> <!-- LISTA MEDICAMENTOS AGREGADOS -->
+				<div class="col-sm-12">
+					<p><label> Lista agregados: </label></p>
+					<ul>
+						<li v-for="(medicamento , key) in getListaMedicamentosSeleccionados" :key="key">
+							<a class="btn" @click="editarMedicamentoAgregado(medicamento)"> Nombre: {{medicamento.perfil.nombre}}, Clasificacion: {{medicamento.perfil.clasificacion}}, CANTIDAD: {{medicamento.cantidad_entrega}} </a>
+						</li>
+					</ul>
+				</div>
+			</div><!-- FIN LISTA MEDICAMENTOS AGREGADOS -->
 		</div>
-	</div>
-	<editar-medicamento-component :medicamento="medicamento_a_manipular" @regresar="volverVistaListadoMedicamentos" v-if="frm_editar_medicamento">
-	</editar-medicamento-component>	
+	</div>	
 </div>
 </template>
 
 <script>
 
 	export default {
-		name: 'lista-medicamentos',
+		name: 'buscar-medicamento',
 		props: [],
 		mounted(){
 			var datos = [
-				{'id': 1,
-				'codigo': 200,
+				{'codigo': 200,
 				'perfil': {'nombre':'ibuprofeno','clasificacion':'analgesico'},
 				'descripcion': 'comprimido 500mg',
 				'cant_blister': '50',
 				'stock': {'cantidad':50}},
-				{'id':2,
-				'codigo': 300,
+				{'codigo': 300,
 				'perfil': {'nombre':'amoxicilina','clasificacion':'antibiotico'},
 				'descripcion': 'comprimido 1500mg',
 				'cant_blister': '45',
 				'stock': {'cantidad':30}},
-			];
-			this.form = datos;
+				];
+			this.form = datos
 			this.datos_filtrados = this.form;
 			this.paginar();
 			/*axios.get( 'administracion/medicamentos/').then(
@@ -128,10 +122,6 @@
 		},
 		data(){
 			return {
-				//vistas
-				frm_listar_medicamentos : true,
-				frm_editar_medicamento 	: false,
-				//fin vistas
 				form: [],
 				paginacion: {
 					currentPage	: 1,
@@ -146,9 +136,8 @@
 				},
 				buscar: '',
 				datos_filtrados: {},
-				medicamento_a_manipular: false, // para pasar a la vista de edicion
-				check_all: false, //checkbox para colocar o quitar todos los checks de todos los medicamentos para eliminar
-				medicamentos_seleccionados: [], //para eliminar
+				medicamentos_seleccionados: [],
+				recargar: true, //recarga lista de medicamentos agregado cuando se actualiza
 			}
 		},
 		methods: {
@@ -236,94 +225,90 @@
 
 				});
 			},
-			editarMedicamento: function( medicamento ){
-				/** Vista de edicion de medicamento
-				* cambiamos a la vista para editar
-				* un medicamento seleccionado
-				* en "activarAnimacion" pasamos el true
-				* para activar la animacion de salida,
-				* y el nombre de la vista que queremos mostrar
-				*/
-				this.medicamento_a_manipular 	= medicamento;
-				this.frm_listar_medicamentos 	= false;
-				this.frm_editar_medicamento 	= true;
-			},
-			seleccionarTodo: function(){
-				/** Para eliminar
-				* Selecciona todos los checkbox de los medicamentos
-				* para eliminarlos
-				* @Pepe
-				*/
-				if (this.check_all) {
-					this.medicamentos_seleccionados = [];
-					return;
+			ocultarListaMedicamentos: function(){
+				var $BOX_PANEL = $('#ocultar-panel-medicamentos').closest('.x_panel'),
+						$ICON = $('#ocultar-panel-medicamentos').find('i'),
+						$BOX_CONTENT = $BOX_PANEL.find('.x_content');
+				// fix for some div with hardcoded fix class
+				if ($BOX_PANEL.attr('style')) {
+						$BOX_CONTENT.slideToggle(200, function(){
+								$BOX_PANEL.removeAttr('style');
+						});
+				} else {
+						$BOX_CONTENT.slideToggle(200); 
+						$BOX_PANEL.css('height', 'auto');  
 				}
-				this.medicamentos_seleccionados = this.form.map(medicamento=>{
-					return medicamento.id;
-				})
-				console.log(this.medicamentos_seleccionados)
+				$ICON.toggleClass('fa-chevron-up fa-chevron-down');
 			},
-			eliminarMedicamentos: function(){
-				if (this.medicamentos_seleccionados.length < 1) {return;}
-				const swalWithBootstrapButtons = Swal.mixin({
+			seleccionarMedicamento: function(agregar_medicamento){
+				Swal.fire({
+					title: 'Ingrese la cantidad a entregar',
+					input: 'number',
+					inputValue: '',
+					showCancelButton: true,
+					confirmButtonText: 'Agregar',
+					reverseButtons: true,
+					inputValidator: (value) => {
+						if (!value) {
+							return 'Debe ingresar la cantidad'
+						} else {
+							let that = this;
+							agregar_medicamento['cantidad_entrega']=value;
+							this.medicamentos_seleccionados.push(agregar_medicamento);
+							$(this.form).each(function(index,medicamento){
+									if(medicamento.codigo == agregar_medicamento.codigo){
+										that.form.splice(index,1);
+										that.paginar();
+									}
+								})
+							this.$emit('medicamentos-seleccionados',this.medicamentos_seleccionados);
+						}
+					}
+				});				
+			},
+			editarMedicamentoAgregado: function(editar_medicamento){
+				Swal.fire({
+					title: 'Editar cantidad medicamento agregado',
+					text: editar_medicamento.perfil.nombre,
+					input: 'number',
+					inputValue: '',
 					customClass: {
 						confirmButton: 'btn btn-success',
 						cancelButton: 'btn btn-danger'
 					},
 					buttonsStyling: false,
-				})
-
-				swalWithBootstrapButtons.fire({
-					title: 'Lista de medicamentos a eliminar:',
-					text: this.getListaMedicamentosEiminar,//"No podra revertir esto!",
-					type: 'warning',
 					showCancelButton: true,
-					confirmButtonText: 'Si, eliminar!',
-					cancelButtonText: 'No, cancelar!',
-					reverseButtons: true
+					cancelButtonText: 'Quitar',
+					confirmButtonText: 'Confirmar',
+					reverseButtons: true,
+					inputValidator: (value) => {
+						if (!value) {
+							return 'Debe ingresar la cantidad'
+						} else {
+							$(this.medicamentos_seleccionados).each(function(index,medicamento){
+								if(medicamento.codigo == editar_medicamento.codigo){
+									medicamento.cantidad_entrega = value;
+								}
+							});							
+							this.recargar = false;
+							this.$nextTick(()=>{ 
+								this.recargar = true
+							});
+							this.$emit('medicamentos-seleccionados',this.medicamentos_seleccionados);
+						}
+					}
 				}).then((result) => {
-					if (result.value) {
-						swalWithBootstrapButtons.fire(
-						'Eliminado',
-						'Los medicamentos fueron eliminados.',
-						'success'
-						)
-					} else if (
-						// Read more about handling dismissals
-						result.dismiss === Swal.DismissReason.cancel
-					) {
-						swalWithBootstrapButtons.fire(
-						'Cancelado',
-						'Proceso de eliminacion cancelado',
-						'error'
-						)
+					if (result.dismiss === Swal.DismissReason.cancel) {
+						let that = this;
+						this.form.push(editar_medicamento);
+						$(this.medicamentos_seleccionados).each(function(index,medicamento){
+							if(medicamento.codigo == editar_medicamento.codigo){
+									that.medicamentos_seleccionados.splice(index,1);
+							}
+						});
+						this.paginar();
 					}
 				});
-			},
-			volverVistaListadoMedicamentos: function(){
-				/** Vista de listado de medicamentos
-				* se apreto en regresar en algun de los otros
-				* formularios ('editar','eliminar')
-				* y regresamos a la lista
-				*/
-				this.medicamento_a_manipular 	= false;
-				this.frm_editar_medicamento 	= false;
-				this.frm_listar_medicamentos 	= true;
-			},
-			ocultarListaMedicamentos: function(){
-					var $BOX_PANEL = $('#ocultar-panel-medicamentos').closest('.x_panel'),
-							$ICON = $('#ocultar-panel-medicamentos').find('i'),
-							$BOX_CONTENT = $BOX_PANEL.find('.x_content');
-					// fix for some div with hardcoded fix class
-					if ($BOX_PANEL.attr('style')) {
-							$BOX_CONTENT.slideToggle(200, function(){
-									$BOX_PANEL.removeAttr('style');
-							});
-					} else {
-							$BOX_CONTENT.slideToggle(200); 
-							$BOX_PANEL.css('height', 'auto');  
-					}
-					$ICON.toggleClass('fa-chevron-up fa-chevron-down');
 			},
 		},
 		watch:{
@@ -336,17 +321,8 @@
 			getLista(){
 				return this.datos_paginados[ this.paginacion.currentPage - 1];
 			},
-			getListaMedicamentosEiminar(){
-				var texto = '';
-				let $this = this;
-				var contador = 0;
-				$(this.form).each(function(index,medicamento){
-					contador++;
-					if ($this.medicamentos_seleccionados.indexOf(medicamento.id) != -1) {
-						texto += contador + ") " + medicamento.perfil.nombre + "..."; 
-					}
-				})
-				return texto;
+			getListaMedicamentosSeleccionados(){
+				return this.recargar ? this.medicamentos_seleccionados : null;
 			},
 			/** filtrar datos
 			* el each toma como grupo de objetos un metodo computado, retorna registros
@@ -366,5 +342,4 @@
 			},
 		}
 	}
-
 </script>

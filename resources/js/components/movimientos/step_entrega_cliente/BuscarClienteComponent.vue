@@ -1,106 +1,56 @@
 <template>
-	<div 	id="buscar-cliente"
-			class="col-md-12 col-sm-12 col-xs-12"
-			:class  = "{ 'animated fadeInRight'  : ejecutar_animacion_entrada,
-						 'animated fadeOutRight' : activarAnimacionSalidaComponentePadre || ejecutar_animacion_salida}"
-			:style  = "style_object_animacion">
+<div class="row" id="buscar-cliente">
+    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>Lista <small>de clientes</small></h2>
+				<!--h4>Listado de Clientes</h4-->
+				<div class="clearfix"></div>
+				<ul class="nav navbar-left panel_toolbox">
+					<a class="btn btn-sm btn-success">Nuevo</a>
+					&nbsp;
+					<label> Buscar: 
+						<input type="search" class="form-control input-sm" v-model="buscar">
+					</label>
+				</ul>
+                <ul class="nav navbar-rigth panel_toolbox">
+					<li @click="ocultarListaMedicamentos()"><a  class="collapse-link" id="ocultar-panel-medicamentos"><i class="fa fa-chevron-up"></i></a>
+					</li>
+				</ul>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<p class="text-muted font-13 m-b-30">
-					Lista completa de clientes, puede buscar por cualquiera de los campos en la barra de "Buscar"
-				</p>
-				<div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-					<div class="row">
-						<div class="col-sm-6">
-						</div>
-						<div class="col-sm-6">
-							<div id="datatable_filter" class="dataTables_filter">
-								<label>
-										Buscar:
-									<input  type 			= "search"
-											class 			= "form-control input-sm"
-											placeholder 	= ""
-											aria-controls	= "datatable"
-											v-model			= "buscar">
-								</label>
-							</div>
-						</div>
-					</div>
-					<!-- TABLA DE REGISTROS -->
-					<!-- .................. -->
-					<div class="row">
-						<div class="col-sm-12">
-							<table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
-								<thead>
-									<tr role="row">
-										<th
-											class 		= "sorting_asc"
-											tabindex 	= "0"
-											aria-controls="datatable"
-											rowspan 	= "1"
-											colspan 	= "1"
-											aria-sort 	= "ascending"
-											aria-label	= "Name: activate to sort column descending"
-											style 		= "width: 264px;"
-											v-for 		= "(campo , key) in key_tabla"
-											:key 		= "key">
-											<div class="row" @click ="ordenar_por(campo.key , campo.titulo)">
-												<div class="col-sm-6">
-													{{ campo.titulo }}
-												</div>
-												<div class="col-sm-6 text-right">
-													<i class="fa fa-arrows-v"></i>
-												</div>
-											</div>
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr role="row" class="odd" v-for="(d , key) in getLista" :key="key">
-										<td class="sorting_1"> {{ d.apellido }} </td>
-										<td> {{d.nombres}} </td>
-										<td> {{d.dni}} </td>
-										<td> {{d.direccion}} </td>
-										<td> {{d.telefono}} </td>
-										<td> {{d.celular}} </td>
-										<td class="text-center">
-											<button type 	= "button"
-													class 	= "btn btn-success btn-lg"
-													@click 	= "seleccionarCliente(d)">
-													<i class="fa fa-check"></i>
-											</button>
-										</td>
-									</tr>
-								</tbody>
-                            </table>
-						</div>
-					</div>
-					<!-- ................... -->
-					<!-- FIN TABLA REGISTROS -->
-					<!-- BARRA NAVEGACION PAGINAS REGISTROS -->
-					<div class="row">
+				<div class=""> <!-- se le saco de la clase "table-responsive" -->
+					<table class="table table-striped jambo_table bulk_action">
+						<thead>
+							<tr class="headings">
+								<th class="column-title" @click ="ordenar_por('apellido')">APELLIDO </th>
+								<th class="column-title" @click ="ordenar_por('nombre')">NOMBRE </th>
+								<th class="column-title no-link last" @click ="ordenar_por('dni')">DNI </th>
+                            </tr>
+						</thead>
+						<tbody>
+							<tr class="even pointer" v-for="(cliente , key) in getLista" :key="key">						
+								<td @click="seleccionarCliente(cliente)"><a> {{cliente.apellido}} </a></td>
+								<td @click="seleccionarCliente(cliente)"><a> {{cliente.nombres}} </a></td>
+								<td class="last" @click="seleccionarCliente(cliente)"><a> {{cliente.dni}} </a></td>
+                            </tr>
+						</tbody>
+					</table> <!-- BARRA NAVEGACION PAGINAS REGISTROS -->
+					<div class="row" v-if="paginacion.totalPage>1">
 						<div class="col-sm-5">
-							<div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
+							<div>
 								Pagina <b>{{ paginacion.currentPage }}</b> de <b>{{ paginacion.totalPage }}</b> en {{datos_filtrados.length}} registros.
 							</div>
 						</div>
 						<div class="col-sm-7">
 							<div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
 								<ul class="pagination">
-									<li class="paginate_button previous " id="datatable_previous">
-										<button
-											aria-controls 	= "datatable"
-											data-dt-idx 	= "0"
-											tabindex 		= "0"
-											@click 			= "paginaAnterior">
-											Previous
+									<li>
+										<button @click="paginaAnterior">
+											Anterior
 										</button>
 									</li>
-									<li class="paginate_button active">
+									<li>
 										<!--a 	aria-controls="datatable"
 											data-dt-idx="1"
 											tabindex="0"
@@ -109,25 +59,20 @@
 											{{ n }}
 										</a-->
 									</li>
-									<li class="paginate_button next" id="datatable_next">
-										<button
-											aria-controls 	= "datatable"
-											data-dt-idx 	= "7"
-											tabindex 		= "0"
-											@click 			= "paginaSiguiente">
-											Next
+									<li>
+										<button @click="paginaSiguiente">
+											Siguiente
 										</button>
 									</li>
 								</ul>
 							</div>
 						</div>
-					</div>
-					<!-- ...................................... -->
-					<!-- FIN BARRA NAVEGACION PAGINAS REGISTROS -->
+					</div> <!-- FIN BARRA NAVEGACION PAGINAS REGISTROS -->
 				</div>
 			</div>
 		</div>
-  	</div>
+	</div>
+</div>
 </template>
 
 <script>
@@ -135,29 +80,18 @@
 
 export default {
     name: 'buscar-cliente',
-    props: [ 'animacion' ], // si se cambia la vista desde el Dashboard
+    props: [],
     mounted(){
-        setTimeout(()=>{
-            this.ejecutar_animacion_entrada 		= false;
-        } , this.animacion.duracion * 1000);
-
-                    //this.form = r.lista_clientes.sort(this.sort_by('dni', true, function(a){return a}));
-                    this.form = [
-                        {'apellido' : 'moreira', 'nombres': 'ezequiel' , 'dni' : 35555555},
-                         {'apellido' : 'tomas', 'nombres': 'tomas' , 'dni' : 333333333}
-                        ];
-                    this.datos_filtrados = this.form;
-                    this.paginar();
-
+        //this.form = r.lista_clientes.sort(this.sort_by('dni', true, function(a){return a}));
+        this.form = [
+            {'apellido' : 'moreira', 'nombres': 'ezequiel' , 'dni' : 35555555},
+                {'apellido' : 'tomas', 'nombres': 'tomas' , 'dni' : 333333333}
+            ];
+        this.datos_filtrados = this.form;
+        this.paginar();
     },
     data(){
         return {
-            ejecutar_animacion_entrada: true,
-            ejecutar_animacion_salida : false,
-            style_object_animacion 	  : {
-                '-webkit-animation-duration': this.animacion.duracion,
-                '-webkit-animation-delay'   : this.animacion.delay,
-            },
             form: [],
             paginacion: {
                 currentPage	: 1,
@@ -172,16 +106,10 @@ export default {
             },
             buscar: '',
             datos_filtrados: {},
-            key_tabla: [
-                { 'titulo': 'Apellido' 	, 'key': 'apellido',},
-                { 'titulo': 'Nombres' 	, 'key': 'nombres',},
-                { 'titulo': 'Dni'		, 'key': 'dni',},
-            ],
         }
     },
     methods: {
         seleccionarCliente: function( cliente ){
-            this.ejecutar_animacion_salida = true;
             this.$emit('cliente-seleccionado' , cliente);
         },
         ordenar_por: function( campo , segundo_campo ){
@@ -272,6 +200,21 @@ export default {
 
             });
         },
+        ocultarListaMedicamentos: function(){
+            var $BOX_PANEL = $('#ocultar-panel-medicamentos').closest('.x_panel'),
+                    $ICON = $('#ocultar-panel-medicamentos').find('i'),
+                    $BOX_CONTENT = $BOX_PANEL.find('.x_content');
+            // fix for some div with hardcoded fix class
+            if ($BOX_PANEL.attr('style')) {
+                    $BOX_CONTENT.slideToggle(200, function(){
+                            $BOX_PANEL.removeAttr('style');
+                    });
+            } else {
+                    $BOX_CONTENT.slideToggle(200); 
+                    $BOX_PANEL.css('height', 'auto');  
+            }
+            $ICON.toggleClass('fa-chevron-up fa-chevron-down');
+        },
     },
     watch:{
         buscar: function () {
@@ -297,12 +240,7 @@ export default {
                 })
             }
         },
-        activarAnimacionSalidaComponentePadre(){
-            if (this.ejecutarSalida) {
-                return true;
-            }
-        }
-    }
+    },
 }
 
 </script>

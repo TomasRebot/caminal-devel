@@ -1,133 +1,92 @@
 <template>
-	<div    class   = "col-md-12 col-sm-12 col-xs-12" 
-            id      = "editar-medicamento"
-            :class  = "{ 'animated fadeInRight'      : ejecutar_animacion_entrada,
-                         'animated fadeOutRight'     : ejecutar_animacion_salida }"  
-            :style  = "style_object_animacion">
-
-        <div class="x_panel">
-            <div class="x_title">
-                <h2> Formulario de edicion de datos de medicamento</h2>
-                <div class="clearfix"></div>
-            </div>
-
-            <div class="x_content">
-
-                <form class="form-horizontal form-label-left" @submit.prevent="editarMedicamento">
-
-                    <p> Ingrese los datos necesarios
-                    </p>
-                    <span class="section">Informacion</span>
-
-                    <div class="item form-group" v-for= "(campo , key) in campos_formulario" :key="key">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" :for="'label-' + campo.label"> 
-                            {{ campo.label }} <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input  :id         = "'label-' + campo.clave" 
-                                    class       = "form-control col-md-7 col-xs-12" 
-                                    :name       = "'label-' + campo.clave" 
-                                    :placeholder= "campo.descripcion" 
-                                    required    = "required" 
-                                    :type       = "campo.type"
-                                    v-model     = "campo.model">
-                                <span :id="'feedback' + campo.key" v-if="campo.status">
-                                    feedback
-                                </span>
-                        </div>
+<div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2> Formulario de edicion de datos de medicamento</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <!-- INICIO FORMULARIO EDITAR MEDICAMENTO -->
+            <form class="form-horizontal form-label-left" @submit.prevent="editarMedicamento">
+                <p> Ingrese los datos necesarios</p>
+                <span class="section">Informacion</span>
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-CODIGO">
+                        CODIGO <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input id="label-CODIGO" class="form-control col-md-7 col-xs-12" v-model="frm.codigo" placeholder="Ingrese el codigo del medicamento." required="required" type="number">
                     </div>
-
-
-                    <div class="ln_solid"></div>
-                    <div class="form-group">
-                        <div class="col-md-6 col-md-offset-3">
-                            <button class   = "btn btn-primary" 
-                                    @click  = "regresarListaMedicamentos">
-                                Cancelar
-                            </button>
-                            <button :class="{   'btn btn-success' : habilitarBotonCrear,
-                                                'btn btn-danger'  : !habilitarBotonCrear}">
+                </div>
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-NOMBRE">
+                        NOMBRE <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input id="label-NOMBRE" class="form-control col-md-7 col-xs-12" v-model="frm.perfil.nombre" placeholder="Ingrese el nombre." required="required" type="text">
+                    </div>
+                </div>
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-CLASIFICACION">
+                        CLASIFICACION <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input id="label-CLASIFICACION" class="form-control col-md-7 col-xs-12" v-model="frm.perfil.clasificacion" placeholder="Ingrese la clasificacion." required="required" type="text">
+                    </div>
+                </div>
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-DESCRIPCION">
+                        DESCRIPCION <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input id="label-DESCRIPCION" class="form-control col-md-7 col-xs-12" v-model="frm.descripcion" placeholder="Ingrese la descripcion." required="required" type="text">
+                    </div>
+                </div>
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-cant-blister">
+                        CANTIDAD POR BLISTER <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input id="label-cant-blister" class="form-control col-md-7 col-xs-12" v-model="frm.cant_blister" placeholder="Ingrese la cantidad por blister." required="required" type="number">
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-3">
+                        <button class="btn btn-primary" @click="regresarListaMedicamentos">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-success">
                                 Editar
-                            </button>
-                        </div>
+                        </button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
+            <!-- FIN FORMULARIO EDITAR MEDICAMENTO -->
         </div>
     </div>
+</div>
 </template>
 
 <script>
 	
 	export default{
 		name: 'editar-medicamento',
-        props: [ 'medicamento' , 'animacion'],
+        props: [ 'medicamento' ],
         mounted(){
-            setTimeout(() => {
-                this.ejecutar_animacion_entrada = false;
-            }, this.animacion.duracion * 1000);
-        	let c = this.campos_formulario;
-            var m = this.medicamento;
-
-
-        	$(c).each(function(index, campo){
-                Object.keys(m).some( function( prop ){
-                    if (campo.clave == prop) { campo.model = m[prop] }
-                    if (prop == 'perfil') {
-        				if (campo.clave == 'nombre') {
-        					campo.model = m[prop]['nombre'];
-    					} else if( campo.clave == 'clasificacion') {
-                            campo.model = m[prop]['clasificacion'];
-                        }
-    				}
-        		});
-            });
+           this.frm = this.medicamento;
+           console.log(this.medicamento)
+           console.log('-----------------')
+           console.log(this.frm)
         },
 		data(){
             return{
-                ejecutar_animacion_entrada: true,
-                ejecutar_animacion_salida : false,
-                style_object_animacion    : {
-                    '-webkit-animation-duration': this.animacion.duracion,
-                    '-webkit-animation-delay'   : this.animacion.delay, 
+                frm: {
+                    codigo: '',
+                    descripcion: '',
+                    cant_blister: '',
+                    perfil: {nombre: '', clasificacion: ''},
                 },
-                campos_formulario: [
-                    //codigo
-                    {   clave     : 'codigo' , 
-                        model   : '', 
-                        label   : 'Codigo' , 
-                        type    : 'number', 
-                        descripcion : 'Ingrese el codigo de medicamento.', 
-                        state   : null  } ,
-                    //nombre
-                    {   clave     : 'nombre',
-                        model   : '', 
-                        label   : 'Nombre', 
-                        type    : 'text'  , 
-                        descripcion: 'Ingrese el nombre.',
-                        state: null } ,
-                    //clasificacion
-                    {   clave     : 'clasificacion',
-                        model   : '', 
-                        label   : 'Clasificacion', 
-                        type    : 'text'  , 
-                        descripcion : 'Ingrese la clasificacion.', 
-                        state   : null } ,
-                    //descripcion
-                    {   clave     : 'descripcion',    
-                        model   : '', 
-                        label   : 'Descripcion', 
-                        type    : 'text'  ,
-                        descripcion : 'Ingrese su descripcion.' ,
-                        state   : null  } ,
-                    //cant por blister
-                    {   clave     : 'cant_blister',
-                        model   : '', 
-                        label   : 'Cantidad blister', 
-                        type    : 'number', 
-                        descripcion : 'Ingrese la cantidad por blister.', 
-                        state: null } ,
-                ],
             }
         },
         methods: {
@@ -135,32 +94,10 @@
 
         	},
             regresarListaMedicamentos: function(){                
-                /** Efecto de salida de formulario
-                * se ejecuta el TimeOut cuando termine la animacion de salida
-                * devolviendo a la vista de "Lista de medicamentos"
-                * el tiempo de salida se calcula por la duracion de la animacion
-                * estalecida
-                */
-                this.ejecutar_animacion_salida = true;
-                setTimeout(() => {
-                        this.$emit('regresar');
-                }, this.animacion.duracion * 1000);
+                this.$emit('regresar');
             },
         },
         computed: {
-        	show(){
-        		return this.medicamento ? true : false;
-        	},
-        	habilitarBotonCrear(){
-                var habilitar = true;
-                $(this.campos_formulario).each(function(index,campo){
-                    if (campo.model.length < 1) {
-                        habilitar = false;
-                        return false;
-                    }
-                });
-                return habilitar;
-            }
         }
 	}
 
