@@ -1,24 +1,110 @@
 <template>
 <div class="row" id="ingreso-medicamento">
-    <configuracion-ingreso-component @modo="guardarModoIngreso" @destino="guardarDestinoIngreso">
-    </configuracion-ingreso-component>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Ingreso de medicamentos<small></small></h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content"> <!-- Smart Wizard -->        
+        <p>Pasos para ingresar medicamentos.</p>
+        <div id="wizard" class="form_wizard wizard_horizontal">
+          <ul class="wizard_steps anchor">
+            <li>
+              <a :class="{'disabled':!step[0].mostrar,'selected':step[0].mostrar}">
+                <span class="step_no">1</span>
+                <span class="step_descr">
+                  Configuracion<br>
+                  <small>Seleccion de destino</small>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a :class="{'disabled':!step[1].mostrar,'selected':step[1].mostrar}">
+                <span class="step_no">2</span>
+                <span class="step_descr">
+                    Institucion<br>
+                    <small>Seleccion de institucion</small>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a :class="{'disabled':!step[2].mostrar,'selected':step[2].mostrar}">
+                <span class="step_no">3</span>
+                <span class="step_descr">
+                    Medicamento<br>
+                    <small>Seleccion de medicamentos</small>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a :class="{'disabled':!step[3].mostrar,'selected':step[3].mostrar}">
+                <span class="step_no">4</span>
+                <span class="step_descr">
+                    Final<br>
+                    <small>Confirmar ingreso</small>
+                </span>
+              </a>
+            </li>
+          </ul> 
+          <div class="" style="height: 281px;"> <!-- se le saco "stepContainer" de la clase -->
+            <div id="step-1" class="content" :style="{'display': step[0].mostrar?'block':'none'}">              
+              <h2 class="StepTitle">Configuracion</h2>
+              <configuracion-ingreso-component @configuracion-seleccionada="guardarConfiguracion" v-if="step[0].mostrar">
+              </configuracion-ingreso-component>
+            </div>
+            <div id="step-2" class="content" :style="{'display': step[1].mostrar?'block':'none'}">              
+              <h2 class="StepTitle">Busqueda de institucion</h2>
+              <buscar-institucion-component @institucion-seleccionado="guardarInstitucion" v-if="step[1].mostrar">
+              </buscar-institucion-component>
+            </div>
+            <div id="step-3" class="content" :style="{'display': step[2].mostrar?'block':'none'}">
+              <h2 class="StepTitle">Busqueda de medicamento</h2>
+              <buscar-medicamento-component @medicamentos-seleccionados="guardarMedicamentos" v-if="step[2].mostrar">
+              </buscar-medicamento-component>
+            </div>
+            <div id="step-4" class="content" :style="{'display': step[3].mostrar?'block':'none'}">
+              <h2 class="StepTitle">Confirmar</h2>
+              <confirmar-entrega-component :cliente="cliente_seleccionado" :medicamentos="medicamentos_seleccionados" v-if="step[3].mostrar">
+              </confirmar-entrega-component>
+            </div>
+          </div>
+          <div class="actionBar">
+            <a class="buttonFinish btn btn-default" :class="{'buttonDisabled': deshabilitar_confirmar_btn}" @click="confirmarIngreso">
+              Confirmar
+            </a>
+            <a class="buttonPrevious btn btn-primary" :class="{'buttonDisabled': deshabilitar_btn_anterior}" @click="cambiarPaginaStep(-1)">
+              Anterior
+            </a>
+            <a class="buttonNext btn btn-success" :class="{'buttonDisabled': deshabilitar_btn_siguiente}" @click="cambiarPaginaStep(1)">
+              Siguiente
+            </a>
+          </div>
+        </div> <!-- End SmartWizard Content -->        
+      </div>
+    </div>
+  </div>
 </div>
 </template>
 <script>
 
 	export default{
-        name: 'ingreso-medicamento',
-        mounted(){
-        },
+    name: 'ingreso-medicamento',
+    mounted(){
+    },
 		data(){
 			return {
-        medicamentos_seleccionados: [],
         step : [
           {mostrar: true}, //pagina 1 del step
           {mostrar: false}, //pagina 2 del step
-          {mostrar: false} //pagina 3 del step
+          {mostrar: false}, //pagina 3 del step
+          {mostrar: false} //pagina 4 del step
         ],
-        cliente_seleccionado: false,
+        configuracion: {
+          modo_ingreso: '',
+          destino_ingreso: '',
+        },
+        institucion_seleccionada: false,
         medicamentos_seleccionados: [],
 			}
     },
@@ -28,17 +114,14 @@
 			volverInicio: function(){
         this.$emit('volver-inicio')
       },
-      confirmarEntrega: function(){
+      confirmarIngreso: function(){
       },
-      guardarModoIngreso: function(modo){
-
-      },
-      guardarDestinoIngreso: function(destino){
-
-      },
-      guardarCliente: function(cliente){
-        this.cliente_seleccionado = cliente;
+      guardarConfiguracion: function(configuracion){
+        this.configuracion = configuracion;
         this.cambiarPaginaStep(1);
+      },
+      guardarInstitucion: function(){
+
       },
       guardarMedicamentos: function(lista_medicamentos){
         this.medicamentos_seleccionados = [];
@@ -81,13 +164,13 @@
     },
     computed:{
       deshabilitar_confirmar_btn(){
-        return !this.step[2].mostrar || !this.cliente_seleccionado || this.medicamentos_seleccionados.length < 1 ? true : false;
+        return !this.step[3].mostrar || !this.cliente_seleccionado || this.medicamentos_seleccionados.length < 1 ? true : false;
       },
       deshabilitar_btn_anterior(){
         return this.step[0].mostrar ? true : false;
       },
       deshabilitar_btn_siguiente(){
-        return this.step[2].mostrar ? true : false;
+        return this.step[3].mostrar ? true : false;
       }
     }
 	}

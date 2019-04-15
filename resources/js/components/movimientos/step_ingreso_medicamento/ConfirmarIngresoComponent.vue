@@ -1,10 +1,10 @@
 <template>
 <div class="row" id="confirmar-entrega-component">
-	<div class 	= "col-md-12 col-sm-12 col-xs-12 form-group animated fadeInRight">
+	<!--div class 	= "col-md-12 col-sm-12 col-xs-12 form-group animated fadeInRight">
         <div class="x_panel">
             <div class="x_content row">
                 <br>
-                <div class="col-md-6 col-sm-12 col-xs-12 form-group"> <!-- DATOS DE PROVEEDOR -->
+                <div class="col-md-6 col-sm-12 col-xs-12 form-group"> <-- DATOS DE PROVEEDOR >
                     <div class="x_title">
                         <h3>Datos de proveedor.</h3>
                         <div class="clearfix"></div>
@@ -26,8 +26,8 @@
                         </div>
                     </div>
                     <div class="ln_solid"></div>
-                </div> <!-- FIN DATOS DE PROVEEDOR -->                
-                <div class="col-md-6 col-sm-12 col-xs-12 form-group"> <!-- LISTA DE MEDICAMENTO/OS -->
+                </div> <!-- FIN DATOS DE PROVEEDOR >                
+                <div class="col-md-6 col-sm-12 col-xs-12 form-group"> <!-- LISTA DE MEDICAMENTO/OS >
                     <div class="x_panel">
                         <div class="x_title">
                             <h3>
@@ -46,10 +46,10 @@
                             </article>
                         </div>
                     </div>
-                </div> <!-- FIN LISTA MEDICAMENTO/OS -->                
+                </div> <!-- FIN LISTA MEDICAMENTO/OS >                
             </div>
         </div>
-    </div>	
+    </div-->	
 </div>
 </template>
 

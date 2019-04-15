@@ -16,12 +16,12 @@
                     <div class="col-md-6 col-sm-9 col-xs-12">
                         <div class="radio">
                             <label>
-                                <input type="radio"  :value="'proveedor'"> Proveedor
+                                <input type="radio" v-model="configuracion.modo" :value="'proveedor'"> Proveedor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio"  :value="'clearing'"> Clearing
+                                <input type="radio" v-model="configuracion.modo" :value="'clearing'"> Clearing
                             </label>
                         </div>
                     </div>
@@ -36,25 +36,17 @@
                     <div class="col-md-6 col-sm-9 col-xs-12">
                         <div class="radio">
                             <label>
-                                <input type="radio" :value="'remediar'" name="optionsRadios2"> Remediar
+                                <input type="radio" v-model="configuracion.destino" :value="'remediar'"> Remediar
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" :value="'caminal'" name="optionsRadios2"> Caminal
+                                <input type="radio" v-model="configuracion.destino" :value="'caminal'"> Caminal
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <div class="actionBar">
-                    <a class="buttonPrevious btn btn-primary">
-                        Cancelar
-                    </a>
-                    <a class="buttonNext btn btn-success">
-                        Siguiente
-                    </a>
-                </div>  
             </form> 
         </div>
     </div>
@@ -69,14 +61,19 @@ export default{
     },
     data(){
         return {
-            modo: '',
+            configuracion:{ 
+                modo: '',
+                destino: ''
+            },
         }
     },
-    mounted(){
+    watch:{
+        modo: function(){
+            this.$emit('configuracion-seleccionada' , this.configuracion);
+        },
+        destino: function(){
+            this.$emit('configuracion-seleccionada' , this.configuracion);
+        },
     },
-    methods: {
-    },
-    computed:{      
-    }
 }
 </script>

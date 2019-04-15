@@ -6,8 +6,7 @@
                 <h2> Formulario de creacion de nuevo medicamento</h2>
                 <div class="clearfix"></div>
             </div>
-            <div class="x_content">
-                <!-- INICIO FORMULARIO CREACION MEDICAMENTO-->
+            <div class="x_content"> <!-- INICIO FORMULARIO CREACION MEDICAMENTO-->
                 <form class="form-horizontal form-label-left" @submit.prevent="agregarMedicamento" novalidate="">
                     <p>Ingrese los datos necesarios</p>
                     <span class="section">Informacion</span>
@@ -62,8 +61,7 @@
                             </button>
                         </div>
                     </div>
-                </form>
-                <!-- FIN FORMULARIO CREACION MEDICAMENTO -->
+                </form> <!-- FIN FORMULARIO CREACION MEDICAMENTO -->                
             </div>
         </div>
     </div>
