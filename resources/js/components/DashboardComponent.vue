@@ -14,6 +14,7 @@
 <script>
     export default {
         mounted() {
+
         },
         name : "dashboard",
         data(){

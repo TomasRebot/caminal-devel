@@ -4,9 +4,9 @@
       <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
           <a @click="showView('InicioDashboardComponent')" class="site_title">
-            <i class="fa fa-plus-square"></i> 
-            <span> 
-              Farmacia 
+            <i class="fa fa-plus-square"></i>
+            <span>
+              Farmacia
             </span>
           </a>
         </div>
@@ -17,7 +17,7 @@
           </div>
           <div class="profile_info">
             <span>Bienvenido,</span>
-            <h2>Usuario</h2>
+            <h2>Jhon Snow</h2>
           </div>
         </div>
         <!--  //datos del usuario autentificado y -->
@@ -34,6 +34,7 @@
                   :titulo   = "boton.titulo"
                   :submenu  = "boton.submenu"
                   :key      = "key"
+                  :icono = "boton.icono"
                   @cambiar-vista = "showView">
               </botonmenu-component>
               <!-- /item del menu
@@ -73,7 +74,7 @@
               <li class="">
                   <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                       <img src="" alt="">
-                      Soy un usuario!
+                      Jhon Snow
                       <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -118,17 +119,17 @@
     data(){
       return {
         botonesPanel: [
-          { 'titulo' : 'Medicamentos' , 'submenu' : [ {'nombre': 'Crear'      , 'componente' : 'CrearMedicamentoComponent'},
+          { 'titulo' : 'Medicamentos' , "icono": "fa fa-plus-square", 'submenu' : [
                                                       {'nombre': 'Lista'      , 'componente' : 'ListaMedicamentosComponent'},],
           },
-          { 'titulo' : 'Operaciones'  , 'submenu' : [ {'nombre': 'Entrega a cliente'   , 'componente' :'EntregaMedicamentoComponent'},
+          { 'titulo' : 'Operaciones'  ,"icono":"fa fa-folder" ,'submenu' : [ {'nombre': 'Entrega a cliente'   , 'componente' :'EntregaMedicamentoComponent'},
                                                       {'nombre': 'Entrega por clearing', 'componente' :'BajaMedicamentoClearingComponent'},
                                                       {'nombre': 'Ingreso medicamentos', 'componente' : 'IngresoMedicamentoComponent'}],
           },
-          { 'titulo' : 'Usuarios'     , 'submenu' : [ {'nombre': 'Crear cliente', 'componente': 'CrearClienteComponent'},
+          { 'titulo' : 'Usuarios'     , "icono":"fa fa-users",'submenu' : [ {'nombre': 'Crear cliente', 'componente': 'CrearClienteComponent'},
                                                       {'nombre': 'Crear Medico' , 'componente': 'CrearMedicoComponent'}],
           },
-          { 'titulo' : 'Configuracion' , 'submenu' : [{'nombre' : 'Usuarios'  , 'componente' :  'UsuarioComponent' },
+          { 'titulo' : 'Configuracion' , "icono":"fa fa-cogs",'submenu' : [{'nombre' : 'Usuarios'  , 'componente' :  'UsuarioComponent' },
                                                       {'nombre' : 'Roles'     , 'componente' : 'RoleComponent'},
                                                       {'nombre' : 'Permisos'  , 'componente' : 'PermisoComponent'},],
           },

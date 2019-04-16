@@ -3,13 +3,11 @@
     <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight">
         <div class="x_panel">
             <div class="x_title">
-                <h2> Formulario de creacion de nuevo medicamento</h2>
+                <h4> Formulario de creacion de nuevo medicamento</h4>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content"> <!-- INICIO FORMULARIO CREACION MEDICAMENTO-->
                 <form class="form-horizontal form-label-left" @submit.prevent="agregarMedicamento" novalidate="">
-                    <p>Ingrese los datos necesarios</p>
-                    <span class="section">Informacion</span>
                     <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-CODIGO">
                             CODIGO <span class="required">*</span>
@@ -53,15 +51,15 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                            <button class="btn btn-primary" type="button" @click="volverInicio">
+                            <button class="btn btn-sm btn-danger" type="button" @click="$emit('regresar')">
                                 Cancelar
                             </button>
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-sm btn-success">
                                 Crear
                             </button>
                         </div>
                     </div>
-                </form> <!-- FIN FORMULARIO CREACION MEDICAMENTO -->                
+                </form> <!-- FIN FORMULARIO CREACION MEDICAMENTO -->
             </div>
         </div>
     </div>
@@ -92,7 +90,9 @@
                     type: 'success',
                     title: 'Medicamento creado exitosamente',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 2000
+                }).then((result) => {
+                    this.$emit('regresar')
                 });
             },
             volverInicio: function(){

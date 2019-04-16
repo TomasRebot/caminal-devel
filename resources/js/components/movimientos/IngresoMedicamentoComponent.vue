@@ -3,10 +3,10 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Ingreso de medicamentos<small></small></h2>
+        <h4>Ingreso de medicamentos</h4>
         <div class="clearfix"></div>
       </div>
-      <div class="x_content"> <!-- Smart Wizard -->        
+      <div class="x_content"> <!-- Smart Wizard -->
         <p>Pasos para ingresar medicamentos.</p>
         <div id="wizard" class="form_wizard wizard_horizontal">
           <ul class="wizard_steps anchor">
@@ -46,25 +46,21 @@
                 </span>
               </a>
             </li>
-          </ul> 
+          </ul>
           <div class="" style="height: 281px;"> <!-- se le saco "stepContainer" de la clase -->
-            <div id="step-1" class="content" :style="{'display': step[0].mostrar?'block':'none'}">              
-              <h2 class="StepTitle">Configuracion</h2>
+            <div id="step-1" class="content" :style="{'display': step[0].mostrar?'block':'none'}">
               <configuracion-ingreso-component @configuracion-seleccionada="guardarConfiguracion" v-if="step[0].mostrar">
               </configuracion-ingreso-component>
             </div>
-            <div id="step-2" class="content" :style="{'display': step[1].mostrar?'block':'none'}">              
-              <h2 class="StepTitle">Busqueda de institucion</h2>
+            <div id="step-2" class="content" :style="{'display': step[1].mostrar?'block':'none'}">
               <buscar-institucion-component @institucion-seleccionado="guardarInstitucion" v-if="step[1].mostrar">
               </buscar-institucion-component>
             </div>
             <div id="step-3" class="content" :style="{'display': step[2].mostrar?'block':'none'}">
-              <h2 class="StepTitle">Busqueda de medicamento</h2>
               <buscar-medicamento-component @medicamentos-seleccionados="guardarMedicamentos" v-if="step[2].mostrar">
               </buscar-medicamento-component>
             </div>
             <div id="step-4" class="content" :style="{'display': step[3].mostrar?'block':'none'}">
-              <h2 class="StepTitle">Confirmar</h2>
               <confirmar-entrega-component :cliente="cliente_seleccionado" :medicamentos="medicamentos_seleccionados" v-if="step[3].mostrar">
               </confirmar-entrega-component>
             </div>
@@ -80,7 +76,7 @@
               Siguiente
             </a>
           </div>
-        </div> <!-- End SmartWizard Content -->        
+        </div> <!-- End SmartWizard Content -->
       </div>
     </div>
   </div>
@@ -134,18 +130,18 @@
          * si la variable "pagina" es positiva significa que vamos a darle a "siguiente"
          * ... pero si el boton siguiente esta deshabilitado significa que ya estamos en el final
          * si la varialbe "pagina" es negativa significa que le dimos en "anterior"
-         * ... pero si el boton anterior esta deshabilitado significa que ya estamos en el inicio 
+         * ... pero si el boton anterior esta deshabilitado significa que ya estamos en el inicio
          */
-        if(pagina > 0 && this.deshabilitar_btn_siguiente){ return; } 
+        if(pagina > 0 && this.deshabilitar_btn_siguiente){ return; }
         if(pagina < 0 && this.deshabilitar_btn_anterior){ return; }
         var pagina_activa = 0;
-                
+
         /**
          * primero encontramos el index del activo y le sumamos o restamos 1
          * teniendo en "pagina_activa" el index del que debemos poner en tru
          * mientras ponemos todo en false
          */
-        $(this.step).each(function(index,val){ 
+        $(this.step).each(function(index,val){
           if (val.mostrar) {
             pagina_activa = index + pagina;
           }

@@ -2,11 +2,11 @@
 <div class="col-md-12 col-sm-12 col-xs-12" id="configuracion-ingreso">
     <div class="x_panel">
         <div class="x_title">
-        <h2>Seleccione modo de ingreso <small>de medicamentos</small></h2>
+        <h4>Seleccione el origen</h4>
         <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <form class="form-horizontal form-label-left"> 
+            <form class="form-horizontal form-label-left">
                 <div class="form-group">
                     <label class="col-md-6 col-sm-3 col-xs-12 control-label">
                         Seleccione modo de ingreso:
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-            </form> 
+            </form>
         </div>
     </div>
 </div>
@@ -61,7 +61,7 @@ export default{
     },
     data(){
         return {
-            configuracion:{ 
+            configuracion:{
                 modo: '',
                 destino: ''
             },

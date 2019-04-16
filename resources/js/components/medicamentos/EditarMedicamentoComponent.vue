@@ -2,16 +2,14 @@
 <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight">
     <div class="x_panel">
         <div class="x_title">
-            <h2> Formulario de edicion de datos de medicamento</h2>
+            <h4> Formulario de edicion de datos de medicamento</h4>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
             <!-- INICIO FORMULARIO EDITAR MEDICAMENTO -->
             <form class="form-horizontal form-label-left" @submit.prevent="editarMedicamento">
-                <p> Ingrese los datos necesarios</p>
-                <span class="section">Informacion</span>
                 <div class="item form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-CODIGO">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-12" for="label-CODIGO">
                         CODIGO <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -19,7 +17,7 @@
                     </div>
                 </div>
                 <div class="item form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-NOMBRE">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-12" for="label-NOMBRE">
                         NOMBRE <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -27,7 +25,7 @@
                     </div>
                 </div>
                 <div class="item form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-CLASIFICACION">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-12" for="label-CLASIFICACION">
                         CLASIFICACION <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -35,7 +33,7 @@
                     </div>
                 </div>
                 <div class="item form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-DESCRIPCION">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-12" for="label-DESCRIPCION">
                         DESCRIPCION <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -43,7 +41,7 @@
                     </div>
                 </div>
                 <div class="item form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-cant-blister">
+                    <label class="control-label col-md-2 col-sm-3 col-xs-12" for="label-cant-blister">
                         CANTIDAD POR BLISTER <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -52,12 +50,12 @@
                 </div>
                 <div class="ln_solid"></div>
                 <div class="form-group">
-                    <div class="col-md-6 col-md-offset-3">
-                        <button class="btn btn-primary" @click="regresarListaMedicamentos">
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        <button class="btn btn-sm btn-danger" @click="regresarListaMedicamentos">
                             Cancelar
                         </button>
-                        <button type="submit" class="btn btn-success">
-                                Editar
+                        <button type="submit" class="btn btn-sm btn-success">
+                            guardar
                         </button>
                     </div>
                 </div>
@@ -69,7 +67,7 @@
 </template>
 
 <script>
-	
+
 	export default{
 		name: 'editar-medicamento',
         props: [ 'medicamento' ],
@@ -93,7 +91,7 @@
         	editarMedicamento: function(){
 
         	},
-            regresarListaMedicamentos: function(){                
+            regresarListaMedicamentos: function(){
                 this.$emit('regresar');
             },
         },

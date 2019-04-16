@@ -6,10 +6,10 @@
 				<h4>Listado de medicamentos</h4>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
-					<a class="btn btn-sm btn-success">Nuevo</a>
-					<a id="deleteMultipleUsers" class="btn btn-sm btn-danger" @click="eliminarMedicamentos">Eliminar</a>
+					<a class="btn btn-sm btn-success" @click="crearMedicamentoNuevo" >Nuevo</a>
+					<a id="deleteMultipleUsers" class="btn btn-sm btn-danger" @click="eliminarMedicamentos" v-if="'eliminar.medico' in Vue.options.components " >Eliminar</a>
 					&nbsp;
-					<label> Buscar: 
+					<label> Buscar:
 						<input type="search" class="form-control input-sm" v-model="buscar">
 					</label>
 				</ul>
@@ -21,17 +21,18 @@
 			</div>
 			<div class="x_content">
 				<div class=""> <!-- se le saco la clase "table-responsive" -->
-					<table class="table table-striped jambo_table bulk_action">
+					<table class="table table-striped jambo_table bulk_action ">
 						<thead>
 							<tr class="headings">
 								<th>
 									<input type="checkbox" id="check-all" v-model="check_all" @click="seleccionarTodo">
 								</th>
-								<th class="column-title" @click ="ordenar_por('codigo')">CODIGO </th>
-								<th class="column-title" @click ="ordenar_por('perfil','nombre')">NOMBRE </th>
-								<th class="column-title" @click ="ordenar_por('perfil','clasificacion')">CLASIFICACION </th>
-								<th class="column-title" @click ="ordenar_por('descripcion')">DESCRIPCION </th>
-								<th class="column-title no-link last" @click ="ordenar_por('cant_blister')"><span class="nobr">CANT. POR BLISTER</span></th>
+								<th class="column-title" @click ="ordenar_por('codigo')">Codigo </th>
+								<th class="column-title" @click ="ordenar_por('perfil','nombre')">Nombre</th>
+								<th class="column-title" @click ="ordenar_por('perfil','clasificacion')">Clasificación </th>
+								<th class="column-title" @click ="ordenar_por('descripcion')">Descripcion </th>
+								<th class="column-title no-link last" @click ="ordenar_por('cant_blister')"><span class="nobr">Cant. por blister</span></th>
+								<th class="column-title no-link last"><span class="nobr">Stock Caminal / Remediar / Total</span></th>
 								<th class="bulk-actions" colspan="7">
 									<a class="antoo" style="color:#fff; font-weight:500;">Usuarios  <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
 								</th>
@@ -41,12 +42,18 @@
 							<tr class="even pointer" v-for="(medicamento ,key) in getLista" :key="key">
 								<td class="a-center ">
 									<input type="checkbox" :value="medicamento.id" v-model="medicamentos_seleccionados">
-								</td>								
+								</td>
 								<td @click="editarMedicamento(medicamento)"><a> {{medicamento.codigo}} </a></td>
 								<td @click="editarMedicamento(medicamento)"><a> {{medicamento.perfil.nombre}} </a></td>
 								<td @click="editarMedicamento(medicamento)"><a> {{medicamento.perfil.clasificacion}} </a></td>
 								<td @click="editarMedicamento(medicamento)"><a> {{medicamento.descripcion}} </a></td>
 								<td class="last"><a><label class='badge badge-success'> {{medicamento.cant_blister}} </label></a>
+								<td class="last"><a>
+                                    <label class='badge badge-success' style="margin-left:30px!important">30</label>
+                                    <label class='badge badge-success' style="margin-left:30px!important">15</label>
+                                    <label class='badge badge-success' style="margin-left:30px!important">45</label>
+
+                                </a>
 								</td>
 							</tr>
 						</tbody>
@@ -88,7 +95,11 @@
 		</div>
 	</div>
 	<editar-medicamento-component :medicamento="medicamento_a_manipular" @regresar="volverVistaListadoMedicamentos" v-if="frm_editar_medicamento">
-	</editar-medicamento-component>	
+	</editar-medicamento-component>
+
+	<crear-medicamento-component  @regresar="volverVistaListadoMedicamentos" v-if="frm_crear_medicamento">
+	</crear-medicamento-component>
+
 </div>
 </template>
 
@@ -130,7 +141,8 @@
 			return {
 				//vistas
 				frm_listar_medicamentos : true,
-				frm_editar_medicamento 	: false,
+                frm_editar_medicamento 	: false,
+                frm_crear_medicamento : false,
 				//fin vistas
 				form: [],
 				paginacion: {
@@ -152,6 +164,10 @@
 			}
 		},
 		methods: {
+            crearMedicamentoNuevo : function (){
+                this.frm_listar_medicamentos = false;
+                this.frm_crear_medicamento = true;
+            },
 			ordenar_por: function(campo , segundo_campo = null){
 				let f = this.sort_fields;
 
@@ -163,7 +179,7 @@
 				}
 				// aca no preguntar, la funcion para ordenar por campo fue extraida de internet
 				// y modificada infimamente
-				this.datos_filtrados = this.datos_filtrados.sort(	
+				this.datos_filtrados = this.datos_filtrados.sort(
 					this.sort_by(campo , this.sort_fields.reverse, function(a){
 						if (segundo_campo == 'nombre') {
 							a = a.nombre;
@@ -309,6 +325,8 @@
 				this.medicamento_a_manipular 	= false;
 				this.frm_editar_medicamento 	= false;
 				this.frm_listar_medicamentos 	= true;
+                this.frm_crear_medicamento 	    = false;
+
 			},
 			ocultarListaMedicamentos: function(){
 					var $BOX_PANEL = $('#ocultar-panel-medicamentos').closest('.x_panel'),
@@ -320,8 +338,8 @@
 									$BOX_PANEL.removeAttr('style');
 							});
 					} else {
-							$BOX_CONTENT.slideToggle(200); 
-							$BOX_PANEL.css('height', 'auto');  
+							$BOX_CONTENT.slideToggle(200);
+							$BOX_PANEL.css('height', 'auto');
 					}
 					$ICON.toggleClass('fa-chevron-up fa-chevron-down');
 			},
@@ -343,7 +361,7 @@
 				$(this.form).each(function(index,medicamento){
 					contador++;
 					if ($this.medicamentos_seleccionados.indexOf(medicamento.id) != -1) {
-						texto += contador + ") " + medicamento.perfil.nombre + "..."; 
+						texto += contador + ") " + medicamento.perfil.nombre + "...";
 					}
 				})
 				return texto;
