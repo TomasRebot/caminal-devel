@@ -1,19 +1,19 @@
 <template>
-<div class="row" id="buscar-cliente">
-    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight">
+<div class="row" id="buscar-paciente">
+    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight" v-if="!mostrar_frm_crear_paciente">
 		<div class="x_panel">
 			<div class="x_title">
-				<!--h4>Listado de Clientes</h4-->
+                <h3 class="StepTitle">Busqueda de paciente</h3>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
-					<a class="btn btn-sm btn-success">Nuevo</a>
+					<a class="btn btn-sm btn-success" @click="crearPaciente" v-if="'CrearPacienteComponent' in Vue.options.components">Nuevo</a>
 					&nbsp;
 					<label> Buscar: 
 						<input type="search" class="form-control input-sm" v-model="buscar">
 					</label>
 				</ul>
                 <ul class="nav navbar-rigth panel_toolbox">
-					<li @click="ocultarListaMedicamentos()"><a  class="collapse-link" id="ocultar-panel-medicamentos"><i class="fa fa-chevron-up"></i></a>
+					<li @click="ocultarListaPacientes()"><a  class="collapse-link" id="ocultar-panel-pacientes"><i class="fa fa-chevron-up"></i></a>
 					</li>
 				</ul>
 				<div class="clearfix"></div>
@@ -29,10 +29,10 @@
                             </tr>
 						</thead>
 						<tbody>
-							<tr class="even pointer" v-for="(cliente , key) in getLista" :key="key">						
-								<td @click="seleccionarCliente(cliente)"><a> {{cliente.apellido}} </a></td>
-								<td @click="seleccionarCliente(cliente)"><a> {{cliente.nombres}} </a></td>
-								<td class="last" @click="seleccionarCliente(cliente)"><a> {{cliente.dni}} </a></td>
+							<tr class="even pointer" v-for="(paciente , key) in getLista" :key="key">						
+								<td @click="seleccionarPaciente(paciente)"><a> {{paciente.apellido}} </a></td>
+								<td @click="seleccionarPaciente(paciente)"><a> {{paciente.nombres}} </a></td>
+								<td class="last" @click="seleccionarPaciente(paciente)"><a> {{paciente.dni}} </a></td>
                             </tr>
 						</tbody>
 					</table> <!-- BARRA NAVEGACION PAGINAS REGISTROS -->
@@ -72,6 +72,7 @@
 			</div>
 		</div>
 	</div>
+    <crear-paciente-component :regresar="true" @regresar="guardarPaciente" v-if="mostrar_frm_crear_paciente"></crear-paciente-component>
 </div>
 </template>
 
@@ -79,10 +80,10 @@
 
 
 export default {
-    name: 'buscar-cliente',
+    name: 'buscar-paciente',
     props: [],
     mounted(){
-        //this.form = r.lista_clientes.sort(this.sort_by('dni', true, function(a){return a}));
+        //this.form = r.lista_pacientes.sort(this.sort_by('dni', true, function(a){return a}));
         this.form = [
             {'apellido' : 'moreira', 'nombres': 'ezequiel' , 'dni' : 35555555},
                 {'apellido' : 'tomas', 'nombres': 'tomas' , 'dni' : 333333333}
@@ -92,6 +93,7 @@ export default {
     },
     data(){
         return {
+            mostrar_frm_crear_paciente: false,
             form: [],
             paginacion: {
                 currentPage	: 1,
@@ -109,8 +111,18 @@ export default {
         }
     },
     methods: {
-        seleccionarCliente: function( cliente ){
-            this.$emit('cliente-seleccionado' , cliente);
+        seleccionarPaciente: function(paciente){
+            this.$emit('paciente-seleccionado' , paciente);
+        },
+        crearPaciente: function(){
+            this.mostrar_frm_crear_paciente = true;            
+        },
+        guardarPaciente: function(paciente=null){
+            if(paciente!=null){
+                this.form.push(paciente);    
+            }     
+            this.paginar();   
+            this.mostrar_frm_crear_paciente = false;   
         },
         ordenar_por: function( campo , segundo_campo ){
             if( campo.toLowerCase() == 'accion' ){ return; }
@@ -200,9 +212,9 @@ export default {
 
             });
         },
-        ocultarListaMedicamentos: function(){
-            var $BOX_PANEL = $('#ocultar-panel-medicamentos').closest('.x_panel'),
-                    $ICON = $('#ocultar-panel-medicamentos').find('i'),
+        ocultarListaPacientes: function(){
+            var $BOX_PANEL = $('#ocultar-panel-pacientes').closest('.x_panel'),
+                    $ICON = $('#ocultar-panel-pacientes').find('i'),
                     $BOX_CONTENT = $BOX_PANEL.find('.x_content');
             // fix for some div with hardcoded fix class
             if ($BOX_PANEL.attr('style')) {

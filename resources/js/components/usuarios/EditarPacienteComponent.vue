@@ -1,14 +1,14 @@
 <template>
-<div id="crear-medico" class="row animated fadeInRight">
+<div id="editar-paciente" class="row animated fadeInRight">
     <div class="col-md-8 col-xs-12">
-        <div class="x_panel" :style="{'background-color' : regresar ? '#f7ffff' : null}">
+        <div class="x_panel">
             <div class="x_title">
-                <h2>Formulario de creacion de medico. <small>Datos personales</small></h2>
+                <h2>Formulario de edicion de pacientes. <small>Datos personales</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <br>
-                <form class="form-horizontal form-label-left"  @submit.prevent="agregarMedico">
+                <form class="form-horizontal form-label-left"  @submit.prevent="editarPaciente">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3" for="input-apellido">
                             APELLIDO:
@@ -32,23 +32,15 @@
                         <div class="col-md-9 col-sm-9 col-xs-9">
                             <input type="number" v-model="form.dni" id="input-dni" placeholder="Ingrese el dni" required class="form-control">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3" for="input-matricula">
-                            MATRICULA:
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                            <input type="number" v-model="form.matricula" id="input-matricula" placeholder="Ingrese la matricula" required class="form-control">
-                        </div>
                     </div>                     
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-9 col-md-offset-3">
-                            <button class="btn btn-primary" type="button" @click="volverInicio">
+                            <button class="btn btn-primary" type="button" @click="volver">
                                 Cancelar
                             </button>
                             <button type="submit" class="btn btn-success">
-                                Crear
+                                Editar
                             </button>
                         </div>
                     </div>
@@ -59,10 +51,12 @@
 </div>
 </template>
 <script>
-export default{
-		name: 'crear-medico',
-        props: ['regresar'], 
+	
+	export default{
+		name: 'editar-paciente',
+        props: ['paciente'], 
         mounted() {
+            this.form = this.paciente;
         },
 		data(){
 			return {
@@ -70,33 +64,28 @@ export default{
                     apellido: '',
                     nombres: '',
                     dni: '',
-                    matricula: '',
                 },
 			}
 		},
 		methods: {
-			agregarMedico: function(){
+			editarPaciente: function(){
                 Swal.fire({
                     position: 'top-end',
                     type: 'success',
-                    title: 'Medico creado exitosamente',
+                    title: 'Paciente creado exitosamente',
                     showConfirmButton: false,
                     timer: 1500
                 }).then(result=>{
-                    if(this.regresar){
-                        this.$emit('regresar', this.form);
-                    }
+                    this.$emit('regresar', this.form);
                 });
 			},
-			volverInicio: function(){
-                if(this.regresar){
-                    this.$emit('regresar');
-                    return;
-                }
-                this.$emit('volver-inicio');
+			volver: function(){
+                this.$emit('regresar');
+                return;
             },
 		},
 		computed:{
         }
 	}
+
 </script>

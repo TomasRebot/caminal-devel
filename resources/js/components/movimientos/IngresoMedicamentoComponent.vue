@@ -23,8 +23,8 @@
               <a :class="{'disabled':!step[1].mostrar,'selected':step[1].mostrar}">
                 <span class="step_no">2</span>
                 <span class="step_descr">
-                    Institucion<br>
-                    <small>Seleccion de institucion</small>
+                    {{getModoIngreso}} <br>
+                    <small>Seleccion de {{ getModoIngreso=='Proveedor' ? 'proveedor' : 'institucion'}}</small>
                 </span>
               </a>
             </li>
@@ -47,22 +47,25 @@
               </a>
             </li>
           </ul>
-          <div class="" style="height: 281px;"> <!-- se le saco "stepContainer" de la clase -->
+          <div class="" style=""> <!-- se le saco "stepContainer" de la clase y del style "height: 281px;"-->
             <div id="step-1" class="content" :style="{'display': step[0].mostrar?'block':'none'}">
               <configuracion-ingreso-component @configuracion-seleccionada="guardarConfiguracion" v-if="step[0].mostrar">
               </configuracion-ingreso-component>
             </div>
             <div id="step-2" class="content" :style="{'display': step[1].mostrar?'block':'none'}">
-              <buscar-institucion-component @institucion-seleccionado="guardarInstitucion" v-if="step[1].mostrar">
+              <buscar-institucion-component @institucion-seleccionada="guardarInstitucion" v-if="step[1].mostrar && getModoIngreso=='Clearing'">
               </buscar-institucion-component>
+              <buscar-proveedor-component v-else @proveedor-seleccionado="guardarProveedor">
+              </buscar-proveedor-component>
+              <!--buscar-proveedor-component-->
             </div>
             <div id="step-3" class="content" :style="{'display': step[2].mostrar?'block':'none'}">
               <buscar-medicamento-component @medicamentos-seleccionados="guardarMedicamentos" v-if="step[2].mostrar">
               </buscar-medicamento-component>
             </div>
             <div id="step-4" class="content" :style="{'display': step[3].mostrar?'block':'none'}">
-              <confirmar-entrega-component :cliente="cliente_seleccionado" :medicamentos="medicamentos_seleccionados" v-if="step[3].mostrar">
-              </confirmar-entrega-component>
+              <confirmar-ingreso-component :configuracion="configuracion" :institucion="institucion_seleccionada" :proveedor="proveedor_seleccionado" :medicamentos="medicamentos_seleccionados" v-if="step[3].mostrar">
+              </confirmar-ingreso-component>
             </div>
           </div>
           <div class="actionBar">
@@ -97,10 +100,11 @@
           {mostrar: false} //pagina 4 del step
         ],
         configuracion: {
-          modo_ingreso: '',
-          destino_ingreso: '',
+          modo_ingreso: 'proveedor',
+          destino_ingreso: 'caminal',
         },
         institucion_seleccionada: false,
+        proveedor_seleccionado: false,
         medicamentos_seleccionados: [],
 			}
     },
@@ -114,10 +118,14 @@
       },
       guardarConfiguracion: function(configuracion){
         this.configuracion = configuracion;
+      },
+      guardarInstitucion: function(institucion){
+        this.institucion_seleccionada = institucion;
         this.cambiarPaginaStep(1);
       },
-      guardarInstitucion: function(){
-
+      guardarProveedor: function(proveedor){
+        this.proveedor_seleccionado = proveedor;
+        this.cambiarPaginaStep(1);
       },
       guardarMedicamentos: function(lista_medicamentos){
         this.medicamentos_seleccionados = [];
@@ -167,6 +175,10 @@
       },
       deshabilitar_btn_siguiente(){
         return this.step[3].mostrar ? true : false;
+      },
+      getModoIngreso(){
+        var m = this.configuracion.modo_ingreso;
+        return m.charAt(0).toUpperCase() + m.slice(1).toLowerCase();
       }
     }
 	}

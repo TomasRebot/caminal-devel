@@ -1,85 +1,85 @@
 <template>
-<div class="row" id="confirmar-ingreso">
+<div class="row" id="confirmar-entrega">
 	<div class 	= "col-md-12 col-sm-12 col-xs-12 form-group animated fadeInRight">
         <div class="x_panel">
             <div class="x_title">
-                <h3 class="StepTitle">Confirmar</h3>                
-                <h4 class="StepTitle">Ingreso de stock a 
-                    <span class="label label-warning" v-if="configuracion.destino_ingreso=='caminal'" style="color:white;">Caminal</span>
-                    <span class="label label-info" v-else style="color:white;">Remediar</span>
-                </h4>
-                <h4 class="StepTitle"> Mediante sistema de {{configuracion.modo_ingreso}} 
-                </h4>
+                <h3 class="StepTitle">Confirmar</h3>
 				<div class="clearfix"></div>
 			</div>
             <div class="x_content row">
                 <br>
-                <!-- DATOS DE PROVEEDOR -->
-                <div class="col-md-6 col-sm-12 col-xs-12 form-group" v-if="proveedor">
+                <!-- DATOS DE PACIENTE -->
+                <div class="col-md-6 col-sm-12 col-xs-12 form-group"> 
                     <div class="x_title">
-                        <h3>Datos de proveedor.</h3>
+                        <u><h3>Datos de paciente.</h3></u>
                         <div class="clearfix"></div>
                     </div>
                     <div class="form-group">
-                        <label for="label-nombre">
-                            NOMBRE
+                        <label for="label-apellido">
+                            APELLIDO
                         </label>
-                        <div id="label-nombre">
-                            <label class="form-control"> {{proveedor.nombre}} </label>
+                        <div id="label-apellido">
+                            <label class="form-control"> {{paciente.apellido}} </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="label-razon_social">
-                            RAZON SOCIAL
+                        <label for="label-nombres">
+                            NOMBRES
                         </label>
-                        <div id="label-razon_social">
-                            <label class="form-control"> {{proveedor.razon_social}} </label>
+                        <div id="label-nombres">
+                            <label class="form-control"> {{paciente.nombres}} </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="label-direccion">
-                            DIRECCION
+                        <label for="label-dni">
+                            DNI
                         </label>
-                        <div id="label-direccion">
-                            <label class="form-control"> {{proveedor.direccion}} </label>
+                        <div id="label-dni">
+                            <label class="form-control"> {{paciente.dni}} </label>
                         </div>
                     </div>
+                    <!-- FIN DATOS DE PACIENTE  -->      
                     <div class="ln_solid"></div>
-                </div> 
-                <!-- FIN DATOS DE PROVEEDOR -->
-                <!-- DATOS DE INSTITUCION -->
-                <div class="col-md-6 col-sm-12 col-xs-12 form-group" v-else>
+                     <!-- DATOS DE MEDICO -->
                     <div class="x_title">
-                        <h3>Datos de la institucion.</h3>
+                        <u><h3>Datos de Medico.</h3></u>
                         <div class="clearfix"></div>
                     </div>
                     <div class="form-group">
-                        <label for="label-nombre">
+                        <label for="label-matricula">
+                            MATRICULA
+                        </label>
+                        <div id="label-matricula">
+                            <label class="form-control"> {{medico.matricula}} </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="label-apellido-medico">
+                            APELLIDO
+                        </label>
+                        <div id="label-apellido-medico">
+                            <label class="form-control"> {{medico.apellido}} </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="label-nombre-medico">
                             NOMBRE
                         </label>
-                        <div id="label-nombre">
-                            <label class="form-control"> {{institucion.nombre}} </label>
+                        <div id="label-nombre-medico">
+                            <label class="form-control"> {{medico.nombres}} </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="label-direccion">
-                            DIRECCION
+                        <label for="label-medico-dni">
+                            DNI
                         </label>
-                        <div id="label-direccion">
-                            <label class="form-control"> {{institucion.direccion}} </label>
+                        <div id="label-medico-dni">
+                            <label class="form-control"> {{medico.dni}} </label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="label-telefono">
-                            TELEFONO
-                        </label>
-                        <div id="label-telefono">
-                            <label class="form-control"> {{institucion.telefono}} </label>
-                        </div>
-                    </div>
+                    <!-- FIN DATOS DE MEDICO -->   
                     <div class="ln_solid"></div>
-                </div> 
-                <!-- FIN DATOS DE INSTITUCION -->                 
+                </div>  
                 <div class="col-md-6 col-sm-12 col-xs-12 form-group"> <!-- LISTA DE MEDICAMENTO/OS -->
                     <div class="x_panel">
                         <div class="x_title">
@@ -108,13 +108,11 @@
 
 <script>
 	export default {
-        name: 'confirmar-ingreso',
-        props: ['configuracion' , 'institucion' , 'proveedor' , 'medicamentos'],
+        name: 'confirmar-entrega',
+        props: ['paciente' , 'medico' , 'medicamentos'],
 		data(){
 			return {
 			}
-        },
-        mounted(){
-        },
+		},
 	}
 </script>

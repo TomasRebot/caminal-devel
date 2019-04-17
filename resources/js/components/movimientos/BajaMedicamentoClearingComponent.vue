@@ -38,19 +38,19 @@
               </a>
             </li>
           </ul> 
-          <div class="" style="height: 281px;"> <!-- se le saco "stepContainer" de la clase -->
+          <div class="" style=""> <!-- se le saco "stepContainer" de la clase y el style "height: 281px;" -->
             <div id="step-1" class="content" :style="{'display': step[0].mostrar?'block':'none'}">              
-              <h2 class="StepTitle">Busqueda de instituciones</h2>
+              <!--h2 class="StepTitle">Busqueda de instituciones</h2-->
               <buscar-institucion-component @institucion-seleccionada="guardarInstitucion" v-if="step[0].mostrar">
               </buscar-institucion-component>
             </div>
             <div id="step-2" class="content" :style="{'display': step[1].mostrar?'block':'none'}">
-              <h2 class="StepTitle">Busqueda de medicamento</h2>
-			  <buscar-medicamento-component @medicamentos-seleccionados="guardarMedicamentos" v-if="step[1].mostrar">
+              <!--h2 class="StepTitle">Busqueda de medicamento</h2-->
+			        <buscar-medicamento-component @medicamentos-seleccionados="guardarMedicamentos" v-if="step[1].mostrar">
               </buscar-medicamento-component>
             </div>
             <div id="step-3" class="content" :style="{'display': step[2].mostrar?'block':'none'}">
-              <h2 class="StepTitle">Confirmar</h2>
+              <!--h2 class="StepTitle">Confirmar</h2-->
               <confirmar-clearing-component :institucion="institucion_seleccionada" :medicamentos="medicamentos_seleccionados">
               </confirmar-clearing-component>
             </div>

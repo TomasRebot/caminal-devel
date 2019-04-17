@@ -3,7 +3,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Entrega de medicamentos a cliente<small></small></h2>
+        <h2>Entrega de medicamentos a pacientes<small></small></h2>
         <div class="clearfix"></div>
       </div>
       <div class="x_content"> <!-- Smart Wizard -->        
@@ -14,8 +14,8 @@
               <a :class="{'disabled':!step[0].mostrar,'selected':step[0].mostrar}">
                 <span class="step_no">1</span>
                 <span class="step_descr">
-                  Cliente<br>
-                  <small>Seleccion de cliente</small>
+                  Paciente<br>
+                  <small>Seleccion de paciente</small>
                 </span>
               </a>
             </li>
@@ -23,8 +23,8 @@
               <a :class="{'disabled':!step[1].mostrar,'selected':step[1].mostrar}">
                 <span class="step_no">2</span>
                 <span class="step_descr">
-                    Medicamento<br>
-                    <small>Seleccion de medicamento</small>
+                  Medico<br>
+                  <small>Seleccion de medico</small>
                 </span>
               </a>
             </li>
@@ -32,26 +32,39 @@
               <a :class="{'disabled':!step[2].mostrar,'selected':step[2].mostrar}">
                 <span class="step_no">3</span>
                 <span class="step_descr">
+                    Medicamento<br>
+                    <small>Seleccion de medicamento</small>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a :class="{'disabled':!step[3].mostrar,'selected':step[3].mostrar}">
+                <span class="step_no">4</span>
+                <span class="step_descr">
                     Final<br>
                     <small>Confirmar entrega</small>
                 </span>
               </a>
             </li>
           </ul> 
-          <div class="" style="height: 281px;"> <!-- se le saco "stepContainer" de la clase -->
-            <div id="step-1" class="content" :style="{'display': step[0].mostrar?'block':'none'}">              
-              <h2 class="StepTitle">Busqueda de cliente</h2>
-              <buscar-cliente-component @cliente-seleccionado="guardarCliente" v-if="step[0].mostrar">
-              </buscar-cliente-component>
+          <div class="" style=""> <!-- se le saco "stepContainer" de la clase y el style "height: 281px;" -->
+            <div id="step-1" class="content" :style="{'display': step[0].mostrar?'block':'none'}">     
+              <buscar-paciente-component @paciente-seleccionado="guardarPaciente" v-if="step[0].mostrar">
+              </buscar-paciente-component>
             </div>
-            <div id="step-2" class="content" :style="{'display': step[1].mostrar?'block':'none'}">
-              <h2 class="StepTitle">Busqueda de medicamento</h2>
-              <buscar-medicamento-component @medicamentos-seleccionados="guardarMedicamentos" v-if="step[1].mostrar">
+            <div id="step-1" class="content" :style="{'display': step[1].mostrar?'block':'none'}">              
+              <!--h2 class="StepTitle">Busqueda de medico</h2-->
+              <buscar-medico-component @medico-seleccionado="guardarMedico" v-if="step[1].mostrar">
+              </buscar-medico-component>
+            </div>
+            <div id="step-2" class="content" :style="{'display': step[2].mostrar?'block':'none'}">
+              <!--h2 class="StepTitle">Busqueda de medicamento</h2-->
+              <buscar-medicamento-component @medicamentos-seleccionados="guardarMedicamentos" v-if="step[2].mostrar">
               </buscar-medicamento-component>
             </div>
-            <div id="step-3" class="content" :style="{'display': step[2].mostrar?'block':'none'}">
-              <h2 class="StepTitle">Confirmar</h2>
-              <confirmar-entrega-component :cliente="cliente_seleccionado" :medicamentos="medicamentos_seleccionados">
+            <div id="step-3" class="content" :style="{'display': step[3].mostrar?'block':'none'}">
+              <!--h2 class="StepTitle">Confirmar</h2-->
+              <confirmar-entrega-component :paciente="paciente_seleccionado" :medico="medico_seleccionado" :medicamentos="medicamentos_seleccionados">
               </confirmar-entrega-component>
             </div>
           </div>
@@ -80,13 +93,14 @@
         },
 		data(){
 			return {
-        medicamentos_seleccionados: [],
         step : [
           {mostrar: true}, //pagina 1 del step
           {mostrar: false}, //pagina 2 del step
-          {mostrar: false} //pagina 3 del step
+          {mostrar: false}, //pagina 3 del step
+          {mostrar: false} //pagina 4 del step
         ],
-        cliente_seleccionado: false,
+        paciente_seleccionado: false,
+        medico_seleccionado: false,
         medicamentos_seleccionados: [],
 			}
     },
@@ -99,12 +113,16 @@
       confirmarEntrega: function(){
         alert('revisa la consola del navegador!')
         var datos = new Object();
-        datos['cliente'] = this.cliente_seleccionado;
+        datos['paciente'] = this.paciente_seleccionado;
         datos['medicamentos'] = this.medicamentos_seleccionados;
         console.log(datos);
       },
-      guardarCliente: function(cliente){
-        this.cliente_seleccionado = cliente;
+      guardarPaciente: function(paciente){
+        this.paciente_seleccionado = paciente;
+        this.cambiarPaginaStep(1);
+      },
+      guardarMedico: function(medico){
+        this.medico_seleccionado = medico;
         this.cambiarPaginaStep(1);
       },
       guardarMedicamentos: function(lista_medicamentos){
@@ -148,13 +166,13 @@
     },
     computed:{
       deshabilitar_confirmar_btn(){
-        return !this.step[2].mostrar || !this.cliente_seleccionado || this.medicamentos_seleccionados.length < 1 ? true : false;
+        return !this.step[3].mostrar || !this.paciente_seleccionado || this.medicamentos_seleccionados.length < 1 ? true : false;
       },
       deshabilitar_btn_anterior(){
         return this.step[0].mostrar ? true : false;
       },
       deshabilitar_btn_siguiente(){
-        return this.step[2].mostrar ? true : false;
+        return this.step[3].mostrar ? true : false;
       }
     }
 	}

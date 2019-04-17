@@ -11,7 +11,7 @@ Vue.mixin({
   data: function() {
     return {
       Vue   : Vue,                  //convertimos la instancia Vue en global
-      axios : axios,   //quizas trae inconvenientes si deseamos implementar una nueva
+      axios : axios,   
       Swal: Swal,
     }
   }
@@ -35,10 +35,25 @@ var permisos = [  'DashboardComponent',
                   'EntregaMedicamentoComponent',
                   'InicioDashboardComponent',
                   'CrearMedicoComponent',
-                  'CrearClienteComponent',
-                  'BuscarClienteComponent',
+                  'CrearPacienteComponent',
                   'BajaMedicamentoClearingComponent',
-                  'AgregarStockMedicamentoComponent'
+                  'AgregarStockMedicamentoComponent',
+                  'CrearProveedorComponent',
+                  'CrearInstitucionComponent',
+                  'ListaPacientesComponent',
+                  'ListaMedicosComponent',
+                  'EditarPacienteComponent',
+                  // a continuacion componentes que se deben agregar si o si
+                  'BuscarMedicoComponent',
+                  'BuscarInstitucionComponent',
+                  'ConfirmarClearingComponent',
+                  'BuscarPacienteComponent',
+                  'ConfirmarEntregaComponent',
+                  'ConfiguracionIngresoComponent',
+                  'ConfirmacionIngresoComponent',
+                  'BuscarMedicamentoComponent',
+                  'BuscarProveedorComponent',
+                  'ConfirmarIngresoComponent',
                   ]; //recibidos al loguearse
 
 const folders = [
@@ -48,10 +63,12 @@ const folders = [
      req = require.context('./components/configuracion', true, /\.(js|vue)$/i),
      req = require.context('./components/movimientos', true, /\.(js|vue)$/i),
      req = require.context('./components/medicamentos', true, /\.(js|vue)$/i),
-     req = require.context('./components/menu_lateral', true, /\.(js|vue)$/i),
-     req = require.context('./components/movimientos/step_entrega_cliente', true, /\.(js|vue)$/i),
+     req = require.context('./components/menu_lateral', true, /\.(js|vue)$/i),     
      req = require.context('./components/movimientos/step_entrega_clearing', true, /\.(js|vue)$/i),
+     req = require.context('./components/movimientos/step_entrega_paciente', true, /\.(js|vue)$/i),
      req = require.context('./components/movimientos/step_ingreso_medicamento', true, /\.(js|vue)$/i),
+     req = require.context('./components/institucion', true, /\.(js|vue)$/i),
+     req = require.context('./components/proveedor', true, /\.(js|vue)$/i),
 
 ];
 //se recorre cada carpeta y se incluyen sus archivos correspondientes
@@ -59,11 +76,6 @@ const folders = [
 folders.forEach(function(req) {
     return req.keys().map(key => {
         const name = key.match(/\w+/)[0];
-        if (name=="BuscarClienteComponent" || name=="BuscarMedicamentoComponent" || name=="ConfirmarEntregaComponent" ||
-            name=="BuscarInstitucionComponent" || name=="BuscarProveedorComponent" || name=="ConfirmarClearingComponent" ||
-            name=="ConfiguracionIngresoComponent") {
-          return Vue.component(name, req(key).default);
-        }
         if ( name.indexOf('Component') == -1 ) {return;} //evitamos agregar string que no son componentes
           if ( permisos.indexOf(name) == -1 ) {return;}  //consultamos si el componente existe dentro del array
                                                         //de permisos para renderizarlo

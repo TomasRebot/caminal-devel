@@ -1,14 +1,14 @@
 <template>
-<div id="crear-cliente" class="row animated fadeInRight">
+<div id="crear-paciente" class="row animated fadeInRight">
     <div class="col-md-8 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Formulario de creacion de cliente. <small>Datos personales</small></h2>
+                <h2>Formulario de creacion de pacientes. <small>Datos personales</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <br>
-                <form class="form-horizontal form-label-left"  @submit.prevent="agregarCliente">
+                <form class="form-horizontal form-label-left"  @submit.prevent="agregarPaciente">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3" for="input-apellido">
                             APELLIDO:
@@ -36,7 +36,7 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-9 col-md-offset-3">
-                            <button class="btn btn-primary" type="button" @click="volverInicio">
+                            <button class="btn btn-primary" type="button" @click="volver">
                                 Cancelar
                             </button>
                             <button type="submit" class="btn btn-success">
@@ -53,7 +53,7 @@
 <script>
 	
 	export default{
-		name: 'crear-cliente',
+		name: 'crear-paciente',
         props: [], 
         mounted() {
         },
@@ -67,17 +67,20 @@
 			}
 		},
 		methods: {
-			agregarCliente: function(){
+			agregarPaciente: function(){
                 Swal.fire({
                     position: 'top-end',
                     type: 'success',
-                    title: 'Cliente creado exitosamente',
+                    title: 'Paciente creado exitosamente',
                     showConfirmButton: false,
                     timer: 1500
+                }).then(result=>{
+                    this.$emit('regresar', this.form);
                 });
 			},
-			volverInicio: function(){
-                this.$emit('volver-inicio');
+			volver: function(){
+                this.$emit('regresar');
+                return;
             },
 		},
 		computed:{

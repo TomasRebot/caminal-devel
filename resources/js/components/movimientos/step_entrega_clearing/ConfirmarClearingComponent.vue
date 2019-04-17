@@ -2,11 +2,15 @@
 <div class="row" id="confirmar-entrega-component">
 	<div class 	= "col-md-12 col-sm-12 col-xs-12 form-group animated fadeInRight">
         <div class="x_panel">
+            <div class="x_title">
+                <h3 class="StepTitle">Confirmar</h3>
+				<div class="clearfix"></div>
+			</div>
             <div class="x_content row">
                 <br>
                 <div class="col-md-6 col-sm-12 col-xs-12 form-group"> <!-- DATOS DE INSTITUCION -->
                     <div class="x_title">
-                        <h3>Datos de institucion.</h3>
+                        <u><h3>Datos de institucion.</h3></u>
                         <div class="clearfix"></div>
                     </div>
                     <div class="form-group">
@@ -30,9 +34,7 @@
                 <div class="col-md-6 col-sm-12 col-xs-12 form-group"> <!-- LISTA DE MEDICAMENTO/OS -->
                     <div class="x_panel">
                         <div class="x_title">
-                            <h3>
-                                Lista de medicamentos
-                            </h3>
+                            <h3>Lista de medicamentos</h3>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">

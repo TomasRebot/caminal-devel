@@ -1,44 +1,36 @@
 <template>
-<div id="crear-medico" class="row animated fadeInRight">
+<div id="crear-proveedor" class="row animated fadeInRight">
     <div class="col-md-8 col-xs-12">
         <div class="x_panel" :style="{'background-color' : regresar ? '#f7ffff' : null}">
             <div class="x_title">
-                <h2>Formulario de creacion de medico. <small>Datos personales</small></h2>
+                <h4>Formulario de creacion de instituciones.</h4>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <br>
-                <form class="form-horizontal form-label-left"  @submit.prevent="agregarMedico">
+                <form class="form-horizontal form-label-left"  @submit.prevent="agregarProveedor">
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3" for="input-apellido">
-                            APELLIDO:
+                        <label class="control-label col-md-3 col-sm-3 col-xs-3" for="input-nombre">
+                            NOMBRE:
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                            <input type="text" v-model="form.apellido" id="input-apellido" placeholder="Ingrese el apellido" required class="form-control">
+                            <input type="text" v-model="form.nombre" id="input-nombre" placeholder="Ingrese el nombre" required class="form-control">
                         </div>
                     </div>
                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3" for="input-nombres">
-                            NOMBRES:
+                        <label class="control-label col-md-3 col-sm-3 col-xs-3" for="input-razon_social">
+                            RAZON SOCIAL:
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                            <input type="text" v-model="form.nombres" id="input-nombres" placeholder="Ingrese el nombre" required class="form-control">
+                            <input type="text" v-model="form.razon_social" id="input-razon_social" placeholder="Ingrese la razon social" required class="form-control">
                         </div>
                     </div>  
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3" for="input-dni">
-                            DNI:
+                        <label class="control-label col-md-3 col-sm-3 col-xs-3" for="input-direccion">
+                            DIRECCION:
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                            <input type="number" v-model="form.dni" id="input-dni" placeholder="Ingrese el dni" required class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3" for="input-matricula">
-                            MATRICULA:
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                            <input type="number" v-model="form.matricula" id="input-matricula" placeholder="Ingrese la matricula" required class="form-control">
+                            <input type="text" v-model="form.direccion" id="input-direccion" placeholder="Ingrese la direccion" required class="form-control">
                         </div>
                     </div>                     
                     <div class="ln_solid"></div>
@@ -59,27 +51,27 @@
 </div>
 </template>
 <script>
-export default{
-		name: 'crear-medico',
+	
+	export default{
+		name: 'crear-proveedor',
         props: ['regresar'], 
         mounted() {
         },
 		data(){
 			return {
                 form: {
-                    apellido: '',
-                    nombres: '',
-                    dni: '',
-                    matricula: '',
+                    nombre: '',
+                    razon_social: '',
+                    direccion: '',
                 },
 			}
 		},
 		methods: {
-			agregarMedico: function(){
+			agregarProveedor: function(){
                 Swal.fire({
                     position: 'top-end',
                     type: 'success',
-                    title: 'Medico creado exitosamente',
+                    title: 'Proveedor creado exitosamente',
                     showConfirmButton: false,
                     timer: 1500
                 }).then(result=>{
@@ -99,4 +91,5 @@ export default{
 		computed:{
         }
 	}
+
 </script>

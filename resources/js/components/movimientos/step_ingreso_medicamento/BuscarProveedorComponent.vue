@@ -1,12 +1,12 @@
 <template>
-<div class="row" id="buscar-institucion">
-    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight" v-if="!mostrar_crear_institucion">
+<div class="row" id="buscar-proveedor">
+    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight" v-if="!mostrar_crear_proveedor">
 		<div class="x_panel">
 			<div class="x_title">
-                <h3 class="StepTitle">Busqueda de instituciones</h3>
+                <h3 class="StepTitle">Busqueda de proveedor</h3>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
-					<a class="btn btn-sm btn-success" @click="crearInstitucion" v-if="'CrearInstitucionComponent' in Vue.options.components">
+					<a class="btn btn-sm btn-success" @click="crearProveedor" v-if="'CrearProveedorComponent' in Vue.options.components">
                         Nuevo
                     </a>
 					&nbsp;
@@ -15,7 +15,7 @@
 					</label>
 				</ul>
                 <ul class="nav navbar-rigth panel_toolbox">
-					<li @click="ocultarListaInstituciones()"><a  class="collapse-link" id="ocultar-panel-instituciones"><i class="fa fa-chevron-up"></i></a>
+					<li @click="ocultarListaProveedores()"><a  class="collapse-link" id="ocultar-panel-instituciones"><i class="fa fa-chevron-up"></i></a>
 					</li>
 				</ul>
 				<div class="clearfix"></div>
@@ -25,16 +25,16 @@
 					<table class="table table-striped jambo_table bulk_action">
 						<thead>
 							<tr class="headings">
-								<th class="column-title" @click="ordenar_por('nombre')">NOMBRE INSTITUCION </th>
-								<th class="column-title" @click="ordenar_por('direccion')">DIRECCION </th>
-								<th class="column-title no-link last" @click="ordenar_por('telefono')">TELEFONO </th>
+								<th class="column-title" @click="ordenar_por('nombre')">NOMBRE </th>
+								<th class="column-title" @click="ordenar_por('razon_social')">RAZON SOCIAL </th>
+								<th class="column-title no-link last" @click="ordenar_por('direccion')">DIRECCION </th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="even pointer" v-for="(institucion , key) in getLista" :key="key">						
-								<td @click="seleccionarInstitucion(institucion)"><a> {{institucion.nombre}} </a></td>		
-								<td @click="seleccionarInstitucion(institucion)"><a> {{institucion.direccion}} </a></td>
-								<td class="last" @click="seleccionarInstitucion(institucion)"><a> {{institucion.telefono}} </a></td>
+							<tr class="even pointer" v-for="(proveedor , key) in getLista" :key="key">						
+								<td @click="seleccionarProveedor(proveedor)"><a> {{proveedor.nombre}} </a></td>			
+								<td @click="seleccionarProveedor(proveedor)"><a> {{proveedor.razon_social}} </a></td>
+								<td class="last" @click="seleccionarProveedor(proveedor)"><a> {{proveedor.direccion}} </a></td>
                             </tr>
 						</tbody>
 					</table> <!-- BARRA NAVEGACION PAGINAS REGISTROS -->
@@ -74,8 +74,8 @@
 			</div>
 		</div>
 	</div>    
-    <crear-institucion-component :regresar="true" @regresar="guardarInstitucion" v-if="mostrar_crear_institucion">
-    </crear-institucion-component>
+    <crear-proveedor-component :regresar="true" @regresar="guardarProveedor" v-if="mostrar_crear_proveedor">
+    </crear-proveedor-component>
 </div>
 </template>
 
@@ -83,20 +83,20 @@
 
 
 export default {
-    name: 'buscar-institucion',
+    name: 'buscar-proveedor',
     props: [],
     mounted(){
         //this.form = r.lista_clientes.sort(this.sort_by('dni', true, function(a){return a}));
         this.form = [
-            {'nombre' : 'moreira', 'direccion': 'coliqueo' , 'telefono' : '505050'},
-                {'nombre' : 'rebot', 'direccion': 'suipacha' , 'telefono': '0800'}
+            {'nombre' : 'moreira', 'razon_social':'no se,1', 'direccion': 'coliqueo' },
+                {'nombre' : 'rebot', 'razon_social':'no se,1','direccion': 'suipacha' }
             ];
         this.datos_filtrados = this.form;
         this.paginar();
     },
     data(){
         return {
-            mostrar_crear_institucion: false,
+            mostrar_crear_proveedor: false,
             form: [],
             paginacion: {
                 currentPage	: 1,
@@ -114,18 +114,18 @@ export default {
         }
     },
     methods: {
-        crearInstitucion: function(){
-            this.mostrar_crear_institucion = true;
+        crearProveedor: function(){
+            this.mostrar_crear_proveedor = true;
         },
-        guardarInstitucion: function(institucion=null){
-            if (institucion!=null) {
-                this.form.push(institucion);
+        guardarProveedor: function(proveedor=null){
+            if (proveedor!=null) {
+                this.form.push(proveedor);
             }
-            this.mostrar_crear_institucion = false;
+            this.mostrar_crear_proveedor = false;
             this.paginar();
         },
-        seleccionarInstitucion: function( institucion ){
-            this.$emit('institucion-seleccionada' , institucion);
+        seleccionarProveedor: function( proveedor ){
+            this.$emit('proveedor-seleccionado' , proveedor);
         },
         ordenar_por: function( campo , segundo_campo ){
             if( campo.toLowerCase() == 'accion' ){ return; }
@@ -142,7 +142,8 @@ export default {
             this.datos_filtrados = this.datos_filtrados.sort(	this.sort_by( 	campo ,
                                                                 this.sort_fields.reverse,
                                                                 function(a){
-                                                                    if ( campo == 'telefono') {
+                                                                    if ( campo == 'dni' || campo == 'telefono' ||
+                                                                            campo == 'celular') {
                                                                         return a;
                                                                     }
                                                                     return a.toUpperCase()
@@ -214,7 +215,7 @@ export default {
 
             });
         },
-        ocultarListaInstituciones: function(){
+        ocultarListaProveedores: function(){
             var $BOX_PANEL = $('#ocultar-panel-instituciones').closest('.x_panel'),
                     $ICON = $('#ocultar-panel-instituciones').find('i'),
                     $BOX_CONTENT = $BOX_PANEL.find('.x_content');
@@ -249,6 +250,7 @@ export default {
             if (this.form) {
                 return this.form.filter(item => {
                     return 	item.nombre.toString().toLowerCase().includes(this.buscar.toLowerCase()) ||
+                            item.razon_social.toLowerCase().includes(this.buscar.toLowerCase()) ||
                             item.direccion.toLowerCase().includes(this.buscar.toLowerCase())
                 })
             }

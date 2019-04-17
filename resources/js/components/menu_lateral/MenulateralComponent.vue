@@ -122,14 +122,17 @@
           { 'titulo' : 'Medicamentos' , "icono": "fa fa-plus-square", 'submenu' : [
                                                       {'nombre': 'Lista'      , 'componente' : 'ListaMedicamentosComponent'},],
           },
-          { 'titulo' : 'Operaciones'  ,"icono":"fa fa-folder" ,'submenu' : [ {'nombre': 'Entrega a cliente'   , 'componente' :'EntregaMedicamentoComponent'},
+          { 'titulo' : 'Operaciones'  ,"icono":"fa fa-folder" ,'submenu' : [ 
+                                                      {'nombre': 'Entrega a paciente'   , 'componente' :'EntregaMedicamentoComponent'},
                                                       {'nombre': 'Entrega por clearing', 'componente' :'BajaMedicamentoClearingComponent'},
                                                       {'nombre': 'Ingreso medicamentos', 'componente' : 'IngresoMedicamentoComponent'}],
           },
-          { 'titulo' : 'Usuarios'     , "icono":"fa fa-users",'submenu' : [ {'nombre': 'Crear cliente', 'componente': 'CrearClienteComponent'},
-                                                      {'nombre': 'Crear Medico' , 'componente': 'CrearMedicoComponent'}],
+          { 'titulo' : 'Usuarios'     , "icono":"fa fa-users",'submenu' : [ 
+                                                      {'nombre': 'Lista pacientes', 'componente': 'ListaPacientesComponent'},
+                                                      {'nombre': 'Lista medicos' , 'componente': 'ListaMedicosComponent'}],
           },
-          { 'titulo' : 'Configuracion' , "icono":"fa fa-cogs",'submenu' : [{'nombre' : 'Usuarios'  , 'componente' :  'UsuarioComponent' },
+          { 'titulo' : 'Configuracion' , "icono":"fa fa-cogs",'submenu' : [
+                                                      {'nombre' : 'Usuarios'  , 'componente' :  'UsuarioComponent' },
                                                       {'nombre' : 'Roles'     , 'componente' : 'RoleComponent'},
                                                       {'nombre' : 'Permisos'  , 'componente' : 'PermisoComponent'},],
           },

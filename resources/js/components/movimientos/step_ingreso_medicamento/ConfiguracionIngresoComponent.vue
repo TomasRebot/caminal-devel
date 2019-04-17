@@ -16,12 +16,12 @@
                     <div class="col-md-6 col-sm-9 col-xs-12">
                         <div class="radio">
                             <label>
-                                <input type="radio" v-model="configuracion.modo" :value="'proveedor'"> Proveedor
+                                <input type="radio" v-model="configuracion.modo_ingreso" :value="'proveedor'"> Proveedor
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" v-model="configuracion.modo" :value="'clearing'"> Clearing
+                                <input type="radio" v-model="configuracion.modo_ingreso" :value="'clearing'"> Clearing
                             </label>
                         </div>
                     </div>
@@ -36,12 +36,12 @@
                     <div class="col-md-6 col-sm-9 col-xs-12">
                         <div class="radio">
                             <label>
-                                <input type="radio" v-model="configuracion.destino" :value="'remediar'"> Remediar
+                                <input type="radio" v-model="configuracion.destino_ingreso" :value="'remediar'"> Remediar
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" v-model="configuracion.destino" :value="'caminal'"> Caminal
+                                <input type="radio" v-model="configuracion.destino_ingreso" :value="'caminal'"> Caminal
                             </label>
                         </div>
                     </div>
@@ -61,19 +61,19 @@ export default{
     },
     data(){
         return {
-            configuracion:{
-                modo: '',
-                destino: ''
+            configuracion: {
+                modo_ingreso: 'proveedor',
+                destino_ingreso: 'caminal',
             },
         }
     },
     watch:{
-        modo: function(){
-            this.$emit('configuracion-seleccionada' , this.configuracion);
-        },
-        destino: function(){
-            this.$emit('configuracion-seleccionada' , this.configuracion);
-        },
+        configuracion: {
+            handler(val){
+                this.$emit('configuracion-seleccionada' , val);
+            },
+            deep: true
+        }
     },
 }
 </script>

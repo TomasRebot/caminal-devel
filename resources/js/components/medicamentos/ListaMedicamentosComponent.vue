@@ -7,7 +7,7 @@
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
 					<a class="btn btn-sm btn-success" @click="crearMedicamentoNuevo" >Nuevo</a>
-					<a id="deleteMultipleUsers" class="btn btn-sm btn-danger" @click="eliminarMedicamentos" v-if="'eliminar.medico' in Vue.options.components " >Eliminar</a>
+					<a id="deleteMultipleUsers" class="btn btn-sm btn-danger" @click="eliminarMedicamentos" v-if="'EliminarMedicamentoComponent' in Vue.options.components " >Eliminar</a>
 					&nbsp;
 					<label> Buscar:
 						<input type="search" class="form-control input-sm" v-model="buscar">
