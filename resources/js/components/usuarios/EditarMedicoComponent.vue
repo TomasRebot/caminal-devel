@@ -1,14 +1,14 @@
 <template>
-<div id="crear-medico" class="row animated fadeInRight">
+<div id="editar-medico" class="row animated fadeInRight">
     <div class="col-md-8 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Formulario de creacion de medico. <small>Datos personales</small></h2>
+                <h2>Formulario de edicion de medicos. <small>Datos personales</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <br>
-                <form class="form-horizontal form-label-left"  @submit.prevent="agregarMedico">
+                <form class="form-horizontal form-label-left"  @submit.prevent="editarMedico">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3" for="input-matricula">
                             MATRICULA:
@@ -40,7 +40,7 @@
                         <div class="col-md-9 col-sm-9 col-xs-9">
                             <input type="number" v-model="form.dni" id="input-dni" placeholder="Ingrese el dni" required class="form-control">
                         </div>
-                    </div>                
+                    </div>                     
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-9 col-md-offset-3">
@@ -48,7 +48,7 @@
                                 Cancelar
                             </button>
                             <button type="submit" class="btn btn-success">
-                                Crear
+                                Editar
                             </button>
                         </div>
                     </div>
@@ -59,28 +59,29 @@
 </div>
 </template>
 <script>
-export default{
-		name: 'crear-medico',
-        props: [], 
+	
+	export default{
+		name: 'editar-medico',
+        props: ['medico'], 
         mounted() {
+            this.form = this.medico;
         },
 		data(){
 			return {
                 form: {
-                    id: Math.floor(Math.random() * (5000 - 5 + 1)) + min,
+                    matricula:'',
                     apellido: '',
                     nombres: '',
                     dni: '',
-                    matricula: '',
                 },
 			}
 		},
 		methods: {
-			agregarMedico: function(){
+			editarMedico: function(){
                 Swal.fire({
                     position: 'top-end',
                     type: 'success',
-                    title: 'Medico creado exitosamente',
+                    title: 'Medico editado exitosamente',
                     showConfirmButton: false,
                     timer: 1500
                 }).then(result=>{
@@ -89,9 +90,11 @@ export default{
 			},
 			volver: function(){
                 this.$emit('regresar');
+                return;
             },
 		},
 		computed:{
         }
 	}
+
 </script>

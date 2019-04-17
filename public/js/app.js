@@ -2999,7 +2999,6 @@ __webpack_require__.r(__webpack_exports__);
       this.medicamentos_seleccionados = this.form.map(function (medicamento) {
         return medicamento.id;
       });
-      console.log(this.medicamentos_seleccionados);
     },
     eliminarMedicamentos: function eliminarMedicamentos() {
       if (this.medicamentos_seleccionados.length < 1) {
@@ -6015,11 +6014,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'crear-medico',
-  props: ['regresar'],
+  props: [],
   mounted: function mounted() {},
   data: function data() {
     return {
       form: {
+        id: Math.floor(Math.random() * (5000 - 5 + 1)) + min,
         apellido: '',
         nombres: '',
         dni: '',
@@ -6038,18 +6038,11 @@ __webpack_require__.r(__webpack_exports__);
         showConfirmButton: false,
         timer: 1500
       }).then(function (result) {
-        if (_this.regresar) {
-          _this.$emit('regresar', _this.form);
-        }
+        _this.$emit('regresar', _this.form);
       });
     },
-    volverInicio: function volverInicio() {
-      if (this.regresar) {
-        this.$emit('regresar');
-        return;
-      }
-
-      this.$emit('volver-inicio');
+    volver: function volver() {
+      this.$emit('regresar');
     }
   },
   computed: {}
@@ -6139,6 +6132,115 @@ __webpack_require__.r(__webpack_exports__);
         position: 'top-end',
         type: 'success',
         title: 'Paciente creado exitosamente',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(function (result) {
+        _this.$emit('regresar', _this.form);
+      });
+    },
+    volver: function volver() {
+      this.$emit('regresar');
+      return;
+    }
+  },
+  computed: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/usuarios/EditarMedicoComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/usuarios/EditarMedicoComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'editar-medico',
+  props: ['medico'],
+  mounted: function mounted() {
+    this.form = this.medico;
+  },
+  data: function data() {
+    return {
+      form: {
+        matricula: '',
+        apellido: '',
+        nombres: '',
+        dni: ''
+      }
+    };
+  },
+  methods: {
+    editarMedico: function editarMedico() {
+      var _this = this;
+
+      Swal.fire({
+        position: 'top-end',
+        type: 'success',
+        title: 'Medico editado exitosamente',
         showConfirmButton: false,
         timer: 1500
       }).then(function (result) {
@@ -6255,6 +6357,384 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/usuarios/ListaMedicosComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/usuarios/ListaMedicosComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'lista-medicos',
+  props: [],
+  mounted: function mounted() {
+    //this.form = r.lista_medicos.sort(this.sort_by('dni', true, function(a){return a}));
+    this.form = [{
+      'id': 1,
+      'matricula': 55,
+      'apellido': 'moreira',
+      'nombres': 'ezequiel',
+      'dni': 35555555
+    }, {
+      'id': 2,
+      'matricula': 99,
+      'apellido': 'tomas',
+      'nombres': 'tomas',
+      'dni': 333333333
+    }];
+    this.datos_filtrados = this.form;
+    this.paginar();
+  },
+  data: function data() {
+    return {
+      mostrar_frm_crear_medico: false,
+      mostrar_frm_editar_medico: false,
+      form: [],
+      paginacion: {
+        currentPage: 1,
+        perPage: 5,
+        index: 0,
+        totalPage: 0
+      },
+      datos_paginados: [],
+      sort_fields: {
+        campo: 'codigo',
+        reverse: false
+      },
+      buscar: '',
+      datos_filtrados: [],
+      editar_medico: false,
+      check_all: false,
+      //checkbox para colocar o quitar todos los checks de todos los medicos para eliminar
+      medicos_seleccionados: []
+    };
+  },
+  methods: {
+    editarMedico: function editarMedico(medico) {
+      var eliminar_index = null;
+      $(this.form).each(function (index, val) {
+        if (val.dni == medico.dni) {
+          eliminar_index = index;
+          return false;
+        }
+      });
+      this.form.splice(eliminar_index, 1);
+      this.editar_medico = medico;
+      this.mostrar_frm_editar_medico = true;
+    },
+    crearMedico: function crearMedico() {
+      this.mostrar_frm_crear_medico = true;
+    },
+    guardarMedico: function guardarMedico() {
+      var medico = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      if (medico != null) {
+        this.form.push(medico);
+      } else {
+        if (this.mostrar_frm_editar_medico) {
+          this.form.push(this.editar_medico);
+        }
+      }
+
+      this.paginar();
+      this.mostrar_frm_crear_medico = false;
+      this.mostrar_frm_editar_medico = false;
+      this.editar_medico = false;
+    },
+    seleccionarTodo: function seleccionarTodo() {
+      /** Para eliminar
+      * Selecciona todos los checkbox de los medicos
+      * para eliminarlos
+      * @Pepe
+      */
+      if (this.check_all) {
+        this.medicos_seleccionados = [];
+        return;
+      }
+
+      this.medicos_seleccionados = this.form.map(function (medico) {
+        return medico.id;
+      });
+    },
+    eliminarMedico: function eliminarMedico() {
+      var _this = this;
+
+      if (this.medicos_seleccionados.length < 1) {
+        return;
+      }
+
+      var swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: 'Lista de medicamentos a eliminar:',
+        text: this.getListaMedicosEiminar,
+        //"No podra revertir esto!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminar!',
+        cancelButtonText: 'No, cancelar!',
+        reverseButtons: true
+      }).then(function (result) {
+        if (result.value) {
+          var that = _this;
+          $(_this.form).each(function (index, medico) {
+            if (that.medicos_seleccionados.indexOf(medico.id) != -1) {
+              that.form.splice(index);
+            }
+          });
+          _this.medicos_seleccionados = [];
+
+          _this.paginar();
+
+          swalWithBootstrapButtons.fire('Eliminado', 'Los medicamentos fueron eliminados.', 'success');
+        } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire('Cancelado', 'Proceso de eliminacion cancelado', 'error');
+        }
+      });
+    },
+    ordenar_por: function ordenar_por(campo, segundo_campo) {
+      if (campo.toLowerCase() == 'accion') {
+        return;
+      }
+
+      var f = this.sort_fields;
+
+      if (f.campo == campo) {
+        f.reverse = f.reverse ? false : true;
+      } else {
+        f.campo = campo;
+        f.reverse = false;
+      } // aca no preguntar, la funcion para ordenar por campo fue extraida de internet
+      // y modificada infimamente
+
+
+      this.datos_filtrados = this.datos_filtrados.sort(this.sort_by(campo, this.sort_fields.reverse, function (a) {
+        if (campo == 'dni' || campo == 'matricula' || campo == 'celular') {
+          return a;
+        }
+
+        return a.toUpperCase();
+      }));
+      this.paginar();
+    },
+    sort_by: function sort_by(field, reverse, primer) {
+      var key = primer ? function (x) {
+        return primer(x[field]);
+      } : function (x) {
+        return x[field];
+      };
+      reverse = !reverse ? 1 : -1;
+      return function (a, b) {
+        return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+      };
+    },
+    paginaAnterior: function paginaAnterior() {
+      if (this.paginacion.currentPage > 1) {
+        this.paginacion.currentPage--;
+      }
+    },
+    paginaSiguiente: function paginaSiguiente() {
+      if (this.paginacion.currentPage != this.paginacion.totalPage) {
+        this.paginacion.currentPage++;
+      }
+    },
+    cambiarCantidadPorPagina: function cambiarCantidadPorPagina() {
+      /** Recarga la tabla con la nueva division de registros por pagina.
+      * renderiza la cantidad de registros que se selecciono para mostrar
+      */
+      this.paginar();
+    },
+
+    /*cambiarPagina: function(n){
+        this.paginacion.currentPage = n;
+    },*/
+    paginar: function paginar() {
+      /** Como este plantilla tiene una version vieja de boostrap.
+      * debemos paginar a mano! =D
+      * "datos_paginados" contiene los registros divididos en grupos de arrays
+      * "datos_filtrados" tiene todos los elementos organizados por el filtro
+      * en caso de no tener filtro aplicado estan ordenados por defecto por codigo
+      * -----------------
+      * se comienza a dividir los registros en el Each y a guardar en datos_paginados
+      */
+      var $this = this;
+      var $p = this.paginacion;
+      this.datos_paginados = [];
+      this.paginacion.currentPage = 1;
+      $p.index = 0;
+      $p.totalPage = Math.ceil(this.datos_filtrados.length / $p.perPage);
+      var arr = new Array();
+      $(this.datos_filtrados).each(function (index, val) {
+        if (index < $p.index + $p.perPage) {
+          arr.push(val);
+        } else {
+          $this.datos_paginados.push(arr);
+          arr = [];
+          arr.push(val);
+          $p.index = index;
+        }
+
+        if (index == $this.datos_filtrados.length - 1) {
+          $this.datos_paginados.push(arr);
+        }
+      });
+    },
+    ocultarListaMedicos: function ocultarListaMedicos() {
+      var $BOX_PANEL = $('#ocultar-panel-medicos').closest('.x_panel'),
+          $ICON = $('#ocultar-panel-medicos').find('i'),
+          $BOX_CONTENT = $BOX_PANEL.find('.x_content'); // fix for some div with hardcoded fix class
+
+      if ($BOX_PANEL.attr('style')) {
+        $BOX_CONTENT.slideToggle(200, function () {
+          $BOX_PANEL.removeAttr('style');
+        });
+      } else {
+        $BOX_CONTENT.slideToggle(200);
+        $BOX_PANEL.css('height', 'auto');
+      }
+
+      $ICON.toggleClass('fa-chevron-up fa-chevron-down');
+    }
+  },
+  watch: {
+    buscar: function buscar() {
+      this.datos_filtrados = this.filtrar_datos;
+      this.paginar();
+    }
+  },
+  computed: {
+    getLista: function getLista() {
+      return this.datos_paginados[this.paginacion.currentPage - 1];
+    },
+    getListaMedicosEiminar: function getListaMedicosEiminar() {
+      var texto = '';
+      var $this = this;
+      var contador = 0;
+      $(this.form).each(function (index, medico) {
+        contador++;
+
+        if ($this.medicos_seleccionados.indexOf(medico.id) != -1) {
+          texto += contador + ") " + medico.apellido + "...";
+        }
+      });
+      return texto;
+    },
+
+    /** filtrar datos
+    * el each toma como grupo de objetos un metodo computado, retorna registros
+    * mientras se aplica los filtros y se encuentran coincidencias
+    * en caso de no tener filtro retorna todo
+    */
+    filtrar_datos: function filtrar_datos() {
+      var _this2 = this;
+
+      if (this.form) {
+        return this.form.filter(function (item) {
+          return item.apellido.toString().toLowerCase().includes(_this2.buscar.toLowerCase()) || item.nombres.toLowerCase().includes(_this2.buscar.toLowerCase()) || item.dni.toString().toLowerCase().includes(_this2.buscar.toLowerCase());
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/usuarios/ListaPacientesComponent.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/usuarios/ListaPacientesComponent.vue?vue&type=script&lang=js& ***!
@@ -6343,16 +6823,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'lista-pacientes',
   props: [],
   mounted: function mounted() {
     //this.form = r.lista_pacientes.sort(this.sort_by('dni', true, function(a){return a}));
     this.form = [{
+      'id': 1,
       'apellido': 'moreira',
       'nombres': 'ezequiel',
       'dni': 35555555
     }, {
+      'id': 2,
       'apellido': 'tomas',
       'nombres': 'tomas',
       'dni': 333333333
@@ -6377,8 +6866,11 @@ __webpack_require__.r(__webpack_exports__);
         reverse: false
       },
       buscar: '',
-      datos_filtrados: {},
-      editar_paciente: false
+      datos_filtrados: [],
+      editar_paciente: false,
+      check_all: false,
+      //checkbox para colocar o quitar todos los checks de todos los pacientes para eliminar
+      pacientes_seleccionados: []
     };
   },
   methods: {
@@ -6412,6 +6904,63 @@ __webpack_require__.r(__webpack_exports__);
       this.mostrar_frm_crear_paciente = false;
       this.mostrar_frm_editar_paciente = false;
       this.editar_paciente = false;
+    },
+    seleccionarTodo: function seleccionarTodo() {
+      /** Para eliminar
+      * Selecciona todos los checkbox de los pacientes
+      * para eliminarlos
+      * @Pepe
+      */
+      if (this.check_all) {
+        this.pacientes_seleccionados = [];
+        return;
+      }
+
+      this.pacientes_seleccionados = this.form.map(function (paciente) {
+        return paciente.id;
+      });
+    },
+    eliminarPaciente: function eliminarPaciente() {
+      var _this = this;
+
+      if (this.pacientes_seleccionados.length < 1) {
+        return;
+      }
+
+      var swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: 'Lista de medicamentos a eliminar:',
+        text: this.getListaPacientesEiminar,
+        //"No podra revertir esto!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminar!',
+        cancelButtonText: 'No, cancelar!',
+        reverseButtons: true
+      }).then(function (result) {
+        if (result.value) {
+          var that = _this;
+          $(_this.form).each(function (index, paciente) {
+            if (that.pacientes_seleccionados.indexOf(paciente.id) != -1) {
+              that.form.splice(index);
+            }
+          });
+          _this.pacientes_seleccionados = [];
+
+          _this.paginar();
+
+          swalWithBootstrapButtons.fire('Eliminado', 'Los medicamentos fueron eliminados.', 'success');
+        } else if ( // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire('Cancelado', 'Proceso de eliminacion cancelado', 'error');
+        }
+      });
     },
     ordenar_por: function ordenar_por(campo, segundo_campo) {
       if (campo.toLowerCase() == 'accion') {
@@ -6527,6 +7076,19 @@ __webpack_require__.r(__webpack_exports__);
     getLista: function getLista() {
       return this.datos_paginados[this.paginacion.currentPage - 1];
     },
+    getListaPacientesEiminar: function getListaPacientesEiminar() {
+      var texto = '';
+      var $this = this;
+      var contador = 0;
+      $(this.form).each(function (index, paciente) {
+        contador++;
+
+        if ($this.pacientes_seleccionados.indexOf(paciente.id) != -1) {
+          texto += contador + ") " + paciente.apellido + "...";
+        }
+      });
+      return texto;
+    },
 
     /** filtrar datos
     * el each toma como grupo de objetos un metodo computado, retorna registros
@@ -6534,11 +7096,11 @@ __webpack_require__.r(__webpack_exports__);
     * en caso de no tener filtro retorna todo
     */
     filtrar_datos: function filtrar_datos() {
-      var _this = this;
+      var _this2 = this;
 
       if (this.form) {
         return this.form.filter(function (item) {
-          return item.apellido.toString().toLowerCase().includes(_this.buscar.toLowerCase()) || item.nombres.toLowerCase().includes(_this.buscar.toLowerCase()) || item.dni.toString().toLowerCase().includes(_this.buscar.toLowerCase());
+          return item.apellido.toString().toLowerCase().includes(_this2.buscar.toLowerCase()) || item.nombres.toLowerCase().includes(_this2.buscar.toLowerCase()) || item.dni.toString().toLowerCase().includes(_this2.buscar.toLowerCase());
         });
       }
     }
@@ -27874,243 +28436,236 @@ var render = function() {
     { staticClass: "row animated fadeInRight", attrs: { id: "crear-medico" } },
     [
       _c("div", { staticClass: "col-md-8 col-xs-12" }, [
-        _c(
-          "div",
-          {
-            staticClass: "x_panel",
-            style: { "background-color": _vm.regresar ? "#f7ffff" : null }
-          },
-          [
-            _vm._m(0),
+        _c("div", { staticClass: "x_panel" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "x_content" }, [
+            _c("br"),
             _vm._v(" "),
-            _c("div", { staticClass: "x_content" }, [
-              _c("br"),
-              _vm._v(" "),
-              _c(
-                "form",
-                {
-                  staticClass: "form-horizontal form-label-left",
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.agregarMedico($event)
-                    }
+            _c(
+              "form",
+              {
+                staticClass: "form-horizontal form-label-left",
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.agregarMedico($event)
                   }
-                },
-                [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "control-label col-md-3 col-sm-3 col-xs-3",
-                        attrs: { for: "input-apellido" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            APELLIDO:\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-9 col-sm-9 col-xs-9" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.apellido,
-                            expression: "form.apellido"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          id: "input-apellido",
-                          placeholder: "Ingrese el apellido",
-                          required: ""
-                        },
-                        domProps: { value: _vm.form.apellido },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "apellido", $event.target.value)
-                          }
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "control-label col-md-3 col-sm-3 col-xs-3",
-                        attrs: { for: "input-nombres" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            NOMBRES:\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-9 col-sm-9 col-xs-9" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.nombres,
-                            expression: "form.nombres"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          id: "input-nombres",
-                          placeholder: "Ingrese el nombre",
-                          required: ""
-                        },
-                        domProps: { value: _vm.form.nombres },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "nombres", $event.target.value)
-                          }
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "control-label col-md-3 col-sm-3 col-xs-3",
-                        attrs: { for: "input-dni" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            DNI:\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-9 col-sm-9 col-xs-9" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.dni,
-                            expression: "form.dni"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "number",
-                          id: "input-dni",
-                          placeholder: "Ingrese el dni",
-                          required: ""
-                        },
-                        domProps: { value: _vm.form.dni },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "dni", $event.target.value)
-                          }
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "control-label col-md-3 col-sm-3 col-xs-3",
-                        attrs: { for: "input-matricula" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            MATRICULA:\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-9 col-sm-9 col-xs-9" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.matricula,
-                            expression: "form.matricula"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "number",
-                          id: "input-matricula",
-                          placeholder: "Ingrese la matricula",
-                          required: ""
-                        },
-                        domProps: { value: _vm.form.matricula },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "matricula", $event.target.value)
-                          }
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "ln_solid" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("div", { staticClass: "col-md-9 col-md-offset-3" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "button" },
-                          on: { click: _vm.volverInicio }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                Cancelar\n                            "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success",
-                          attrs: { type: "submit" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                Crear\n                            "
-                          )
-                        ]
+                }
+              },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "control-label col-md-3 col-sm-3 col-xs-3",
+                      attrs: { for: "input-matricula" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            MATRICULA:\n                        "
                       )
-                    ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9 col-sm-9 col-xs-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.matricula,
+                          expression: "form.matricula"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        id: "input-matricula",
+                        placeholder: "Ingrese la matricula",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.matricula },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "matricula", $event.target.value)
+                        }
+                      }
+                    })
                   ])
-                ]
-              )
-            ])
-          ]
-        )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "control-label col-md-3 col-sm-3 col-xs-3",
+                      attrs: { for: "input-apellido" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            APELLIDO:\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9 col-sm-9 col-xs-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.apellido,
+                          expression: "form.apellido"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "input-apellido",
+                        placeholder: "Ingrese el apellido",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.apellido },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "apellido", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "control-label col-md-3 col-sm-3 col-xs-3",
+                      attrs: { for: "input-nombres" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            NOMBRES:\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9 col-sm-9 col-xs-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.nombres,
+                          expression: "form.nombres"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "input-nombres",
+                        placeholder: "Ingrese el nombre",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.nombres },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "nombres", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "control-label col-md-3 col-sm-3 col-xs-3",
+                      attrs: { for: "input-dni" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            DNI:\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9 col-sm-9 col-xs-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.dni,
+                          expression: "form.dni"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        id: "input-dni",
+                        placeholder: "Ingrese el dni",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.dni },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "dni", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "ln_solid" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("div", { staticClass: "col-md-9 col-md-offset-3" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: { click: _vm.volver }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                Cancelar\n                            "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        attrs: { type: "submit" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                Crear\n                            "
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              ]
+            )
+          ])
+        ])
       ])
     ]
   )
@@ -28370,6 +28925,281 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/usuarios/EditarMedicoComponent.vue?vue&type=template&id=28ec8a5a&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/usuarios/EditarMedicoComponent.vue?vue&type=template&id=28ec8a5a& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "row animated fadeInRight", attrs: { id: "editar-medico" } },
+    [
+      _c("div", { staticClass: "col-md-8 col-xs-12" }, [
+        _c("div", { staticClass: "x_panel" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "x_content" }, [
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                staticClass: "form-horizontal form-label-left",
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.editarMedico($event)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "control-label col-md-3 col-sm-3 col-xs-3",
+                      attrs: { for: "input-matricula" }
+                    },
+                    [
+                      _vm._v(
+                        "\r\n                            MATRICULA:\r\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9 col-sm-9 col-xs-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.matricula,
+                          expression: "form.matricula"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        id: "input-matricula",
+                        placeholder: "Ingrese la matricula",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.matricula },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "matricula", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "control-label col-md-3 col-sm-3 col-xs-3",
+                      attrs: { for: "input-apellido" }
+                    },
+                    [
+                      _vm._v(
+                        "\r\n                            APELLIDO:\r\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9 col-sm-9 col-xs-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.apellido,
+                          expression: "form.apellido"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "input-apellido",
+                        placeholder: "Ingrese el apellido",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.apellido },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "apellido", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "control-label col-md-3 col-sm-3 col-xs-3",
+                      attrs: { for: "input-nombres" }
+                    },
+                    [
+                      _vm._v(
+                        "\r\n                            NOMBRES:\r\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9 col-sm-9 col-xs-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.nombres,
+                          expression: "form.nombres"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "input-nombres",
+                        placeholder: "Ingrese el nombre",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.nombres },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "nombres", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "control-label col-md-3 col-sm-3 col-xs-3",
+                      attrs: { for: "input-dni" }
+                    },
+                    [
+                      _vm._v(
+                        "\r\n                            DNI:\r\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9 col-sm-9 col-xs-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.dni,
+                          expression: "form.dni"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        id: "input-dni",
+                        placeholder: "Ingrese el dni",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.dni },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "dni", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "ln_solid" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("div", { staticClass: "col-md-9 col-md-offset-3" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: { click: _vm.volver }
+                      },
+                      [
+                        _vm._v(
+                          "\r\n                                Cancelar\r\n                            "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        attrs: { type: "submit" }
+                      },
+                      [
+                        _vm._v(
+                          "\r\n                                Editar\r\n                            "
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              ]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "x_title" }, [
+      _c("h2", [
+        _vm._v("Formulario de edicion de medicos. "),
+        _c("small", [_vm._v("Datos personales")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/usuarios/EditarPacienteComponent.vue?vue&type=template&id=2d6579b2&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/usuarios/EditarPacienteComponent.vue?vue&type=template&id=2d6579b2& ***!
@@ -28604,6 +29434,446 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/usuarios/ListaMedicosComponent.vue?vue&type=template&id=ae400652&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/usuarios/ListaMedicosComponent.vue?vue&type=template&id=ae400652& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "row", attrs: { id: "lista-medicos" } },
+    [
+      !_vm.mostrar_frm_crear_medico && !_vm.mostrar_frm_editar_medico
+        ? _c(
+            "div",
+            {
+              staticClass: "col-md-12 col-sm-12 col-xs-12 animated fadeInRight"
+            },
+            [
+              _c("div", { staticClass: "x_panel" }, [
+                _c("div", { staticClass: "x_title" }, [
+                  _c("h3", { staticClass: "StepTitle" }, [
+                    _vm._v("Listado de medicos")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }),
+                  _vm._v(" "),
+                  _c("ul", { staticClass: "nav navbar-left panel_toolbox" }, [
+                    "CrearMedicoComponent" in _vm.Vue.options.components
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-sm btn-success",
+                            on: { click: _vm.crearMedico }
+                          },
+                          [_vm._v("Nuevo")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    "EliminarMedicoComponent" in _vm.Vue.options.components
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-sm btn-danger",
+                            attrs: { id: "deleteMultipleUsers" },
+                            on: { click: _vm.eliminarMedico }
+                          },
+                          [_vm._v("Eliminar")]
+                        )
+                      : _vm._e(),
+                    _vm._v("\r\n\t\t\t\t\t \r\n\t\t\t\t\t"),
+                    _c("label", [
+                      _vm._v(" Buscar: \r\n\t\t\t\t\t\t"),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.buscar,
+                            expression: "buscar"
+                          }
+                        ],
+                        staticClass: "form-control input-sm",
+                        attrs: { type: "search" },
+                        domProps: { value: _vm.buscar },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.buscar = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("ul", { staticClass: "nav navbar-rigth panel_toolbox" }, [
+                    _c(
+                      "li",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.ocultarListaMedicos()
+                          }
+                        }
+                      },
+                      [_vm._m(0)]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "x_content" }, [
+                  _c("div", {}, [
+                    _c(
+                      "table",
+                      {
+                        staticClass:
+                          "table table-striped jambo_table bulk_action"
+                      },
+                      [
+                        _c("thead", [
+                          _c("tr", { staticClass: "headings" }, [
+                            _c("th", [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.check_all,
+                                    expression: "check_all"
+                                  }
+                                ],
+                                attrs: { type: "checkbox", id: "check-all" },
+                                domProps: {
+                                  checked: Array.isArray(_vm.check_all)
+                                    ? _vm._i(_vm.check_all, null) > -1
+                                    : _vm.check_all
+                                },
+                                on: {
+                                  click: _vm.seleccionarTodo,
+                                  change: function($event) {
+                                    var $$a = _vm.check_all,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = null,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          (_vm.check_all = $$a.concat([$$v]))
+                                      } else {
+                                        $$i > -1 &&
+                                          (_vm.check_all = $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1)))
+                                      }
+                                    } else {
+                                      _vm.check_all = $$c
+                                    }
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "column-title",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.ordenar_por("matricula")
+                                  }
+                                }
+                              },
+                              [_vm._v("MATRICULA")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "column-title",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.ordenar_por("apellido")
+                                  }
+                                }
+                              },
+                              [_vm._v("APELLIDO ")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "column-title",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.ordenar_por("nombres")
+                                  }
+                                }
+                              },
+                              [_vm._v("NOMBRE ")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "column-title no-link last",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.ordenar_por("dni")
+                                  }
+                                }
+                              },
+                              [_vm._v("DNI ")]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.getLista, function(medico, key) {
+                            return _c(
+                              "tr",
+                              { key: key, staticClass: "even pointer" },
+                              [
+                                _c("td", { staticClass: "a-center " }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.medicos_seleccionados,
+                                        expression: "medicos_seleccionados"
+                                      }
+                                    ],
+                                    attrs: { type: "checkbox" },
+                                    domProps: {
+                                      value: medico.id,
+                                      checked: Array.isArray(
+                                        _vm.medicos_seleccionados
+                                      )
+                                        ? _vm._i(
+                                            _vm.medicos_seleccionados,
+                                            medico.id
+                                          ) > -1
+                                        : _vm.medicos_seleccionados
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.medicos_seleccionados,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = medico.id,
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.medicos_seleccionados = $$a.concat(
+                                                [$$v]
+                                              ))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.medicos_seleccionados = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.medicos_seleccionados = $$c
+                                        }
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.editarMedico(medico)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("a", [
+                                      _vm._v(
+                                        " " + _vm._s(medico.matricula) + " "
+                                      )
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.editarMedico(medico)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("a", [
+                                      _vm._v(
+                                        " " + _vm._s(medico.apellido) + " "
+                                      )
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.editarMedico(medico)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("a", [
+                                      _vm._v(" " + _vm._s(medico.nombres) + " ")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  {
+                                    staticClass: "last",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.editarMedico(medico)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("a", [
+                                      _vm._v(" " + _vm._s(medico.dni) + " ")
+                                    ])
+                                  ]
+                                )
+                              ]
+                            )
+                          }),
+                          0
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm.paginacion.totalPage > 1
+                      ? _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-sm-5" }, [
+                            _c("div", [
+                              _vm._v("\r\n\t\t\t\t\t\t\t\tPagina "),
+                              _c("b", [
+                                _vm._v(_vm._s(_vm.paginacion.currentPage))
+                              ]),
+                              _vm._v(" de "),
+                              _c("b", [
+                                _vm._v(_vm._s(_vm.paginacion.totalPage))
+                              ]),
+                              _vm._v(
+                                " en " +
+                                  _vm._s(_vm.datos_filtrados.length) +
+                                  " registros.\r\n\t\t\t\t\t\t\t"
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-7" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "dataTables_paginate paging_simple_numbers",
+                                attrs: { id: "datatable_paginate" }
+                              },
+                              [
+                                _c("ul", { staticClass: "pagination" }, [
+                                  _c("li", [
+                                    _c(
+                                      "button",
+                                      { on: { click: _vm.paginaAnterior } },
+                                      [
+                                        _vm._v(
+                                          "\r\n\t\t\t\t\t\t\t\t\t\t\tAnterior\r\n\t\t\t\t\t\t\t\t\t\t"
+                                        )
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("li"),
+                                  _vm._v(" "),
+                                  _c("li", [
+                                    _c(
+                                      "button",
+                                      { on: { click: _vm.paginaSiguiente } },
+                                      [
+                                        _vm._v(
+                                          "\r\n\t\t\t\t\t\t\t\t\t\t\tSiguiente\r\n\t\t\t\t\t\t\t\t\t\t"
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ])
+                              ]
+                            )
+                          ])
+                        ])
+                      : _vm._e()
+                  ])
+                ])
+              ])
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.mostrar_frm_crear_medico
+        ? _c("crear-medico-component", { on: { regresar: _vm.guardarMedico } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.mostrar_frm_editar_medico
+        ? _c("editar-medico-component", {
+            attrs: { medico: _vm.editar_medico },
+            on: { regresar: _vm.guardarMedico }
+          })
+        : _vm._e()
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      { staticClass: "collapse-link", attrs: { id: "ocultar-panel-medicos" } },
+      [_c("i", { staticClass: "fa fa-chevron-up" })]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/usuarios/ListaPacientesComponent.vue?vue&type=template&id=a26f5c02&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/usuarios/ListaPacientesComponent.vue?vue&type=template&id=a26f5c02& ***!
@@ -28647,6 +29917,18 @@ var render = function() {
                             on: { click: _vm.crearPaciente }
                           },
                           [_vm._v("Nuevo")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    "EliminarPacienteComponent" in _vm.Vue.options.components
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-sm btn-danger",
+                            attrs: { id: "deleteMultipleUsers" },
+                            on: { click: _vm.eliminarPaciente }
+                          },
+                          [_vm._v("Eliminar")]
                         )
                       : _vm._e(),
                     _vm._v("\r\n\t\t\t\t\t \r\n\t\t\t\t\t"),
@@ -28704,6 +29986,48 @@ var render = function() {
                       [
                         _c("thead", [
                           _c("tr", { staticClass: "headings" }, [
+                            _c("th", [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.check_all,
+                                    expression: "check_all"
+                                  }
+                                ],
+                                attrs: { type: "checkbox", id: "check-all" },
+                                domProps: {
+                                  checked: Array.isArray(_vm.check_all)
+                                    ? _vm._i(_vm.check_all, null) > -1
+                                    : _vm.check_all
+                                },
+                                on: {
+                                  click: _vm.seleccionarTodo,
+                                  change: function($event) {
+                                    var $$a = _vm.check_all,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = null,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          (_vm.check_all = $$a.concat([$$v]))
+                                      } else {
+                                        $$i > -1 &&
+                                          (_vm.check_all = $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1)))
+                                      }
+                                    } else {
+                                      _vm.check_all = $$c
+                                    }
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
                             _c(
                               "th",
                               {
@@ -28723,7 +30047,7 @@ var render = function() {
                                 staticClass: "column-title",
                                 on: {
                                   click: function($event) {
-                                    return _vm.ordenar_por("nombre")
+                                    return _vm.ordenar_por("nombres")
                                   }
                                 }
                               },
@@ -28752,6 +30076,55 @@ var render = function() {
                               "tr",
                               { key: key, staticClass: "even pointer" },
                               [
+                                _c("td", { staticClass: "a-center " }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.pacientes_seleccionados,
+                                        expression: "pacientes_seleccionados"
+                                      }
+                                    ],
+                                    attrs: { type: "checkbox" },
+                                    domProps: {
+                                      value: paciente.id,
+                                      checked: Array.isArray(
+                                        _vm.pacientes_seleccionados
+                                      )
+                                        ? _vm._i(
+                                            _vm.pacientes_seleccionados,
+                                            paciente.id
+                                          ) > -1
+                                        : _vm.pacientes_seleccionados
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.pacientes_seleccionados,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = paciente.id,
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.pacientes_seleccionados = $$a.concat(
+                                                [$$v]
+                                              ))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.pacientes_seleccionados = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.pacientes_seleccionados = $$c
+                                        }
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
                                 _c(
                                   "td",
                                   {
@@ -41047,7 +42420,7 @@ Vue.mixin({
 //pero en permisos recibimos un array de strings con los nombres de los componentes
 //a los cuales tenemos autorizacion!
 
-var permisos = ['DashboardComponent', 'PermisoComponent', 'RoleComponent', 'UsuarioComponent', 'AgregarStockComponent', 'CrearMedicamentoComponent', 'ListaMedicamentosComponent', 'BotonmenuComponent', 'MenulateralComponent', 'EditarMedicamentoComponent', 'EliminarMedicamentoComponent', 'IngresoMedicamentoComponent', 'EntregaMedicamentoComponent', 'InicioDashboardComponent', 'CrearMedicoComponent', 'CrearPacienteComponent', 'BajaMedicamentoClearingComponent', 'AgregarStockMedicamentoComponent', 'CrearProveedorComponent', 'CrearInstitucionComponent', 'ListaPacientesComponent', 'ListaMedicosComponent', 'EditarPacienteComponent', // a continuacion componentes que se deben agregar si o si
+var permisos = ['DashboardComponent', 'PermisoComponent', 'RoleComponent', 'UsuarioComponent', 'AgregarStockComponent', 'CrearMedicamentoComponent', 'ListaMedicamentosComponent', 'BotonmenuComponent', 'MenulateralComponent', 'EditarMedicamentoComponent', 'EliminarMedicamentoComponent', 'IngresoMedicamentoComponent', 'EntregaMedicamentoComponent', 'InicioDashboardComponent', 'CrearMedicoComponent', 'CrearPacienteComponent', 'BajaMedicamentoClearingComponent', 'AgregarStockMedicamentoComponent', 'CrearProveedorComponent', 'CrearInstitucionComponent', 'ListaPacientesComponent', 'ListaMedicosComponent', 'EditarPacienteComponent', 'EliminarPacienteComponent', 'EditarMedicoComponent', 'EliminarMedicoComponent', // a continuacion componentes que se deben agregar si o si
 'BuscarMedicoComponent', 'BuscarInstitucionComponent', 'ConfirmarClearingComponent', 'BuscarPacienteComponent', 'ConfirmarEntregaComponent', 'ConfiguracionIngresoComponent', 'ConfirmacionIngresoComponent', 'BuscarMedicamentoComponent', 'BuscarProveedorComponent', 'ConfirmarIngresoComponent']; //recibidos al loguearse
 
 var folders = [req = __webpack_require__("./resources/js/components sync recursive \\.(js|vue)$/"), req = __webpack_require__("./resources/js/components/inicio_dashboard sync recursive \\.(js|vue)$/"), req = __webpack_require__("./resources/js/components/usuarios sync recursive \\.(js|vue)$/"), req = __webpack_require__("./resources/js/components/configuracion sync recursive \\.(js|vue)$/"), req = __webpack_require__("./resources/js/components/movimientos sync recursive \\.(js|vue)$/"), req = __webpack_require__("./resources/js/components/medicamentos sync recursive \\.(js|vue)$/"), req = __webpack_require__("./resources/js/components/menu_lateral sync recursive \\.(js|vue)$/"), req = __webpack_require__("./resources/js/components/movimientos/step_entrega_clearing sync recursive \\.(js|vue)$/"), req = __webpack_require__("./resources/js/components/movimientos/step_entrega_paciente sync recursive \\.(js|vue)$/"), req = __webpack_require__("./resources/js/components/movimientos/step_ingreso_medicamento sync recursive \\.(js|vue)$/"), req = __webpack_require__("./resources/js/components/institucion sync recursive \\.(js|vue)$/"), req = __webpack_require__("./resources/js/components/proveedor sync recursive \\.(js|vue)$/")]; //se recorre cada carpeta y se incluyen sus archivos correspondientes
@@ -41115,7 +42488,10 @@ var map = {
 	"./proveedor/CrearProveedorComponent.vue": "./resources/js/components/proveedor/CrearProveedorComponent.vue",
 	"./usuarios/CrearMedicoComponent.vue": "./resources/js/components/usuarios/CrearMedicoComponent.vue",
 	"./usuarios/CrearPacienteComponent.vue": "./resources/js/components/usuarios/CrearPacienteComponent.vue",
+	"./usuarios/EditarMedicoComponent.vue": "./resources/js/components/usuarios/EditarMedicoComponent.vue",
 	"./usuarios/EditarPacienteComponent.vue": "./resources/js/components/usuarios/EditarPacienteComponent.vue",
+	"./usuarios/EliminarMedicoComponent.vue": "./resources/js/components/usuarios/EliminarMedicoComponent.vue",
+	"./usuarios/EliminarPacienteComponent.vue": "./resources/js/components/usuarios/EliminarPacienteComponent.vue",
 	"./usuarios/ListaMedicosComponent.vue": "./resources/js/components/usuarios/ListaMedicosComponent.vue",
 	"./usuarios/ListaPacientesComponent.vue": "./resources/js/components/usuarios/ListaPacientesComponent.vue"
 };
@@ -43192,7 +44568,10 @@ __webpack_require__.r(__webpack_exports__);
 var map = {
 	"./CrearMedicoComponent.vue": "./resources/js/components/usuarios/CrearMedicoComponent.vue",
 	"./CrearPacienteComponent.vue": "./resources/js/components/usuarios/CrearPacienteComponent.vue",
+	"./EditarMedicoComponent.vue": "./resources/js/components/usuarios/EditarMedicoComponent.vue",
 	"./EditarPacienteComponent.vue": "./resources/js/components/usuarios/EditarPacienteComponent.vue",
+	"./EliminarMedicoComponent.vue": "./resources/js/components/usuarios/EliminarMedicoComponent.vue",
+	"./EliminarPacienteComponent.vue": "./resources/js/components/usuarios/EliminarPacienteComponent.vue",
 	"./ListaMedicosComponent.vue": "./resources/js/components/usuarios/ListaMedicosComponent.vue",
 	"./ListaPacientesComponent.vue": "./resources/js/components/usuarios/ListaPacientesComponent.vue"
 };
@@ -43357,6 +44736,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/usuarios/EditarMedicoComponent.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/usuarios/EditarMedicoComponent.vue ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EditarMedicoComponent_vue_vue_type_template_id_28ec8a5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditarMedicoComponent.vue?vue&type=template&id=28ec8a5a& */ "./resources/js/components/usuarios/EditarMedicoComponent.vue?vue&type=template&id=28ec8a5a&");
+/* harmony import */ var _EditarMedicoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditarMedicoComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/usuarios/EditarMedicoComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EditarMedicoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EditarMedicoComponent_vue_vue_type_template_id_28ec8a5a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EditarMedicoComponent_vue_vue_type_template_id_28ec8a5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/usuarios/EditarMedicoComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/usuarios/EditarMedicoComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/usuarios/EditarMedicoComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarMedicoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./EditarMedicoComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/usuarios/EditarMedicoComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarMedicoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/usuarios/EditarMedicoComponent.vue?vue&type=template&id=28ec8a5a&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/usuarios/EditarMedicoComponent.vue?vue&type=template&id=28ec8a5a& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarMedicoComponent_vue_vue_type_template_id_28ec8a5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./EditarMedicoComponent.vue?vue&type=template&id=28ec8a5a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/usuarios/EditarMedicoComponent.vue?vue&type=template&id=28ec8a5a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarMedicoComponent_vue_vue_type_template_id_28ec8a5a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditarMedicoComponent_vue_vue_type_template_id_28ec8a5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/usuarios/EditarPacienteComponent.vue":
 /*!**********************************************************************!*\
   !*** ./resources/js/components/usuarios/EditarPacienteComponent.vue ***!
@@ -43426,10 +44874,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/usuarios/ListaMedicosComponent.vue":
-/*!********************************************************************!*\
-  !*** ./resources/js/components/usuarios/ListaMedicosComponent.vue ***!
-  \********************************************************************/
+/***/ "./resources/js/components/usuarios/EliminarMedicoComponent.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/usuarios/EliminarMedicoComponent.vue ***!
+  \**********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -43453,8 +44901,109 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   
 )
 
+component.options.__file = "resources/js/components/usuarios/EliminarMedicoComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/usuarios/EliminarPacienteComponent.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/usuarios/EliminarPacienteComponent.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "resources/js/components/usuarios/EliminarPacienteComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/usuarios/ListaMedicosComponent.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/usuarios/ListaMedicosComponent.vue ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ListaMedicosComponent_vue_vue_type_template_id_ae400652___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ListaMedicosComponent.vue?vue&type=template&id=ae400652& */ "./resources/js/components/usuarios/ListaMedicosComponent.vue?vue&type=template&id=ae400652&");
+/* harmony import */ var _ListaMedicosComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListaMedicosComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/usuarios/ListaMedicosComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ListaMedicosComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ListaMedicosComponent_vue_vue_type_template_id_ae400652___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ListaMedicosComponent_vue_vue_type_template_id_ae400652___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
 component.options.__file = "resources/js/components/usuarios/ListaMedicosComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/usuarios/ListaMedicosComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/usuarios/ListaMedicosComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListaMedicosComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ListaMedicosComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/usuarios/ListaMedicosComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListaMedicosComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/usuarios/ListaMedicosComponent.vue?vue&type=template&id=ae400652&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/usuarios/ListaMedicosComponent.vue?vue&type=template&id=ae400652& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListaMedicosComponent_vue_vue_type_template_id_ae400652___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ListaMedicosComponent.vue?vue&type=template&id=ae400652& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/usuarios/ListaMedicosComponent.vue?vue&type=template&id=ae400652&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListaMedicosComponent_vue_vue_type_template_id_ae400652___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListaMedicosComponent_vue_vue_type_template_id_ae400652___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

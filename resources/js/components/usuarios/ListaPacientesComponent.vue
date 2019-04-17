@@ -7,6 +7,7 @@
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
 					<a class="btn btn-sm btn-success" @click="crearPaciente" v-if="'CrearPacienteComponent' in Vue.options.components">Nuevo</a>
+					<a id="deleteMultipleUsers" class="btn btn-sm btn-danger" @click="eliminarPaciente" v-if="'EliminarPacienteComponent' in Vue.options.components " >Eliminar</a>
 					&nbsp;
 					<label> Buscar: 
 						<input type="search" class="form-control input-sm" v-model="buscar">
@@ -23,13 +24,19 @@
 					<table class="table table-striped jambo_table bulk_action">
 						<thead>
 							<tr class="headings">
+                                <th>
+									<input type="checkbox" id="check-all" v-model="check_all" @click="seleccionarTodo">
+								</th>
 								<th class="column-title" @click ="ordenar_por('apellido')">APELLIDO </th>
-								<th class="column-title" @click ="ordenar_por('nombre')">NOMBRE </th>
+								<th class="column-title" @click ="ordenar_por('nombres')">NOMBRE </th>
 								<th class="column-title no-link last" @click ="ordenar_por('dni')">DNI </th>
                             </tr>
 						</thead>
 						<tbody>
-							<tr class="even pointer" v-for="(paciente , key) in getLista" :key="key">						
+                            <tr class="even pointer" v-for="(paciente , key) in getLista" :key="key">			
+                                <td class="a-center ">
+                                    <input type="checkbox" :value="paciente.id" v-model="pacientes_seleccionados">
+                                </td>			
 								<td @click="editarPaciente(paciente)"><a> {{paciente.apellido}} </a></td>
 								<td @click="editarPaciente(paciente)"><a> {{paciente.nombres}} </a></td>
 								<td class="last" @click="editarPaciente(paciente)"><a> {{paciente.dni}} </a></td>
@@ -86,8 +93,8 @@ export default {
     mounted(){
         //this.form = r.lista_pacientes.sort(this.sort_by('dni', true, function(a){return a}));
         this.form = [
-            {'apellido' : 'moreira', 'nombres': 'ezequiel' , 'dni' : 35555555},
-                {'apellido' : 'tomas', 'nombres': 'tomas' , 'dni' : 333333333}
+            {'id':1,'apellido' : 'moreira', 'nombres': 'ezequiel' , 'dni' : 35555555},
+                {'id':2,'apellido' : 'tomas', 'nombres': 'tomas' , 'dni' : 333333333}
             ];
         this.datos_filtrados = this.form;
         this.paginar();
@@ -109,8 +116,10 @@ export default {
                 reverse : false,
             },
             buscar: '',
-            datos_filtrados: {},
+            datos_filtrados: [],
             editar_paciente: false,
+            check_all: false, //checkbox para colocar o quitar todos los checks de todos los pacientes para eliminar
+			pacientes_seleccionados: [],
         }
     },
     methods: {
@@ -141,6 +150,65 @@ export default {
             this.mostrar_frm_crear_paciente = false;            
             this.mostrar_frm_editar_paciente = false;   
             this.editar_paciente = false;
+        },
+        seleccionarTodo: function(){
+            /** Para eliminar
+            * Selecciona todos los checkbox de los pacientes
+            * para eliminarlos
+            * @Pepe
+            */
+            if (this.check_all) {
+                this.pacientes_seleccionados = [];
+                return;
+            }
+            this.pacientes_seleccionados = this.form.map(paciente=>{
+                return paciente.id;
+            })
+        },
+        eliminarPaciente: function(){
+            if (this.pacientes_seleccionados.length < 1) {return;}
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false,
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Lista de medicamentos a eliminar:',
+                text: this.getListaPacientesEiminar,//"No podra revertir esto!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, eliminar!',
+                cancelButtonText: 'No, cancelar!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    let that = this;
+                    $(this.form).each(function(index,paciente){
+                        if (that.pacientes_seleccionados.indexOf(paciente.id) != -1) {
+                            that.form.splice(index);
+                        }
+                    });
+                    this.pacientes_seleccionados = [];
+                    this.paginar();
+                    swalWithBootstrapButtons.fire(
+                    'Eliminado',
+                    'Los medicamentos fueron eliminados.',
+                    'success'
+                    )
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                    'Cancelado',
+                    'Proceso de eliminacion cancelado',
+                    'error'
+                    )
+                }
+            });
         },
         ordenar_por: function( campo , segundo_campo ){
             if( campo.toLowerCase() == 'accion' ){ return; }
@@ -255,6 +323,18 @@ export default {
     computed: {
         getLista(){
             return this.datos_paginados[ this.paginacion.currentPage - 1];
+        },
+        getListaPacientesEiminar(){
+            var texto = '';
+            let $this = this;
+            var contador = 0;
+            $(this.form).each(function(index,paciente){
+                contador++;
+                if ($this.pacientes_seleccionados.indexOf(paciente.id) != -1) {
+                    texto += contador + ") " + paciente.apellido + "...";
+                }
+            })
+            return texto;
         },
         /** filtrar datos
         * el each toma como grupo de objetos un metodo computado, retorna registros

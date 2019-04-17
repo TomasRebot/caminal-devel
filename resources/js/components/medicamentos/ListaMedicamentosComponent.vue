@@ -277,7 +277,6 @@
 				this.medicamentos_seleccionados = this.form.map(medicamento=>{
 					return medicamento.id;
 				})
-				console.log(this.medicamentos_seleccionados)
 			},
 			eliminarMedicamentos: function(){
 				if (this.medicamentos_seleccionados.length < 1) {return;}
