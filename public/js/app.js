@@ -4765,12 +4765,12 @@ __webpack_require__.r(__webpack_exports__);
     this.form = [{
       'matricula': 3580,
       'apellido': 'moreira',
-      'nombres': 'ezequiel',
+      'nombre': 'ezequiel',
       'dni': 35555555
     }, {
       'matricula': 4122,
       'apellido': 'tomas',
-      'nombres': 'tomas',
+      'nombre': 'tomas',
       'dni': 333333333
     }];
     this.datos_filtrados = this.form;
@@ -4800,7 +4800,66 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('medico-seleccionado', medico);
     },
     crearMedico: function crearMedico() {
-      this.mostrar_frm_crear_medico = true;
+      var _this = this;
+
+      var modal = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+      modal.fire({
+        title: 'Crear nuevo medico',
+        text: "Ingrese datos personales.",
+        type: 'warning',
+        html: "\n                        <form class=\"form-horizontal form-label-left\">\n                            <div class=\"ln_solid\"></div>  \n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-matricula\">\n                                    MATRICULA:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"number\" id=\"input-matricula\" placeholder=\"Ingrese la matricula\" class=\"form-control\">\n                                </div>\n                            </div>\n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-apellido\">\n                                    APELLIDO:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"text\" id=\"input-apellido\" placeholder=\"Ingrese el apellido\" class=\"form-control\">\n                                </div>\n                            </div>\n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-nombre\">\n                                    NOMBRE:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"text\" id=\"input-nombre\" placeholder=\"Ingrese el nombre\" class=\"form-control\">\n                                </div>\n                            </div>  \n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-dni\">\n                                    DNI:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"number\" id=\"input-dni\" placeholder=\"Ingrese el dni\" class=\"form-control\">\n                                </div>\n                            </div>                     \n                            <div class=\"ln_solid\"></div>                            \n                        </form>                                  \n                        ",
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'Crear',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        preConfirm: function preConfirm(form) {
+          var inputs = new Object();
+          inputs = {
+            'matricula': document.getElementById('input-matricula').value,
+            'apellido': document.getElementById('input-apellido').value,
+            'nombre': document.getElementById('input-nombre').value,
+            'dni': document.getElementById('input-dni').value
+          };
+          Object.keys(inputs).forEach(function (key) {
+            if (inputs[key].length == 0) {
+              Swal.showValidationMessage("Error: campos sin completar");
+            }
+
+            return false;
+          });
+          return inputs;
+        }
+      }).then(function (result) {
+        if (result.value) {
+          modal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Medico creado exitosamente.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+
+          _this.form.push(result.value);
+
+          _this.paginar();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          modal.fire({
+            position: 'top-end',
+            title: 'Cancelado',
+            type: 'error',
+            showConfirmButton: false,
+            timer: 1000
+          });
+        }
+      });
     },
     guardarMedico: function guardarMedico() {
       var medico = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -4829,7 +4888,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
       this.datos_filtrados = this.datos_filtrados.sort(this.sort_by(campo, this.sort_fields.reverse, function (a) {
-        if (campo == 'dni' || campo == 'telefono' || campo == 'celular') {
+        if (campo == 'dni' || campo == 'matricula') {
           return a;
         }
 
@@ -4933,11 +4992,11 @@ __webpack_require__.r(__webpack_exports__);
     * en caso de no tener filtro retorna todo
     */
     filtrar_datos: function filtrar_datos() {
-      var _this = this;
+      var _this2 = this;
 
       if (this.form) {
         return this.form.filter(function (item) {
-          return item.apellido.toString().toLowerCase().includes(_this.buscar.toLowerCase()) || item.nombres.toLowerCase().includes(_this.buscar.toLowerCase()) || item.dni.toString().toLowerCase().includes(_this.buscar.toLowerCase()) || item.matricula.toString().toLowerCase().includes(_this.buscar.toLowerCase());
+          return item.apellido.toString().toLowerCase().includes(_this2.buscar.toLowerCase()) || item.nombre.toLowerCase().includes(_this2.buscar.toLowerCase()) || item.dni.toString().toLowerCase().includes(_this2.buscar.toLowerCase()) || item.matricula.toString().toLowerCase().includes(_this2.buscar.toLowerCase());
         });
       }
     }
@@ -5040,11 +5099,11 @@ __webpack_require__.r(__webpack_exports__);
     //this.form = r.lista_pacientes.sort(this.sort_by('dni', true, function(a){return a}));
     this.form = [{
       'apellido': 'moreira',
-      'nombres': 'ezequiel',
+      'nombre': 'ezequiel',
       'dni': 35555555
     }, {
       'apellido': 'tomas',
-      'nombres': 'tomas',
+      'nombre': 'tomas',
       'dni': 333333333
     }];
     this.datos_filtrados = this.form;
@@ -5074,7 +5133,65 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('paciente-seleccionado', paciente);
     },
     crearPaciente: function crearPaciente() {
-      this.mostrar_frm_crear_paciente = true;
+      var _this = this;
+
+      var modal = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+      modal.fire({
+        title: 'Crear nuevo paciente',
+        text: "Ingrese datos personales.",
+        type: 'warning',
+        html: "\n                        <form class=\"form-horizontal form-label-left\">\n                            <div class=\"ln_solid\"></div>  \n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-apellido\">\n                                    APELLIDO:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"text\" id=\"input-apellido\" placeholder=\"Ingrese el apellido\" required class=\"form-control\">\n                                </div>\n                            </div>\n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-nombre\">\n                                    NOMBRE:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"text\" id=\"input-nombre\" placeholder=\"Ingrese el nombre\" required class=\"form-control\">\n                                </div>\n                            </div>  \n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-dni\">\n                                    DNI:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"number\" id=\"input-dni\" placeholder=\"Ingrese el dni\" required class=\"form-control\">\n                                </div>\n                            </div>                     \n                            <div class=\"ln_solid\"></div>                            \n                        </form>                                  \n                        ",
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'Crear',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        preConfirm: function preConfirm(form) {
+          var inputs = new Object();
+          inputs = {
+            'apellido': document.getElementById('input-apellido').value,
+            'nombre': document.getElementById('input-nombre').value,
+            'dni': document.getElementById('input-dni').value
+          };
+          Object.keys(inputs).forEach(function (key) {
+            if (inputs[key].length == 0) {
+              Swal.showValidationMessage("Error: campos sin completar");
+            }
+
+            return false;
+          });
+          return inputs;
+        }
+      }).then(function (result) {
+        if (result.value) {
+          modal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Paciente creado exitosamente.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+
+          _this.form.push(result.value);
+
+          _this.paginar();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          modal.fire({
+            position: 'top-end',
+            title: 'Cancelado',
+            type: 'error',
+            showConfirmButton: false,
+            timer: 1000
+          });
+        }
+      });
     },
     guardarPaciente: function guardarPaciente() {
       var paciente = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -5207,11 +5324,11 @@ __webpack_require__.r(__webpack_exports__);
     * en caso de no tener filtro retorna todo
     */
     filtrar_datos: function filtrar_datos() {
-      var _this = this;
+      var _this2 = this;
 
       if (this.form) {
         return this.form.filter(function (item) {
-          return item.apellido.toString().toLowerCase().includes(_this.buscar.toLowerCase()) || item.nombres.toLowerCase().includes(_this.buscar.toLowerCase()) || item.dni.toString().toLowerCase().includes(_this.buscar.toLowerCase());
+          return item.apellido.toString().toLowerCase().includes(_this2.buscar.toLowerCase()) || item.nombre.toLowerCase().includes(_this2.buscar.toLowerCase()) || item.dni.toString().toLowerCase().includes(_this2.buscar.toLowerCase());
         });
       }
     }
@@ -26676,7 +26793,7 @@ var render = function() {
                                   },
                                   [
                                     _c("a", [
-                                      _vm._v(" " + _vm._s(medico.nombres) + " ")
+                                      _vm._v(" " + _vm._s(medico.nombre) + " ")
                                     ])
                                   ]
                                 ),
@@ -26981,7 +27098,7 @@ var render = function() {
                                   [
                                     _c("a", [
                                       _vm._v(
-                                        " " + _vm._s(paciente.nombres) + " "
+                                        " " + _vm._s(paciente.nombre) + " "
                                       )
                                     ])
                                   ]

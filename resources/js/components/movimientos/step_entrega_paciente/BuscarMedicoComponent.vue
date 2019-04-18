@@ -34,7 +34,7 @@
                             <tr class="even pointer" v-for="(medico , key) in getLista" :key="key">					
                                 <td @click="seleccionarMedico(medico)"><a> {{medico.matricula}} </a></td>					
                                 <td @click="seleccionarMedico(medico)"><a> {{medico.apellido}} </a></td>
-                                <td @click="seleccionarMedico(medico)"><a> {{medico.nombres}} </a></td>
+                                <td @click="seleccionarMedico(medico)"><a> {{medico.nombre}} </a></td>
                                 <td class="last" @click="seleccionarMedico(medico)"><a> {{medico.dni}} </a></td>
                             </tr>
                         </tbody>
@@ -86,8 +86,8 @@ export default {
     mounted(){
         //this.form = r.lista_clientes.sort(this.sort_by('dni', true, function(a){return a}));
         this.form = [
-            {'matricula':3580 , 'apellido' : 'moreira', 'nombres': 'ezequiel' , 'dni' : 35555555},
-                {'matricula':4122 , 'apellido' : 'tomas', 'nombres': 'tomas' , 'dni' : 333333333}
+            {'matricula':3580 , 'apellido' : 'moreira', 'nombre': 'ezequiel' , 'dni' : 35555555},
+                {'matricula':4122 , 'apellido' : 'tomas', 'nombre': 'tomas' , 'dni' : 333333333}
             ];
         this.datos_filtrados = this.form;
         this.paginar();
@@ -116,7 +116,100 @@ export default {
             this.$emit('medico-seleccionado' , medico);
         },
         crearMedico: function(){
-            this.mostrar_frm_crear_medico = true;            
+            const modal = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false,
+            });
+            
+            modal.fire({
+                title: 'Crear nuevo medico',
+                text: "Ingrese datos personales.",
+                type: 'warning',
+                html:  `
+                        <form class="form-horizontal form-label-left">
+                            <div class="ln_solid"></div>  
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-matricula">
+                                    MATRICULA:
+                                </label>
+                                <div class="col-md-8 col-sm-9 col-xs-9">
+                                    <input type="number" id="input-matricula" placeholder="Ingrese la matricula" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-apellido">
+                                    APELLIDO:
+                                </label>
+                                <div class="col-md-8 col-sm-9 col-xs-9">
+                                    <input type="text" id="input-apellido" placeholder="Ingrese el apellido" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-nombre">
+                                    NOMBRE:
+                                </label>
+                                <div class="col-md-8 col-sm-9 col-xs-9">
+                                    <input type="text" id="input-nombre" placeholder="Ingrese el nombre" class="form-control">
+                                </div>
+                            </div>  
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-dni">
+                                    DNI:
+                                </label>
+                                <div class="col-md-8 col-sm-9 col-xs-9">
+                                    <input type="number" id="input-dni" placeholder="Ingrese el dni" class="form-control">
+                                </div>
+                            </div>                     
+                            <div class="ln_solid"></div>                            
+                        </form>                                  
+                        `,
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'Crear',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true,                
+                showLoaderOnConfirm: true,
+                preConfirm: (form)=>{
+                        var inputs = new Object();
+                        inputs = { 'matricula' : document.getElementById('input-matricula').value,
+                                    'apellido' : document.getElementById('input-apellido').value,
+                                    'nombre' : document.getElementById('input-nombre').value,
+                                    'dni' : document.getElementById('input-dni').value };
+                        
+                        Object.keys(inputs).forEach(function(key) {
+                            if(inputs[key].length == 0){
+                                Swal.showValidationMessage(
+                                    `Error: campos sin completar`
+                                );
+                            }
+                            return false;
+                        });
+                        return inputs;
+                    },
+                }).then((result) => {
+                    if (result.value) {
+                        modal.fire({
+                            position: 'top-end',
+                            type: 'success',
+                            title: 'Medico creado exitosamente.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        this.form.push(result.value);
+                        this.paginar();
+                    } else if (result.dismiss === Swal.DismissReason.cancel){
+                        modal.fire({
+                            position: 'top-end',
+                            title: 'Cancelado',
+                            type: 'error',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                });    
         },
         guardarMedico: function(medico=null){
             if(medico!=null){
@@ -140,8 +233,7 @@ export default {
             this.datos_filtrados = this.datos_filtrados.sort(	this.sort_by( 	campo ,
                                                                 this.sort_fields.reverse,
                                                                 function(a){
-                                                                    if ( campo == 'dni' || campo == 'telefono' ||
-                                                                            campo == 'celular') {
+                                                                    if ( campo == 'dni' || campo == 'matricula') {
                                                                         return a;
                                                                     }
                                                                     return a.toUpperCase()
@@ -248,7 +340,7 @@ export default {
             if (this.form) {
                 return this.form.filter(item => {
                     return 	item.apellido.toString().toLowerCase().includes(this.buscar.toLowerCase()) ||
-                            item.nombres.toLowerCase().includes(this.buscar.toLowerCase()) ||
+                            item.nombre.toLowerCase().includes(this.buscar.toLowerCase()) ||
                             item.dni.toString().toLowerCase().includes(this.buscar.toLowerCase()) ||
                             item.matricula.toString().toLowerCase().includes(this.buscar.toLowerCase())
                 })
