@@ -169,7 +169,7 @@ export default {
         },
         eliminarMedico: function(){
             if (this.medicos_seleccionados.length < 1) {return;}
-            const swalWithBootstrapButtons = Swal.mixin({
+            const modalEliminar = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success',
                     cancelButton: 'btn btn-danger'
@@ -177,8 +177,8 @@ export default {
                 buttonsStyling: false,
             })
 
-            swalWithBootstrapButtons.fire({
-                title: 'Lista de medicamentos a eliminar:',
+            modalEliminar.fire({
+                title: 'Lista de medicos a eliminar:',
                 text: this.getListaMedicosEiminar,//"No podra revertir esto!",
                 type: 'warning',
                 showCancelButton: true,
@@ -188,23 +188,27 @@ export default {
             }).then((result) => {
                 if (result.value) {
                     let that = this;
-                    $(this.form).each(function(index,medico){
-                        if (that.medicos_seleccionados.indexOf(medico.id) != -1) {
-                            that.form.splice(index);
-                        }
-                    });
+                    this.medicos_seleccionados.forEach(id_eliminar=>{
+                        $(that.form).each(function(index,medico){
+                            if (id_eliminar == medico.id) {
+                                that.form.splice(index , 1);
+                                return false;
+                            }
+                        });
+                    });                    
                     this.medicos_seleccionados = [];
+                    this.check_all = false; // destildamos el "marcar todo" para eliminar
                     this.paginar();
-                    swalWithBootstrapButtons.fire(
-                    'Eliminado',
-                    'Los medicamentos fueron eliminados.',
-                    'success'
-                    )
+                    modalEliminar.fire(
+                        'Eliminado',
+                        'Los medicos fueron eliminados.',
+                        'success'
+                    );
                 } else if (
                     // Read more about handling dismissals
                     result.dismiss === Swal.DismissReason.cancel
                 ) {
-                    swalWithBootstrapButtons.fire(
+                    modalEliminar.fire(
                     'Cancelado',
                     'Proceso de eliminacion cancelado',
                     'error'

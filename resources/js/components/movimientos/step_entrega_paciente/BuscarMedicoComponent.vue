@@ -128,6 +128,7 @@ export default {
                 title: 'Crear nuevo medico',
                 text: "Ingrese datos personales.",
                 type: 'warning',
+                width: 400,
                 html:  `
                         <form class="form-horizontal form-label-left">
                             <div class="ln_solid"></div>  

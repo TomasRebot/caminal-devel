@@ -4813,6 +4813,7 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Crear nuevo medico',
         text: "Ingrese datos personales.",
         type: 'warning',
+        width: 400,
         html: "\n                        <form class=\"form-horizontal form-label-left\">\n                            <div class=\"ln_solid\"></div>  \n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-matricula\">\n                                    MATRICULA:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"number\" id=\"input-matricula\" placeholder=\"Ingrese la matricula\" class=\"form-control\">\n                                </div>\n                            </div>\n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-apellido\">\n                                    APELLIDO:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"text\" id=\"input-apellido\" placeholder=\"Ingrese el apellido\" class=\"form-control\">\n                                </div>\n                            </div>\n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-nombre\">\n                                    NOMBRE:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"text\" id=\"input-nombre\" placeholder=\"Ingrese el nombre\" class=\"form-control\">\n                                </div>\n                            </div>  \n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-dni\">\n                                    DNI:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"number\" id=\"input-dni\" placeholder=\"Ingrese el dni\" class=\"form-control\">\n                                </div>\n                            </div>                     \n                            <div class=\"ln_solid\"></div>                            \n                        </form>                                  \n                        ",
         focusConfirm: false,
         showCancelButton: true,
@@ -5146,6 +5147,7 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Crear nuevo paciente',
         text: "Ingrese datos personales.",
         type: 'warning',
+        width: 400,
         html: "\n                        <form class=\"form-horizontal form-label-left\">\n                            <div class=\"ln_solid\"></div>  \n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-apellido\">\n                                    APELLIDO:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"text\" id=\"input-apellido\" placeholder=\"Ingrese el apellido\" required class=\"form-control\">\n                                </div>\n                            </div>\n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-nombre\">\n                                    NOMBRE:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"text\" id=\"input-nombre\" placeholder=\"Ingrese el nombre\" required class=\"form-control\">\n                                </div>\n                            </div>  \n                            <div class=\"form-group\">\n                                <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-dni\">\n                                    DNI:\n                                </label>\n                                <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                    <input type=\"number\" id=\"input-dni\" placeholder=\"Ingrese el dni\" required class=\"form-control\">\n                                </div>\n                            </div>                     \n                            <div class=\"ln_solid\"></div>                            \n                        </form>                                  \n                        ",
         focusConfirm: false,
         showCancelButton: true,
@@ -6136,7 +6138,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: {
-        id: Math.floor(Math.random() * (5000 - 5 + 1)) + min,
+        id: Math.floor(Math.random() * (5000 - 5 + 1)) + 1,
         apellido: '',
         nombres: '',
         dni: '',
@@ -6670,15 +6672,15 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      var swalWithBootstrapButtons = Swal.mixin({
+      var modalEliminar = Swal.mixin({
         customClass: {
           confirmButton: 'btn btn-success',
           cancelButton: 'btn btn-danger'
         },
         buttonsStyling: false
       });
-      swalWithBootstrapButtons.fire({
-        title: 'Lista de medicamentos a eliminar:',
+      modalEliminar.fire({
+        title: 'Lista de medicos a eliminar:',
         text: this.getListaMedicosEiminar,
         //"No podra revertir esto!",
         type: 'warning',
@@ -6689,19 +6691,25 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           var that = _this;
-          $(_this.form).each(function (index, medico) {
-            if (that.medicos_seleccionados.indexOf(medico.id) != -1) {
-              that.form.splice(index);
-            }
+
+          _this.medicos_seleccionados.forEach(function (id_eliminar) {
+            $(that.form).each(function (index, medico) {
+              if (id_eliminar == medico.id) {
+                that.form.splice(index, 1);
+                return false;
+              }
+            });
           });
+
           _this.medicos_seleccionados = [];
+          _this.check_all = false; // destildamos el "marcar todo" para eliminar
 
           _this.paginar();
 
-          swalWithBootstrapButtons.fire('Eliminado', 'Los medicamentos fueron eliminados.', 'success');
+          modalEliminar.fire('Eliminado', 'Los medicos fueron eliminados.', 'success');
         } else if ( // Read more about handling dismissals
         result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire('Cancelado', 'Proceso de eliminacion cancelado', 'error');
+          modalEliminar.fire('Cancelado', 'Proceso de eliminacion cancelado', 'error');
         }
       });
     },
@@ -7044,15 +7052,15 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      var swalWithBootstrapButtons = Swal.mixin({
+      var modalEliminar = Swal.mixin({
         customClass: {
           confirmButton: 'btn btn-success',
           cancelButton: 'btn btn-danger'
         },
         buttonsStyling: false
       });
-      swalWithBootstrapButtons.fire({
-        title: 'Lista de medicamentos a eliminar:',
+      modalEliminar.fire({
+        title: 'Lista de pacientes a eliminar:',
         text: this.getListaPacientesEiminar,
         //"No podra revertir esto!",
         type: 'warning',
@@ -7063,19 +7071,25 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           var that = _this;
-          $(_this.form).each(function (index, paciente) {
-            if (that.pacientes_seleccionados.indexOf(paciente.id) != -1) {
-              that.form.splice(index);
-            }
+
+          _this.pacientes_seleccionados.forEach(function (id_eliminar) {
+            $(that.form).each(function (index, paciente) {
+              if (id_eliminar == paciente.id) {
+                that.form.splice(index, 1);
+                return false;
+              }
+            });
           });
+
           _this.pacientes_seleccionados = [];
+          _this.check_all = false; // destildamos el "marcar todo" para eliminar
 
           _this.paginar();
 
-          swalWithBootstrapButtons.fire('Eliminado', 'Los medicamentos fueron eliminados.', 'success');
+          modalEliminar.fire('Eliminado', 'Los pacientes fueron eliminados.', 'success');
         } else if ( // Read more about handling dismissals
         result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire('Cancelado', 'Proceso de eliminacion cancelado', 'error');
+          modalEliminar.fire('Cancelado', 'Proceso de eliminacion cancelado', 'error');
         }
       });
     },
@@ -28754,7 +28768,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-primary",
+                        staticClass: "btn btn-sm btn-danger",
                         attrs: { type: "button" },
                         on: { click: _vm.volver }
                       },
@@ -28768,7 +28782,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-success",
+                        staticClass: "btn btn-sm btn-success",
                         attrs: { type: "submit" }
                       },
                       [
@@ -28988,7 +29002,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-primary",
+                        staticClass: "btn btn-sm btn-danger",
                         attrs: { type: "button" },
                         on: { click: _vm.volver }
                       },
@@ -29002,7 +29016,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-success",
+                        staticClass: "btn btn-sm btn-success",
                         attrs: { type: "submit" }
                       },
                       [

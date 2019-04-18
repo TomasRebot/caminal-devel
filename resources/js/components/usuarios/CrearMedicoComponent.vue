@@ -44,10 +44,10 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-9 col-md-offset-3">
-                            <button class="btn btn-primary" type="button" @click="volver">
+                            <button class="btn btn-sm btn-danger" type="button" @click="volver">
                                 Cancelar
                             </button>
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-sm btn-success">
                                 Crear
                             </button>
                         </div>
@@ -67,7 +67,7 @@ export default{
 		data(){
 			return {
                 form: {
-                    id: Math.floor(Math.random() * (5000 - 5 + 1)) + min,
+                    id: Math.floor(Math.random() * (5000 - 5 + 1)) + 1,
                     apellido: '',
                     nombres: '',
                     dni: '',

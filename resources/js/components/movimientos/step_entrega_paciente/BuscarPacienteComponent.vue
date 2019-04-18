@@ -126,7 +126,8 @@ export default {
             modal.fire({
                 title: 'Crear nuevo paciente',
                 text: "Ingrese datos personales.",
-                type: 'warning',
+                type: 'warning',                
+                width: 400,
                 html:  `
                         <form class="form-horizontal form-label-left">
                             <div class="ln_solid"></div>  
