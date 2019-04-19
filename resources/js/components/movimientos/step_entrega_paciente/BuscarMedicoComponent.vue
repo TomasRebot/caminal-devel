@@ -1,15 +1,15 @@
 <template>
 <div id="buscar-medico" class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight" v-if="!mostrar_frm_crear_medico">
+    <div class="col-md-12 col-sm-12 col-xs-12 " v-if="!mostrar_frm_crear_medico">
         <div class="x_panel">
             <div class="x_title">
-                <h3 class="StepTitle">Busqueda de medico</h3>
+                <h4 class="StepTitle">Busqueda de médico</h4>
                 <!--h4>Listado de Medicos</h4-->
                 <div class="clearfix"></div>
                 <ul class="nav navbar-left panel_toolbox">
                     <a class="btn btn-sm btn-success" @click="crearMedico" v-if="'CrearMedicoComponent' in Vue.options.components">Nuevo</a>
                     &nbsp;
-                    <label> Buscar: 
+                    <label> Buscar:
                         <input type="search" class="form-control input-sm" v-model="buscar">
                     </label>
                 </ul>
@@ -31,8 +31,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="even pointer" v-for="(medico , key) in getLista" :key="key">					
-                                <td @click="seleccionarMedico(medico)"><a> {{medico.matricula}} </a></td>					
+                            <tr class="even pointer" v-for="(medico , key) in getLista" :key="key">
+                                <td @click="seleccionarMedico(medico)"><a> {{medico.matricula}} </a></td>
                                 <td @click="seleccionarMedico(medico)"><a> {{medico.apellido}} </a></td>
                                 <td @click="seleccionarMedico(medico)"><a> {{medico.nombre}} </a></td>
                                 <td class="last" @click="seleccionarMedico(medico)"><a> {{medico.dni}} </a></td>
@@ -123,15 +123,18 @@ export default {
                 },
                 buttonsStyling: false,
             });
-            
+
             modal.fire({
                 title: 'Crear nuevo medico',
                 text: "Ingrese datos personales.",
-                type: 'warning',
+                type: 'custom icon',
+                imageUrl: window.location +"/images/iconos-dashboard/dotor.png",
+                imageWidth: 100,
+                imageHeight:100,
                 width: 400,
                 html:  `
                         <form class="form-horizontal form-label-left">
-                            <div class="ln_solid"></div>  
+                            <div class="ln_solid"></div>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-matricula">
                                     MATRICULA:
@@ -155,7 +158,7 @@ export default {
                                 <div class="col-md-8 col-sm-9 col-xs-9">
                                     <input type="text" id="input-nombre" placeholder="Ingrese el nombre" class="form-control">
                                 </div>
-                            </div>  
+                            </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-dni">
                                     DNI:
@@ -163,15 +166,15 @@ export default {
                                 <div class="col-md-8 col-sm-9 col-xs-9">
                                     <input type="number" id="input-dni" placeholder="Ingrese el dni" class="form-control">
                                 </div>
-                            </div>                     
-                            <div class="ln_solid"></div>                            
-                        </form>                                  
+                            </div>
+                            <div class="ln_solid"></div>
+                        </form>
                         `,
                 focusConfirm: false,
                 showCancelButton: true,
                 confirmButtonText: 'Crear',
                 cancelButtonText: 'Cancelar',
-                reverseButtons: true,                
+                reverseButtons: true,
                 showLoaderOnConfirm: true,
                 preConfirm: (form)=>{
                         var inputs = new Object();
@@ -179,7 +182,7 @@ export default {
                                     'apellido' : document.getElementById('input-apellido').value,
                                     'nombre' : document.getElementById('input-nombre').value,
                                     'dni' : document.getElementById('input-dni').value };
-                        
+
                         Object.keys(inputs).forEach(function(key) {
                             if(inputs[key].length == 0){
                                 Swal.showValidationMessage(
@@ -193,29 +196,29 @@ export default {
                 }).then((result) => {
                     if (result.value) {
                         modal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             type: 'success',
                             title: 'Medico creado exitosamente.',
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 1000
                         });
                         this.form.push(result.value);
                         this.paginar();
                     } else if (result.dismiss === Swal.DismissReason.cancel){
                         modal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             title: 'Cancelado',
                             type: 'error',
                             showConfirmButton: false,
-                            timer: 1000
+                            timer: 700
                         });
                     }
-                });    
+                });
         },
         guardarMedico: function(medico=null){
             if(medico!=null){
                 this.form.push(medico);
-            }            
+            }
             this.mostrar_frm_crear_medico = false;
             this.paginar();
         },
@@ -316,8 +319,8 @@ export default {
                             $BOX_PANEL.removeAttr('style');
                     });
             } else {
-                    $BOX_CONTENT.slideToggle(200); 
-                    $BOX_PANEL.css('height', 'auto');  
+                    $BOX_CONTENT.slideToggle(200);
+                    $BOX_PANEL.css('height', 'auto');
             }
             $ICON.toggleClass('fa-chevron-up fa-chevron-down');
         },

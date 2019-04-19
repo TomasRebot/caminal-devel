@@ -3,106 +3,79 @@
 	<div class 	= "col-md-12 col-sm-12 col-xs-12 form-group animated fadeInRight">
         <div class="x_panel">
             <div class="x_title">
-                <h3 class="StepTitle">Confirmar</h3>                
-                <h4 class="StepTitle">Ingreso de stock a 
-                    <span class="label label-warning" v-if="configuracion.destino_ingreso=='caminal'" style="color:white;">Caminal</span>
-                    <span class="label label-info" v-else style="color:white;">Remediar</span>
-                </h4>
-                <h4 class="StepTitle"> Mediante sistema de {{configuracion.modo_ingreso}} 
+                <h4 class="StepTitle">Confirmar ingreso de stock al sector
+                    <span class="badge badge-xs-warning" v-if="configuracion.destino_ingreso=='caminal'" style="color:white;">Caminal</span>
+                    <span class="badge badge-xs-info" v-else style="color:white;">Remediar</span>
                 </h4>
 				<div class="clearfix"></div>
 			</div>
-            <div class="x_content row">
+           <div class="x_content row">
                 <br>
-                <!-- DATOS DE PROVEEDOR -->
-                <div class="col-md-6 col-sm-12 col-xs-12 form-group" v-if="proveedor">
+                <div class="col-md-6 col-sm-12 col-xs-12 form-group"> <!-- DATOS DE INSTITUCION -->
                     <div class="x_title">
-                        <h3>Datos de proveedor.</h3>
+                        <u><h4>Datos de institucion.</h4></u>
                         <div class="clearfix"></div>
                     </div>
                     <div class="form-group">
                         <label for="label-nombre">
-                            NOMBRE
+                            Nombre
                         </label>
                         <div id="label-nombre">
                             <label class="form-control"> {{proveedor.nombre}} </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="label-razon_social">
-                            RAZON SOCIAL
+                        <label for="label-razon">
+                            Razon social
                         </label>
-                        <div id="label-razon_social">
-                            <label class="form-control"> {{proveedor.razon_social}} </label>
+                        <div id="label-razon">
+                            <label class="form-control"> {{proveedor.razon}} </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="label-cuit">
+                        Cuit
+                        </label>
+                        <div id="label-cuit">
+                            <label class="form-control"> {{proveedor.cuit}} </label>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="label-direccion">
-                            DIRECCION
+                            Direccion
                         </label>
                         <div id="label-direccion">
                             <label class="form-control"> {{proveedor.direccion}} </label>
                         </div>
                     </div>
-                    <div class="ln_solid"></div>
-                </div> 
-                <!-- FIN DATOS DE PROVEEDOR -->
-                <!-- DATOS DE INSTITUCION -->
-                <div class="col-md-6 col-sm-12 col-xs-12 form-group" v-else>
-                    <div class="x_title">
-                        <h3>Datos de la institucion.</h3>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="label-nombre">
-                            NOMBRE
-                        </label>
-                        <div id="label-nombre">
-                            <label class="form-control"> {{institucion.nombre}} </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="label-direccion">
-                            DIRECCION
-                        </label>
-                        <div id="label-direccion">
-                            <label class="form-control"> {{institucion.direccion}} </label>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label for="label-telefono">
-                            TELEFONO
+                            Telefono
                         </label>
                         <div id="label-telefono">
-                            <label class="form-control"> {{institucion.telefono}} </label>
+                            <label class="form-control"> {{proveedor.telefono}} </label>
                         </div>
                     </div>
                     <div class="ln_solid"></div>
-                </div> 
-                <!-- FIN DATOS DE INSTITUCION -->                 
+                </div>
+                <!-- FIN DATOS DE INSTITUCION -->
                 <div class="col-md-6 col-sm-12 col-xs-12 form-group"> <!-- LISTA DE MEDICAMENTO/OS -->
-                    <div class="x_panel">
                         <div class="x_title">
-                            <h3>
-                                Lista de medicamentos
-                            </h3>
+                            <h4>Lista de medicamentos</h4>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="x_content">
-                            <article class="media event" v-for="(medicamento , key) in medicamentos" :key = "key">
-                                <div class="media-body">
-                                <a class="title">{{medicamento.perfil.nombre}}</a>
-                                <p>Clasificacion: {{medicamento.perfil.clasificacion}}</p>
-                                <p>Descripcion: {{medicamento.descripcion}}</p>
-                                <p>Cantidad: {{medicamento.cantidad_entrega}}</p>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div> <!-- FIN LISTA MEDICAMENTO/OS -->                
+                        <article class="media event" v-for="(medicamento , key) in medicamentos" :key = "key">
+                            <div class="media-body">
+                            <a class="title">{{medicamento.perfil.nombre}}</a>
+                            <p>Clasificacion: {{medicamento.perfil.clasificacion}}</p>
+                            <p>Descripcion: {{medicamento.descripcion}}</p>
+                            <p class="badge badge-sm-success">Cantidad: {{medicamento.cantidad_entrega}}</p>
+                            </div>
+                        </article>
+                </div> <!-- FIN LISTA MEDICAMENTO/OS -->
             </div>
         </div>
-    </div>	
+    </div>
 </div>
 </template>
 

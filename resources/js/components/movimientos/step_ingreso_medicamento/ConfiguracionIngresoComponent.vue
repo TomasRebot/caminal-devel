@@ -1,15 +1,18 @@
 <template>
-<div class="col-md-12 col-sm-12 col-xs-12" id="configuracion-ingreso">
+<div class="row" id="configuracion-ingreso">
+
+<div class="col-md-12 col-sm-12 col-xs-12" >
     <div class="x_panel">
         <div class="x_title">
-        <h4>Seleccione el origen</h4>
-        <div class="clearfix"></div>
+            <h4>Seleccione el origen y detino de los medicamentos</h4>
+            <div class="clearfix"></div>
         </div>
+
         <div class="x_content">
             <form class="form-horizontal form-label-left">
                 <div class="form-group">
                     <label class="col-md-6 col-sm-3 col-xs-12 control-label">
-                        Seleccione modo de ingreso:
+                        Seleccione el origen de ingreso:
                         <br>
                         <small class="text-navy"></small>
                     </label>
@@ -29,19 +32,19 @@
                 <div class="clearfix"></div>
                 <div class="form-group">
                     <label class="col-md-6 col-sm-3 col-xs-12 control-label">
-                        Seleccione destino de ingreso:
+                        Seleccione el destino de ingreso:
                         <br>
                         <small class="text-navy"></small>
                     </label>
                     <div class="col-md-6 col-sm-9 col-xs-12">
                         <div class="radio">
                             <label>
-                                <input type="radio" v-model="configuracion.destino_ingreso" :value="'remediar'"> Remediar
+                                <input type="radio" v-model="configuracion.destino_ingreso" :value="'remediar'"> <span class="badge badge-md-info">Remediar</span>
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" v-model="configuracion.destino_ingreso" :value="'caminal'"> Caminal
+                                <input type="radio" v-model="configuracion.destino_ingreso" :value="'caminal'"> <span class="badge badge-md-warning">Caminal</span>
                             </label>
                         </div>
                     </div>
@@ -50,6 +53,7 @@
             </form>
         </div>
     </div>
+</div>
 </div>
 </template>
 

@@ -8958,17 +8958,17 @@ button.close {
 
 
 html , body{
-	
+
  height:100%;
- 
+
 }
- 
+
 .full-width {
-	
+
  width:100%;
- 
+
  }
- 
+
 .full-height{
  height:100%;
  }
@@ -11359,6 +11359,77 @@ a.btn-danger {
 .btn.btn-app:focus {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125)
 }
+
+.badge-sm-success{
+    min-width: 20%!important;
+    margin:auto;
+    background-color:#1ABB9C!important;
+}
+.badge-md-success{
+    min-width: 50%!important;
+    margin:auto!important;
+    background-color:#1ABB9C!important;
+}
+
+.badge-sm-danger{
+    min-width: 20%!important;
+    margin:auto;
+    background-color:#d9534f!important;
+}
+
+.badge-md-danger{
+    min-width: 50%!important;
+    margin:auto;
+    background-color:#d9534f!important;
+}
+.badge-sm-info{
+    min-width: 20%!important;
+    margin:auto;
+    background-color:#5bc0de!important;
+}
+.badge-md-info{
+    min-width: 50%!important;
+    margin:auto;
+    background-color:#5bc0de!important;
+}
+.badge-sm-warning{
+    min-width: 20%!important;
+    margin:auto;
+    background-color:#f0ad4e!important;
+}
+.badge-md-warning{
+    min-width: 20%!important;
+    margin:auto;
+    background-color:#f0ad4e!important;
+}
+
+
+
+
+.badge-xs-danger{
+    min-width: 10%!important;
+    margin:auto;
+    background-color:#d9534f!important;
+}
+.badge-xs-info{
+    min-width: 10%!important;
+    margin:auto;
+    background-color:#5bc0de!important;
+}
+.badge-xs-warning{
+    min-width: 10%!important;
+    margin:auto;
+    background-color:#f0ad4e!important;
+}
+.badge-xs-success{
+    min-width: 10%!important;
+    margin:auto;
+    background-color:#1ABB9C!important;
+}
+
+
+
+
 .btn.btn-app>.badge {
     position: absolute;
     top: -3px;
@@ -13198,7 +13269,7 @@ ul.notifications {
 table thead .checkbox { margin-top:-7px;margin-top:-21px; }
 table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 */
-			
+
 .daterangepicker.xdisplay { width:228px; }
 
 .dataTables_wrapper > .row{

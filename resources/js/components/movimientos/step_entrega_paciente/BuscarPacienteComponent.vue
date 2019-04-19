@@ -1,14 +1,14 @@
 <template>
 <div class="row" id="buscar-paciente">
-    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight" v-if="!mostrar_frm_crear_paciente">
+    <div class="col-md-12 col-sm-12 col-xs-12 " v-if="!mostrar_frm_crear_paciente">
 		<div class="x_panel">
 			<div class="x_title">
-                <h3 class="StepTitle">Busqueda de paciente</h3>
+                <h4 class="StepTitle">Busqueda de paciente</h4>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
 					<a class="btn btn-sm btn-success" @click="crearPaciente" v-if="'CrearPacienteComponent' in Vue.options.components">Nuevo</a>
 					&nbsp;
-					<label> Buscar: 
+					<label> Buscar:
 						<input type="search" class="form-control input-sm" v-model="buscar">
 					</label>
 				</ul>
@@ -29,7 +29,7 @@
                             </tr>
 						</thead>
 						<tbody>
-							<tr class="even pointer" v-for="(paciente , key) in getLista" :key="key">						
+							<tr class="even pointer" v-for="(paciente , key) in getLista" :key="key">
 								<td @click="seleccionarPaciente(paciente)"><a> {{paciente.apellido}} </a></td>
 								<td @click="seleccionarPaciente(paciente)"><a> {{paciente.nombre}} </a></td>
 								<td class="last" @click="seleccionarPaciente(paciente)"><a> {{paciente.dni}} </a></td>
@@ -122,15 +122,18 @@ export default {
                 },
                 buttonsStyling: false,
             });
-            
+
             modal.fire({
                 title: 'Crear nuevo paciente',
                 text: "Ingrese datos personales.",
-                type: 'warning',                
+                type: 'custom icon',
+                imageUrl: window.location +"/images/iconos-dashboard/addpaciente.png",
+                imageWidth: 100,
+                imageHeight:100,
                 width: 400,
                 html:  `
                         <form class="form-horizontal form-label-left">
-                            <div class="ln_solid"></div>  
+                            <div class="ln_solid"></div>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-apellido">
                                     APELLIDO:
@@ -146,7 +149,7 @@ export default {
                                 <div class="col-md-8 col-sm-9 col-xs-9">
                                     <input type="text" id="input-nombre" placeholder="Ingrese el nombre" required class="form-control">
                                 </div>
-                            </div>  
+                            </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-dni">
                                     DNI:
@@ -154,22 +157,39 @@ export default {
                                 <div class="col-md-8 col-sm-9 col-xs-9">
                                     <input type="number" id="input-dni" placeholder="Ingrese el dni" required class="form-control">
                                 </div>
-                            </div>                     
-                            <div class="ln_solid"></div>                            
-                        </form>                                  
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-sexo">
+                                    SEXO:
+                                </label>
+                                <div class="col-md-8 col-sm-9 col-xs-9">
+                                    <label s for="input-masculino">
+                                        masculino:
+                                    </label>
+                                        <input type="radio" id="masculino" name="sexo" value="M"checked>
+
+                                    <label class="control-label" for="input-femenino">
+                                        Femenino:
+                                    </label>
+                                        <input type="radio" id="femenino" name="sexo" value="F" >
+
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                        </form>
                         `,
                 focusConfirm: false,
                 showCancelButton: true,
                 confirmButtonText: 'Crear',
                 cancelButtonText: 'Cancelar',
-                reverseButtons: true,                
+                reverseButtons: true,
                 showLoaderOnConfirm: true,
                 preConfirm: (form)=>{
                         var inputs = new Object();
                         inputs = { 'apellido' : document.getElementById('input-apellido').value,
                                     'nombre' : document.getElementById('input-nombre').value,
                                     'dni' : document.getElementById('input-dni').value };
-                        
+
                         Object.keys(inputs).forEach(function(key) {
                             if(inputs[key].length == 0){
                                 Swal.showValidationMessage(
@@ -183,31 +203,31 @@ export default {
                 }).then((result) => {
                     if (result.value) {
                         modal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             type: 'success',
                             title: 'Paciente creado exitosamente.',
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 1000
                         });
                         this.form.push(result.value);
                         this.paginar();
                     } else if (result.dismiss === Swal.DismissReason.cancel){
                         modal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             title: 'Cancelado',
                             type: 'error',
                             showConfirmButton: false,
-                            timer: 1000
+                            timer: 700
                         });
                     }
-                });         
+                });
         },
         guardarPaciente: function(paciente=null){
             if(paciente!=null){
-                this.form.push(paciente);    
-            }     
-            this.paginar();   
-            this.mostrar_frm_crear_paciente = false;   
+                this.form.push(paciente);
+            }
+            this.paginar();
+            this.mostrar_frm_crear_paciente = false;
         },
         ordenar_por: function( campo , segundo_campo ){
             if( campo.toLowerCase() == 'accion' ){ return; }
@@ -307,8 +327,8 @@ export default {
                             $BOX_PANEL.removeAttr('style');
                     });
             } else {
-                    $BOX_CONTENT.slideToggle(200); 
-                    $BOX_PANEL.css('height', 'auto');  
+                    $BOX_CONTENT.slideToggle(200);
+                    $BOX_PANEL.css('height', 'auto');
             }
             $ICON.toggleClass('fa-chevron-up fa-chevron-down');
         },

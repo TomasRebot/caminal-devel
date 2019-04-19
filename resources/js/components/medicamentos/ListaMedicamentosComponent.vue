@@ -33,9 +33,6 @@
 								<th class="column-title" @click ="ordenar_por('descripcion')">Descripcion </th>
 								<th class="column-title no-link last" @click ="ordenar_por('cant_blister')"><span class="nobr">Cant. por blister</span></th>
 								<th class="column-title no-link last"><span class="nobr">Stock Caminal / Remediar / Total</span></th>
-								<th class="bulk-actions" colspan="7">
-									<a class="antoo" style="color:#fff; font-weight:500;">Usuarios  <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -47,13 +44,11 @@
 								<td @click="editarMedicamento(medicamento)"><a> {{medicamento.perfil.nombre}} </a></td>
 								<td @click="editarMedicamento(medicamento)"><a> {{medicamento.perfil.clasificacion}} </a></td>
 								<td @click="editarMedicamento(medicamento)"><a> {{medicamento.descripcion}} </a></td>
-								<td class="last"><a><label class='badge badge-success'> {{medicamento.cant_blister}} </label></a>
-								<td class="last"><a>
-                                    <label class='badge badge-success' style="margin-left:30px!important">30</label>
-                                    <label class='badge badge-success' style="margin-left:30px!important">15</label>
-                                    <label class='badge badge-success' style="margin-left:30px!important">45</label>
-
-                                </a>
+								<td><span class='badge badge-md-success'> {{medicamento.cant_blister}} </span></td>
+								<td class="last">
+                                    <label class='badge badge-sm-warning' style="margin-left:30px!important">30</label>
+                                    <label class='badge badge-sm-info' style="margin-left:30px!important">15</label>
+                                    <label class='badge badge-sm-success' style="margin-left:30px!important">45</label>
 								</td>
 							</tr>
 						</tbody>

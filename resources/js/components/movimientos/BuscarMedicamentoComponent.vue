@@ -1,12 +1,12 @@
 <template>
 <div id="buscar-medicamento" class="row">
-	<div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight">
+	<div class="col-md-12 col-sm-12 col-xs-12 ">
 		<div class="x_panel">
 			<div class="x_title">
-				<h3 class="StepTitle">Busqueda de medicamento</h3>
+				<h4 class="StepTitle">Busqueda de medicamento</h4>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
-					<label> Buscar: 
+					<label> Buscar:
 						<input type="search" class="form-control input-sm" v-model="buscar">
 					</label>
 				</ul>
@@ -34,7 +34,7 @@
 								<td @click="seleccionarMedicamento(medicamento)"><a> {{medicamento.perfil.nombre}} </a></td>
 								<td @click="seleccionarMedicamento(medicamento)"><a> {{medicamento.perfil.clasificacion}} </a></td>
 								<td @click="seleccionarMedicamento(medicamento)"><a> {{medicamento.descripcion}} </a></td>
-								<td @click="seleccionarMedicamento(medicamento)" class="last"><a><label class='badge badge-success'> {{medicamento.cant_blister}} </label></a>
+								<td @click="seleccionarMedicamento(medicamento)" class="last"><a><div class='badge badge-md-success'> {{medicamento.cant_blister}} </div></a>
 								</td>
 							</tr>
 						</tbody>
@@ -85,7 +85,7 @@
 				</div>
 			</div><!-- FIN LISTA MEDICAMENTOS AGREGADOS -->
 		</div>
-	</div>	
+	</div>
 </div>
 </template>
 
@@ -153,7 +153,7 @@
 				}
 				// aca no preguntar, la funcion para ordenar por campo fue extraida de internet
 				// y modificada infimamente
-				this.datos_filtrados = this.datos_filtrados.sort(	
+				this.datos_filtrados = this.datos_filtrados.sort(
 					this.sort_by(campo , this.sort_fields.reverse, function(a){
 						if (segundo_campo == 'nombre') {
 							a = a.nombre;
@@ -236,8 +236,8 @@
 								$BOX_PANEL.removeAttr('style');
 						});
 				} else {
-						$BOX_CONTENT.slideToggle(200); 
-						$BOX_PANEL.css('height', 'auto');  
+						$BOX_CONTENT.slideToggle(200);
+						$BOX_PANEL.css('height', 'auto');
 				}
 				$ICON.toggleClass('fa-chevron-up fa-chevron-down');
 			},
@@ -265,7 +265,7 @@
 							this.$emit('medicamentos-seleccionados',this.medicamentos_seleccionados);
 						}
 					}
-				});				
+				});
 			},
 			editarMedicamentoAgregado: function(editar_medicamento){
 				Swal.fire({
@@ -290,9 +290,9 @@
 								if(medicamento.codigo == editar_medicamento.codigo){
 									medicamento.cantidad_entrega = value;
 								}
-							});							
+							});
 							this.recargar = false;
-							this.$nextTick(()=>{ 
+							this.$nextTick(()=>{
 								this.recargar = true
 							});
 							this.$emit('medicamentos-seleccionados',this.medicamentos_seleccionados);

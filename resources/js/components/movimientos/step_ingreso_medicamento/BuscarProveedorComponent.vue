@@ -1,16 +1,16 @@
 <template>
 <div class="row" id="buscar-proveedor">
-    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight" v-if="!mostrar_crear_proveedor">
+    <div class="col-md-12 col-sm-12 col-xs-12" v-if="!mostrar_crear_proveedor">
 		<div class="x_panel">
 			<div class="x_title">
                 <h3 class="StepTitle">Busqueda de proveedor</h3>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
-					<a class="btn btn-sm btn-success" @click="crearProveedor" v-if="'CrearProveedorComponent' in Vue.options.components">
+					<a class="btn btn-sm btn-success" @click="crearProveedor" >
                         Nuevo
                     </a>
 					&nbsp;
-					<label> Buscar: 
+					<label> Buscar:
 						<input type="search" class="form-control input-sm" v-model="buscar">
 					</label>
 				</ul>
@@ -31,8 +31,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="even pointer" v-for="(proveedor , key) in getLista" :key="key">						
-								<td @click="seleccionarProveedor(proveedor)"><a> {{proveedor.nombre}} </a></td>			
+							<tr class="even pointer" v-for="(proveedor , key) in getLista" :key="key">
+								<td @click="seleccionarProveedor(proveedor)"><a> {{proveedor.nombre}} </a></td>
 								<td @click="seleccionarProveedor(proveedor)"><a> {{proveedor.razon_social}} </a></td>
 								<td class="last" @click="seleccionarProveedor(proveedor)"><a> {{proveedor.direccion}} </a></td>
                             </tr>
@@ -73,7 +73,7 @@
 				</div>
 			</div>
 		</div>
-	</div>    
+	</div>
     <crear-proveedor-component :regresar="true" @regresar="guardarProveedor" v-if="mostrar_crear_proveedor">
     </crear-proveedor-component>
 </div>
@@ -88,8 +88,8 @@ export default {
     mounted(){
         //this.form = r.lista_clientes.sort(this.sort_by('dni', true, function(a){return a}));
         this.form = [
-            {'nombre' : 'moreira', 'razon_social':'no se,1', 'direccion': 'coliqueo' },
-                {'nombre' : 'rebot', 'razon_social':'no se,1','direccion': 'suipacha' }
+             {'nombre' : 'moreira', 'direccion': 'coliqueo' , 'telefono' : '505050' , 'razon': '','cuit':''},
+                {'nombre' : 'rebot', 'direccion': 'suipacha' , 'telefono': '0800', 'razon': '','cuit':''}
             ];
         this.datos_filtrados = this.form;
         this.paginar();
@@ -114,8 +114,120 @@ export default {
         }
     },
     methods: {
-        crearProveedor: function(){
-            this.mostrar_crear_proveedor = true;
+        crearProveedor:function(){
+            const modal = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false,
+            });
+
+            modal.fire({
+                title: 'Agregar nueva institucion',
+                text: "Ingrese datos de la institucion.",
+                type: 'custom icon',
+                imageUrl: window.location +"/images/iconos-dashboard/hospital.png",
+                imageWidth: 100,
+                imageHeight:100,
+                width: 500,
+                html: `
+                    <form class="form-horizontal form-label-left">
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-nombre">
+                                NOMBRE:
+                            </label>
+                            <div class="col-md-8 col-sm-9 col-xs-9">
+                                <input type="text" id="input-nombre" placeholder="Ingrese el nombre" required class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-razon">
+                                RAZON SOCIAL:
+                            </label>
+                            <div class="col-md-8 col-sm-9 col-xs-9">
+                                <input type="text" id="input-razon" placeholder="Ingrese la razon social" required class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-cuit">
+                                CUIT:
+                            </label>
+                            <div class="col-md-8 col-sm-9 col-xs-9">
+                                <input type="number" id="input-cuit" placeholder="Ingrese el cuit" required class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-direccion">
+                                DIRECCION:
+                            </label>
+                            <div class="col-md-8 col-sm-9 col-xs-9">
+                                <input type="text" id="input-direccion" placeholder="Ingrese la direccion" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-telefono">
+                                TELÉFONO:
+                            </label>
+                            <div class="col-md-8 col-sm-9 col-xs-9">
+                                <input type="text" id="input-telefono" placeholder="Ingrese un teléfono" required class="form-control">
+                            </div>
+                        </div>
+
+
+
+                        <div class="ln_solid"></div>
+                    </form>
+                    `,
+            focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: 'Crear',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true,
+            showLoaderOnConfirm: true,
+            preConfirm: (form)=>{
+                    var inputs = new Object();
+                    inputs = { 'nombre' : document.getElementById('input-nombre').value,
+                                'razon' : document.getElementById('input-razon').value,
+                                'cuit' : document.getElementById('input-cuit').value ,
+                                'telefono' : document.getElementById('input-telefono').value ,
+                                'direccion' : document.getElementById('input-direccion').value };
+
+                    Object.keys(inputs).forEach(function(key) {
+                        if(inputs[key].length == 0){
+                            Swal.showValidationMessage(
+                                `Error: campos sin completar`
+                            );
+                        }
+                        return false;
+                    });
+                    return inputs;
+                },
+            }).then((result) => {
+                if (result.value) {
+                    modal.fire({
+                        position: 'center',
+                        type: 'success',
+                        title: 'Institucion creada exitosamente.',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                    this.form.push(result.value);
+                    this.paginar();
+                } else if (result.dismiss === Swal.DismissReason.cancel){
+                    modal.fire({
+                        position: 'center',
+                        title: 'Cancelado',
+                        type: 'error',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                }
+            });
         },
         guardarProveedor: function(proveedor=null){
             if (proveedor!=null) {
@@ -225,8 +337,8 @@ export default {
                             $BOX_PANEL.removeAttr('style');
                     });
             } else {
-                    $BOX_CONTENT.slideToggle(200); 
-                    $BOX_PANEL.css('height', 'auto');  
+                    $BOX_CONTENT.slideToggle(200);
+                    $BOX_PANEL.css('height', 'auto');
             }
             $ICON.toggleClass('fa-chevron-up fa-chevron-down');
         },

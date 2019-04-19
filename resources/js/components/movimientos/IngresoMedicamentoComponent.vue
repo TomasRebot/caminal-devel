@@ -1,6 +1,6 @@
 <template>
 <div class="row" id="ingreso-medicamento">
-    <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight">
     <div class="x_panel">
       <div class="x_title">
         <h4>Ingreso de medicamentos</h4>
@@ -69,13 +69,13 @@
             </div>
           </div>
           <div class="actionBar">
-            <a class="buttonFinish btn btn-default" :class="{'buttonDisabled': deshabilitar_confirmar_btn}" @click="confirmarIngreso">
+            <a class="buttonFinish btn btn-sm btn-success" :class="{'buttonDisabled': deshabilitar_confirmar_btn}" @click="confirmarIngreso">
               Confirmar
             </a>
-            <a class="buttonPrevious btn btn-primary" :class="{'buttonDisabled': deshabilitar_btn_anterior}" @click="cambiarPaginaStep(-1)">
+            <a class="buttonPrevious btn btn-sm btn-danger" :class="{'buttonDisabled': deshabilitar_btn_anterior}" @click="cambiarPaginaStep(-1)">
               Anterior
             </a>
-            <a class="buttonNext btn btn-success" :class="{'buttonDisabled': deshabilitar_btn_siguiente}" @click="cambiarPaginaStep(1)">
+            <a class="buttonNext btn btn-sm btn-primary" :class="{'buttonDisabled': deshabilitar_btn_siguiente}" @click="cambiarPaginaStep(1)">
               Siguiente
             </a>
           </div>
