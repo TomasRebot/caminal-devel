@@ -4,7 +4,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name ="csrf-token" content=" {{csrf_token()}} ">
-<link rel="icon" href="images/favicon.ico" type="image/ico" />
+<link rel="icon" type="image/png" href="{{asset('/images/iconos-dashboard/logoPrincipal.png')}}" />
+
 <title> Farmacia | {{env('APP_NAME')}}</title>
 <!-- Bootstrap -->
 <link href="{{asset('css/all.css')}}" rel="stylesheet">

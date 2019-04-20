@@ -8968,7 +8968,6 @@ html , body{
  width:100%;
 
  }
-
 .full-height{
  height:100%;
  }
@@ -9128,9 +9127,11 @@ html , body{
     z-index: 2
 }
 .nav-sm .navbar.nav_title {
+
     width: 70px
 }
 .nav-sm .navbar.nav_title a span {
+
     display: none
 }
 .nav-sm .navbar.nav_title a i {
@@ -9291,6 +9292,8 @@ html , body{
     position: relative
 }
 @media (min-width: 480px) {
+
+
     .nav_menu {
         position: static
     }
@@ -9318,6 +9321,7 @@ body .container.body .right_col {
 .nav_title {
     width: 230px;
     float: left;
+    margin-top: 15px!important;
     background: #2A3F54;
     border-radius: 0;
     height: 57px
@@ -9513,6 +9517,7 @@ table.no-margin .progress {
     margin-bottom: 10px
 }
 @media (min-width: 768px) {
+
     .col-md-55 {
         width: 20%
     }
@@ -11360,79 +11365,6 @@ a.btn-danger {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125)
 }
 
-.badge-sm-success{
-    min-width: 20%!important;
-    margin:auto;
-    background-color:#1ABB9C!important;
-}
-.badge-md-success{
-    min-width: 50%!important;
-    margin:auto!important;
-    background-color:#1ABB9C!important;
-}
-
-.badge-sm-danger{
-    min-width: 20%!important;
-    margin:auto;
-    background-color:#d9534f!important;
-}
-
-.badge-md-danger{
-    min-width: 50%!important;
-    margin:auto;
-    background-color:#d9534f!important;
-}
-.badge-sm-info{
-    min-width: 20%!important;
-    margin:auto;
-    background-color:#5bc0de!important;
-}
-.badge-md-info{
-    min-width: 50%!important;
-    margin:auto;
-    background-color:#5bc0de!important;
-}
-.badge-sm-warning{
-    min-width: 20%!important;
-    margin:auto;
-    background-color:#f0ad4e!important;
-}
-.badge-md-warning{
-    min-width: 20%!important;
-    margin:auto;
-    background-color:#f0ad4e!important;
-}
-
-
-
-
-.badge-xs-danger{
-    min-width: 10%!important;
-    margin:auto;
-    background-color:#d9534f!important;
-}
-.badge-xs-info{
-    min-width: 10%!important;
-    margin:auto;
-    background-color:#5bc0de!important;
-}
-.badge-xs-warning{
-    min-width: 10%!important;
-    margin:auto;
-    background-color:#f0ad4e!important;
-}
-.badge-xs-success{
-    min-width: 10%!important;
-    margin:auto;
-    background-color:#1ABB9C!important;
-}
-
-.badge-xs-info{
-    min-width: 10%!important;
-    margin:auto;
-    color:white!important;
-    background-color:#5bc0de!important;
-}
 
 
 .btn.btn-app>.badge {
@@ -11508,6 +11440,7 @@ textarea:focus {
     background-color: #1ABB9C
 }
 @media (min-width: 768px) {
+
     .bs-glyphicons {
         margin-right: 0;
         margin-left: 0
@@ -12433,6 +12366,8 @@ ul.project_files li a i {
     font-size: 35px
 }
 .login {
+    overflow-x:hidden!important;
+    overflow-y: hidden!important;
     background: #F7F7F7
 }
 .login .fa-paw {
@@ -12747,6 +12682,7 @@ fieldset {
     margin-bottom: 20px
 }
 @media (min-width: 768px) {
+
     .cropper .img-container {
         min-height: 516px
     }
@@ -13204,6 +13140,7 @@ ul.notifications {
 }
 */
 
+
 .main_menu .label {
     line-height: 11px;
     margin-top: 4px;
@@ -13275,11 +13212,212 @@ table thead .checkbox { margin-top:-7px;margin-top:-21px; }
 table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 */
 
+/*----------------------PERSONALIZADOS---------------------------------*/
+.no-overflow{
+    overflow-x:hidden!important;
+}
+.image-container{
+margin:auto!important;
+max-width: 150px!important;
+max-height: 150px!important;
+}
+.m-top-5vh{
+    margin-top:5vh!important;
+}
+.btn-login{
+    font-size: 14px!important;
+    padding: 5px!important;
+}
+.btn-login:hover{
+    background-color:#1ABB9C!important;
+}
+.forgot-password:hover{
+    text-decoration: none!important;
+    color:#d9534f!important;
+}
 .daterangepicker.xdisplay { width:228px; }
 
 .dataTables_wrapper > .row{
   overflow:auto !important; /*prevent datatables overflowing its container*/
 }
+.login-footer{
+    position: absolute;
+    margin-bottom: 0%!important;;
+    width: 100%;
+}
+
+.badge-sm-success{
+    min-width: 20%!important;
+    margin:auto;
+    color:white!important;
+
+    background-color:#1ABB9C!important;
+}
+.badge-md-success{
+    min-width: 50%!important;
+    margin:auto!important;
+    color:white!important;
+
+    background-color:#1ABB9C!important;
+}
+
+.badge-sm-danger{
+    min-width: 20%!important;
+    margin:auto;
+    background-color:#d9534f!important;
+}
+
+.badge-md-danger{
+    min-width: 50%!important;
+    margin:auto;
+    background-color:#d9534f!important;
+}
+.badge-sm-info{
+    min-width: 20%!important;
+    margin:auto;
+    color:white!important;
+
+    background-color:#5bc0de!important;
+}
+.badge-md-info{
+    min-width: 50%!important;
+    margin:auto;
+    color:white!important;
+
+    background-color:#5bc0de!important;
+}
+.badge-sm-warning{
+    min-width: 20%!important;
+    margin:auto;
+    background-color:#f0ad4e!important;
+}
+.badge-md-warning{
+    min-width: 20%!important;
+    margin:auto;
+    color:white!important;
+
+    background-color:#f0ad4e!important;
+}
+
+
+
+
+.badge-xs-danger{
+    min-width: 10%!important;
+    margin:auto;
+    color:white!important;
+
+    background-color:#d9534f!important;
+}
+.badge-xs-info{
+    min-width: 10%!important;
+    margin:auto;
+    color:white!important;
+
+    background-color:#5bc0de!important;
+}
+.badge-xs-warning{
+    min-width: 10%!important;
+    margin:auto;
+    color:white!important;
+
+    background-color:#f0ad4e!important;
+}
+.badge-xs-success{
+    min-width: 10%!important;
+    margin:auto;
+    color:white!important;
+
+    color:white!important;
+
+    background-color:#1ABB9C!important;
+}
+
+.badge-xs-info{
+    min-width: 10%!important;
+    margin:auto;
+    color:white!important;
+    background-color:#5bc0de!important;
+}
+.total-pacientes{
+    min-width:50px!important;
+    min-height:50px!important;
+    background-size: 100%;
+        -moz-background-size: 100%;
+        -o-background-size: 100%;
+        -webkit-background-size: 100%;
+        -khtml-background-size: 100%;
+    background-image: url("/images/iconos-dashboard/usuarios.png");
+    color: #BAB8B8;
+    margin-top: 15px!important;
+    margin-right: 15px!important;
+    position: relative;
+    float: right!important;
+
+}
+.total-entregas{
+    min-width: 50px!important;
+    min-height:50px!important;
+    background-size: 100%;
+        -moz-background-size: 100%;
+        -o-background-size: 100%;
+        -webkit-background-size: 100%;
+        -khtml-background-size: 100%;
+    background-image: url("/images/iconos-dashboard/muchasplanillas.png");
+    color: #BAB8B8;
+    margin-top: 15px!important;
+    margin-right: 15px!important;
+    position: relative;
+    float: right!important;
+}
+.total-profesionales{
+    min-width: 50px!important;
+    min-height:50px!important;
+    background-size: 100%;
+        -moz-background-size: 100%;
+        -o-background-size: 100%;
+        -webkit-background-size: 100%;
+        -khtml-background-size: 100%;
+    background-image: url("/images/iconos-dashboard/dotor.png");
+    color: #BAB8B8;
+    margin-top: 15px!important;
+    margin-right: 15px!important;
+    position: relative;
+    float: right!important;
+}
+.total-medicamentos{
+    min-width: 50px!important;
+    min-height:50px!important;
+    background-size: 100%;
+        -moz-background-size: 100%;
+        -o-background-size: 100%;
+        -webkit-background-size: 100%;
+        -khtml-background-size: 100%;
+    background-image: url("/images/iconos-dashboard/medicamento.png");
+    color: #BAB8B8;
+    margin-top: 15px!important;
+    margin-right: 15px!important;
+    position: relative;
+    float: right!important;
+}
+.lateral-sistema{
+    height:150px!important;
+    width:150px!important;
+    max-width: 23%!important;
+    max-height:75%!important;
+    background-size: 100%;
+        -moz-background-size: 100%;
+        -o-background-size: 100%;
+        -webkit-background-size: 100%;
+        -khtml-background-size: 100%;
+    background-image: url("/images/iconos-dashboard/planilla.png");
+    color: #BAB8B8;
+    margin-top: 15px!important;
+    margin-right: 15px!important;
+    position: relative;
+    float: left!important;
+}
+
 
 /** bootstrap-datetimepicker **/
 .input-group.date .input-group-addon{

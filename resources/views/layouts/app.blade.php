@@ -4,8 +4,8 @@
     @include('partials.header')
     @yield('top-styles')
   </head>
-  <body class="nav-md">
-      <div class="container body">
+  <body class="nav-md no-overflow">
+      <div class="container body ">
           <div class="main_container">
                  <div id="app">
 

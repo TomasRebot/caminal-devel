@@ -1,5 +1,5 @@
 <!-- footer de pagina -->
-<footer>
+<footer class="footer_fixed">
   <div class="pull-right">
    Creado por <a href="javascript:void(0)">grupo BV 69</a>
   </div>

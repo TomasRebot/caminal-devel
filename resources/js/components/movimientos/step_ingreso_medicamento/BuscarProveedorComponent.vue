@@ -3,7 +3,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12" v-if="!mostrar_crear_proveedor">
 		<div class="x_panel">
 			<div class="x_title">
-                <h3 class="StepTitle">Busqueda de proveedor</h3>
+                <h4 class="StepTitle">Busqueda de proveedor</h4>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
 					<a class="btn btn-sm btn-success" @click="crearProveedor" >
@@ -124,7 +124,7 @@ export default {
             });
 
             modal.fire({
-                title: 'Agregar nueva institucion',
+                title: 'Registrar nuevo proveedor',
                 text: "Ingrese datos de la institucion.",
                 type: 'custom icon',
                 imageUrl: window.location +"/images/iconos-dashboard/hospital.png",

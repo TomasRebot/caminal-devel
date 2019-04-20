@@ -2,31 +2,24 @@
 <div id="panel-lateral">
   <div class="col-md-3 left_col" >
       <div class="left_col scroll-view">
-        <div class="navbar nav_title" style="border: 0;">
-          <a @click="showView('InicioDashboardComponent')" class="site_title">
-            <i class="fa fa-plus-square"></i>
-            <span>
-              Farmacia
-            </span>
-          </a>
+        <div class="profile clearfix" style="margin-top:25px!important">
+            <div class="profile_pic">
+            <img :src="Logotipo" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+            <span>Bienvenido,</span>
+            <h2>Usuario</h2>
+            </div>
         </div>
         <div class="clearfix"></div>
         <!-- menu aprofile quick info -->
-        <div class="profile clearfix">
-          <div class="profile_pic">
-          </div>
-          <div class="profile_info">
-            <span>Bienvenido,</span>
-            <h2>Jhon Snow</h2>
-          </div>
-        </div>
         <!--  //datos del usuario autentificado y -->
         <br />
         <br />
         <!-- items menu lateral -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
           <div class="menu_section">
-            <h3>General</h3>
+            <h3>Gestión de farmacia</h3>
             <ul class="nav side-menu">
               <!-- item del menu -->
               <botonmenu-component
@@ -91,7 +84,7 @@
                           <span>Ayuda</span>
                       </a>
                       </li>
-                      <li><a href="">
+                      <li><a href="/logaut">
                       <i class="fa fa-sign-out pull-right"></i> Cerrar sesion</a><form id="logout-form" action="" method="POST" style="display: none;">
 
                       </form>
@@ -115,21 +108,23 @@
       //  'btn-opcion-vista' : btnViewButton,
     },
     mounted(){
+
     },
     data(){
       return {
+        Logotipo : window.location+ "/images/iconos-dashboard/userprofile.png",
         botonesPanel: [
           { 'titulo' : 'Medicamentos' , "icono": "fa fa-plus-square", 'submenu' : [
                                                       {'nombre': 'Lista'      , 'componente' : 'ListaMedicamentosComponent'},],
           },
-          { 'titulo' : 'Operaciones'  ,"icono":"fa fa-folder" ,'submenu' : [ 
+          { 'titulo' : 'Operaciones'  ,"icono":"fa fa-folder" ,'submenu' : [
                                                       {'nombre': 'Entrega a paciente'   , 'componente' :'EntregaMedicamentoComponent'},
                                                       {'nombre': 'Entrega por clearing', 'componente' :'BajaMedicamentoClearingComponent'},
                                                       {'nombre': 'Ingreso medicamentos', 'componente' : 'IngresoMedicamentoComponent'}],
           },
-          { 'titulo' : 'Usuarios'     , "icono":"fa fa-users",'submenu' : [ 
+          { 'titulo' : 'Usuarios'     , "icono":"fa fa-users",'submenu' : [
                                                       {'nombre': 'Lista pacientes', 'componente': 'ListaPacientesComponent'},
-                                                      {'nombre': 'Lista medicos' , 'componente': 'ListaMedicosComponent'}],
+                                                      {'nombre': 'Lista profesionales' , 'componente': 'ListaMedicosComponent'}],
           },
           { 'titulo' : 'Configuracion' , "icono":"fa fa-cogs",'submenu' : [
                                                       {'nombre' : 'Usuarios'  , 'componente' :  'UsuarioComponent' },

@@ -3,7 +3,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight" v-if="!mostrar_frm_crear_medico && !mostrar_frm_editar_medico">
 		<div class="x_panel">
 			<div class="x_title">
-                <h4 class="StepTitle">Listado de medicos</h4>
+                <h4 class="StepTitle">Listado de profesionales</h4>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
 					<a class="btn btn-sm btn-success" @click="crearMedico" v-if="'CrearMedicoComponent' in Vue.options.components">Nuevo</a>

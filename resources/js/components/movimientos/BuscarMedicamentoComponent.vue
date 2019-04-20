@@ -6,6 +6,7 @@
 				<h4 class="StepTitle">Busqueda de medicamento</h4>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
+                    <a class="btn btn-sm btn-success" @click="crearMedicamento" v-if="'CrearMedicamentoComponent' in Vue.options.components">Nuevo</a>
 					<label> Buscar:
 						<input type="search" class="form-control input-sm" v-model="buscar">
 					</label>
@@ -142,6 +143,115 @@
 			}
 		},
 		methods: {
+             crearMedicamento: function(){
+                const modal = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false,
+                });
+
+                modal.fire({
+                    title: 'Agregar un nuevo medicamento',
+                    text: "Ingrese datos personales.",
+                    type: 'custom icon',
+                    imageUrl: window.location +"/images/iconos-dashboard/medicamento.png",
+                    imageWidth: 100,
+                    imageHeight:100,
+                    width: 400,
+                    html:  `
+                            <form class="form-horizontal form-label-left">
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-codigo">
+                                        CÓDIGO:
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-9">
+                                        <input type="text" id="input-codigo" placeholder="Ingrese codigo de medicamento" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-nombre">
+                                        NOMBRE:
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-9">
+                                        <input type="text" id="input-nombre" placeholder="Ingrese el nombre" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-clasificacion">
+                                        CLASIFICACION:
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-9">
+                                        <input type="text" id="input-clasificacion" placeholder="Ingrese la clasificacion" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-descripcion">
+                                        DESCRIPCIÓN:
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-9">
+                                        <input type="text" id="input-descripcion" placeholder="Ingrese una descripcion" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-3" for="input-cantidadBlister">
+                                        CANTIDAD X BLISTER:
+                                    </label>
+                                    <div class="col-md-8 col-sm-9 col-xs-9">
+                                        <input type="number" id="input-cantidadBlister" placeholder="Ingrese la cantidad x blister" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
+                            </form>
+                            `,
+                    focusConfirm: false,
+                    showCancelButton: true,
+                    confirmButtonText: 'Crear',
+                    cancelButtonText: 'Cancelar',
+                    reverseButtons: true,
+                    showLoaderOnConfirm: true,
+                    preConfirm: (form)=>{
+                            var inputs = new Object();
+                            inputs = { 'codigo' : document.getElementById('input-codigo').value,
+                                        'nombre' : document.getElementById('input-nombre').value,
+                                        'clasificacion' : document.getElementById('input-clasificacion').value,
+                                        'descripcion' : document.getElementById('input-descripcion').value,
+                                        'cantidadBlister' : document.getElementById('input-cantidadBlister').value };
+
+                            Object.keys(inputs).forEach(function(key) {
+                                if(inputs[key].length == 0){
+                                    Swal.showValidationMessage(
+                                        `Error: campos sin completar`
+                                    );
+                                }
+                                return false;
+                            });
+                            return inputs;
+                        },
+                    }).then((result) => {
+                        if (result.value) {
+                            modal.fire({
+                                position: 'center',
+                                type: 'success',
+                                title: 'Medicamento creado exitosamente.',
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                            this.form.push(result.value);
+                            this.paginar();
+                        } else if (result.dismiss === Swal.DismissReason.cancel){
+                            modal.fire({
+                                position: 'center',
+                                title: 'Cancelado',
+                                type: 'error',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                        }
+                    });
+            },
 			ordenar_por: function(campo , segundo_campo = null){
 				let f = this.sort_fields;
 

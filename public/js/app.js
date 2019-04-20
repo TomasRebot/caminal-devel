@@ -2307,48 +2307,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3249,13 +3207,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'panel-lateral',
   components: {//  'btn-opcion-vista' : btnViewButton,
@@ -3263,6 +3214,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {},
   data: function data() {
     return {
+      Logotipo: window.location + "/images/iconos-dashboard/userprofile.png",
       botonesPanel: [{
         'titulo': 'Medicamentos',
         "icono": "fa fa-plus-square",
@@ -3290,7 +3242,7 @@ __webpack_require__.r(__webpack_exports__);
           'nombre': 'Lista pacientes',
           'componente': 'ListaPacientesComponent'
         }, {
-          'nombre': 'Lista medicos',
+          'nombre': 'Lista profesionales',
           'componente': 'ListaMedicosComponent'
         }]
       }, {
@@ -3613,6 +3565,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'buscar-medicamento',
   props: [],
@@ -3676,6 +3629,73 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    crearMedicamento: function crearMedicamento() {
+      var _this = this;
+
+      var modal = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+      modal.fire({
+        title: 'Agregar un nuevo medicamento',
+        text: "Ingrese datos personales.",
+        type: 'custom icon',
+        imageUrl: window.location + "/images/iconos-dashboard/medicamento.png",
+        imageWidth: 100,
+        imageHeight: 100,
+        width: 400,
+        html: "\n                            <form class=\"form-horizontal form-label-left\">\n                                <div class=\"ln_solid\"></div>\n                                <div class=\"form-group\">\n                                    <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-codigo\">\n                                        C\xD3DIGO:\n                                    </label>\n                                    <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                        <input type=\"text\" id=\"input-codigo\" placeholder=\"Ingrese codigo de medicamento\" class=\"form-control\">\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-nombre\">\n                                        NOMBRE:\n                                    </label>\n                                    <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                        <input type=\"text\" id=\"input-nombre\" placeholder=\"Ingrese el nombre\" class=\"form-control\">\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-clasificacion\">\n                                        CLASIFICACION:\n                                    </label>\n                                    <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                        <input type=\"text\" id=\"input-clasificacion\" placeholder=\"Ingrese la clasificacion\" class=\"form-control\">\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-descripcion\">\n                                        DESCRIPCI\xD3N:\n                                    </label>\n                                    <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                        <input type=\"text\" id=\"input-descripcion\" placeholder=\"Ingrese una descripcion\" class=\"form-control\">\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label class=\"control-label col-md-4 col-sm-3 col-xs-3\" for=\"input-cantidadBlister\">\n                                        CANTIDAD X BLISTER:\n                                    </label>\n                                    <div class=\"col-md-8 col-sm-9 col-xs-9\">\n                                        <input type=\"number\" id=\"input-cantidadBlister\" placeholder=\"Ingrese la cantidad x blister\" class=\"form-control\">\n                                    </div>\n                                </div>\n                                <div class=\"ln_solid\"></div>\n                            </form>\n                            ",
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'Crear',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        preConfirm: function preConfirm(form) {
+          var inputs = new Object();
+          inputs = {
+            'codigo': document.getElementById('input-codigo').value,
+            'nombre': document.getElementById('input-nombre').value,
+            'clasificacion': document.getElementById('input-clasificacion').value,
+            'descripcion': document.getElementById('input-descripcion').value,
+            'cantidadBlister': document.getElementById('input-cantidadBlister').value
+          };
+          Object.keys(inputs).forEach(function (key) {
+            if (inputs[key].length == 0) {
+              Swal.showValidationMessage("Error: campos sin completar");
+            }
+
+            return false;
+          });
+          return inputs;
+        }
+      }).then(function (result) {
+        if (result.value) {
+          modal.fire({
+            position: 'center',
+            type: 'success',
+            title: 'Medicamento creado exitosamente.',
+            showConfirmButton: false,
+            timer: 1000
+          });
+
+          _this.form.push(result.value);
+
+          _this.paginar();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          modal.fire({
+            position: 'center',
+            title: 'Cancelado',
+            type: 'error',
+            showConfirmButton: false,
+            timer: 700
+          });
+        }
+      });
+    },
     ordenar_por: function ordenar_por(campo) {
       var segundo_campo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var f = this.sort_fields;
@@ -3777,7 +3797,7 @@ __webpack_require__.r(__webpack_exports__);
       $ICON.toggleClass('fa-chevron-up fa-chevron-down');
     },
     seleccionarMedicamento: function seleccionarMedicamento(agregar_medicamento) {
-      var _this = this;
+      var _this2 = this;
 
       Swal.fire({
         title: 'Ingrese la cantidad a entregar',
@@ -3790,25 +3810,25 @@ __webpack_require__.r(__webpack_exports__);
           if (!value) {
             return 'Debe ingresar la cantidad';
           } else {
-            var that = _this;
+            var that = _this2;
             agregar_medicamento['cantidad_entrega'] = value;
 
-            _this.medicamentos_seleccionados.push(agregar_medicamento);
+            _this2.medicamentos_seleccionados.push(agregar_medicamento);
 
-            $(_this.form).each(function (index, medicamento) {
+            $(_this2.form).each(function (index, medicamento) {
               if (medicamento.codigo == agregar_medicamento.codigo) {
                 that.form.splice(index, 1);
                 that.paginar();
               }
             });
 
-            _this.$emit('medicamentos-seleccionados', _this.medicamentos_seleccionados);
+            _this2.$emit('medicamentos-seleccionados', _this2.medicamentos_seleccionados);
           }
         }
       });
     },
     editarMedicamentoAgregado: function editarMedicamentoAgregado(editar_medicamento) {
-      var _this2 = this;
+      var _this3 = this;
 
       Swal.fire({
         title: 'Editar cantidad medicamento agregado',
@@ -3828,33 +3848,33 @@ __webpack_require__.r(__webpack_exports__);
           if (!value) {
             return 'Debe ingresar la cantidad';
           } else {
-            $(_this2.medicamentos_seleccionados).each(function (index, medicamento) {
+            $(_this3.medicamentos_seleccionados).each(function (index, medicamento) {
               if (medicamento.codigo == editar_medicamento.codigo) {
                 medicamento.cantidad_entrega = value;
               }
             });
-            _this2.recargar = false;
+            _this3.recargar = false;
 
-            _this2.$nextTick(function () {
-              _this2.recargar = true;
+            _this3.$nextTick(function () {
+              _this3.recargar = true;
             });
 
-            _this2.$emit('medicamentos-seleccionados', _this2.medicamentos_seleccionados);
+            _this3.$emit('medicamentos-seleccionados', _this3.medicamentos_seleccionados);
           }
         }
       }).then(function (result) {
         if (result.dismiss === Swal.DismissReason.cancel) {
-          var that = _this2;
+          var that = _this3;
 
-          _this2.form.push(editar_medicamento);
+          _this3.form.push(editar_medicamento);
 
-          $(_this2.medicamentos_seleccionados).each(function (index, medicamento) {
+          $(_this3.medicamentos_seleccionados).each(function (index, medicamento) {
             if (medicamento.codigo == editar_medicamento.codigo) {
               that.medicamentos_seleccionados.splice(index, 1);
             }
           });
 
-          _this2.paginar();
+          _this3.paginar();
         }
       });
     }
@@ -3879,11 +3899,11 @@ __webpack_require__.r(__webpack_exports__);
     * en caso de no tener filtro retorna todo
     */
     filtrar_datos: function filtrar_datos() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.form) {
         return this.form.filter(function (item) {
-          return item.codigo.toString().toLowerCase().includes(_this3.buscar.toLowerCase()) || item.perfil.nombre.toLowerCase().includes(_this3.buscar.toLowerCase()) || item.perfil.clasificacion.toLowerCase().includes(_this3.buscar.toLowerCase()) || item.descripcion.toLowerCase().includes(_this3.buscar.toLowerCase()) || item.cant_blister.toString().toLowerCase().includes(_this3.buscar.toLowerCase());
+          return item.codigo.toString().toLowerCase().includes(_this4.buscar.toLowerCase()) || item.perfil.nombre.toLowerCase().includes(_this4.buscar.toLowerCase()) || item.perfil.clasificacion.toLowerCase().includes(_this4.buscar.toLowerCase()) || item.descripcion.toLowerCase().includes(_this4.buscar.toLowerCase()) || item.cant_blister.toString().toLowerCase().includes(_this4.buscar.toLowerCase());
         });
       }
     }
@@ -5683,7 +5703,7 @@ __webpack_require__.r(__webpack_exports__);
         buttonsStyling: false
       });
       modal.fire({
-        title: 'Agregar nueva institucion',
+        title: 'Registrar nuevo proveedor',
         text: "Ingrese datos de la institucion.",
         type: 'custom icon',
         imageUrl: window.location + "/images/iconos-dashboard/hospital.png",
@@ -22941,13 +22961,11 @@ var staticRenderFns = [
               },
               [
                 _c("div", { staticClass: "tile-stats" }, [
-                  _c("div", { staticClass: "icon" }, [
-                    _c("i", { staticClass: "fa fa-caret-square-o-right" })
-                  ]),
+                  _c("div", { staticClass: "total-pacientes" }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "count" }, [_vm._v("179")]),
+                  _c("div", { staticClass: "count" }, [_vm._v("3554")]),
                   _vm._v(" "),
-                  _c("h3", [_vm._v("Cantidad de pacientes")]),
+                  _c("h3", [_vm._v("Pacientes")]),
                   _vm._v(" "),
                   _c("p", [_vm._v("Registrados.")])
                 ])
@@ -22962,15 +22980,13 @@ var staticRenderFns = [
               },
               [
                 _c("div", { staticClass: "tile-stats" }, [
-                  _c("div", { staticClass: "icon" }, [
-                    _c("i", { staticClass: "fa fa-comments-o" })
-                  ]),
+                  _c("div", { staticClass: "total-entregas" }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "count" }, [_vm._v("179")]),
+                  _c("div", { staticClass: "count" }, [_vm._v("90")]),
                   _vm._v(" "),
-                  _c("h3", [_vm._v("Promedio total de entregas")]),
+                  _c("h3", [_vm._v("Entregas")]),
                   _vm._v(" "),
-                  _c("p", [_vm._v("Mensuales.")])
+                  _c("p", [_vm._v("Hasta la fecha.")])
                 ])
               ]
             ),
@@ -22983,13 +22999,11 @@ var staticRenderFns = [
               },
               [
                 _c("div", { staticClass: "tile-stats" }, [
-                  _c("div", { staticClass: "icon" }, [
-                    _c("i", { staticClass: "fa fa-sort-amount-desc" })
-                  ]),
+                  _c("div", { staticClass: "total-profesionales" }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "count" }, [_vm._v("179")]),
+                  _c("div", { staticClass: "count" }, [_vm._v("33")]),
                   _vm._v(" "),
-                  _c("h3", [_vm._v("Cantidad de profesionales")]),
+                  _c("h3", [_vm._v("Profesionales")]),
                   _vm._v(" "),
                   _c("p", [_vm._v("Registrados.")])
                 ])
@@ -23004,15 +23018,13 @@ var staticRenderFns = [
               },
               [
                 _c("div", { staticClass: "tile-stats" }, [
-                  _c("div", { staticClass: "icon" }, [
-                    _c("i", { staticClass: "fa fa-check-square-o" })
-                  ]),
+                  _c("div", { staticClass: "total-medicamentos" }),
                   _vm._v(" "),
                   _c("div", { staticClass: "count" }, [_vm._v("179")]),
                   _vm._v(" "),
-                  _c("h3", [_vm._v("Medicamentos recibidos")]),
+                  _c("h3", [_vm._v("Medicamentos")]),
                   _vm._v(" "),
-                  _c("p", [_vm._v("El último mes.")])
+                  _c("p", [_vm._v("En stock.")])
                 ])
               ]
             )
@@ -23021,7 +23033,20 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("div", { staticClass: "x_panel animated fadeInRight" }, [
           _c("div", { staticClass: "x_title" }, [
-            _c("h3", [_vm._v("Proximos medicamentos en limite ")]),
+            _c("h4", [
+              _vm._v("Próximos medicamentos en limite\n            "),
+              _c("span", { staticClass: "badge badge-xs-danger" }, [
+                _vm._v("Próximo a vencer")
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "badge badge-xs-warning" }, [
+                _vm._v("Bajo stock en Caminal")
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "badge badge-xs-info" }, [
+                _vm._v("Bajo stock en Remediar")
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "clearfix" })
           ]),
@@ -23047,260 +23072,85 @@ var staticRenderFns = [
               [
                 _c("thead", [
                   _c("tr", { attrs: { role: "row" } }, [
-                    _c(
-                      "th",
-                      {
-                        staticClass: "sorting_asc",
-                        staticStyle: { width: "141px" },
-                        attrs: {
-                          tabindex: "0",
-                          "aria-controls": "datatable-fixed-header",
-                          rowspan: "1",
-                          colspan: "1",
-                          "aria-sort": "ascending",
-                          "aria-label":
-                            "Name: activate to sort column descending"
-                        }
-                      },
-                      [_vm._v("Codigo")]
-                    ),
+                    _c("th", [_vm._v("Codigo")]),
                     _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "sorting",
-                        staticStyle: { width: "234px" },
-                        attrs: {
-                          tabindex: "0",
-                          "aria-controls": "datatable-fixed-header",
-                          rowspan: "1",
-                          colspan: "1",
-                          "aria-label":
-                            "Position: activate to sort column ascending"
-                        }
-                      },
-                      [_vm._v("Medicamento")]
-                    ),
+                    _c("th", [_vm._v("Medicamento")]),
                     _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "sorting",
-                        staticStyle: { width: "104px" },
-                        attrs: {
-                          tabindex: "0",
-                          "aria-controls": "datatable-fixed-header",
-                          rowspan: "1",
-                          colspan: "1",
-                          "aria-label":
-                            "Office: activate to sort column ascending"
-                        }
-                      },
-                      [_vm._v("Stock Remediar")]
-                    ),
+                    _c("th", [_vm._v("Stock Remediar")]),
                     _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "sorting",
-                        staticStyle: { width: "52px" },
-                        attrs: {
-                          tabindex: "0",
-                          "aria-controls": "datatable-fixed-header",
-                          rowspan: "1",
-                          colspan: "1",
-                          "aria-label": "Age: activate to sort column ascending"
-                        }
-                      },
-                      [_vm._v("stock Caminal")]
-                    ),
+                    _c("th", [_vm._v("Stock Caminal")]),
                     _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "sorting",
-                        staticStyle: { width: "102px" },
-                        attrs: {
-                          tabindex: "0",
-                          "aria-controls": "datatable-fixed-header",
-                          rowspan: "1",
-                          colspan: "1",
-                          "aria-label":
-                            "Start date: activate to sort column ascending"
-                        }
-                      },
-                      [_vm._v("Vencimiento")]
-                    ),
+                    _c("th", [_vm._v("Fecha vencimiento")]),
                     _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "sorting",
-                        staticStyle: { width: "79px" },
-                        attrs: {
-                          tabindex: "0",
-                          "aria-controls": "datatable-fixed-header",
-                          rowspan: "1",
-                          colspan: "1",
-                          "aria-label":
-                            "Salary: activate to sort column ascending"
-                        }
-                      },
-                      [_vm._v("Unidades totales en riesgo")]
-                    )
+                    _c("th", [_vm._v("Unidades totales en riesgo")])
                   ])
                 ]),
                 _vm._v(" "),
                 _c("tbody", [
                   _c("tr", { staticClass: "odd", attrs: { role: "row" } }, [
-                    _c("td", { staticClass: "sorting_1" }, [
-                      _vm._v("Airi Satou")
-                    ]),
+                    _c("td", [_vm._v("0853")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Accountant")]),
+                    _c("td", [_vm._v("Ibupirac 600 x 10 cpr")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Tokyo")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("33")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("2008/11/28")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("$162,700")])
-                  ]),
-                  _c("tr", { staticClass: "even", attrs: { role: "row" } }, [
-                    _c("td", { staticClass: "sorting_1" }, [
-                      _vm._v("Angelica Ramos")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Chief Executive Officer (CEO)")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("London")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("47")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("2009/10/09")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("$1,200,000")])
-                  ]),
-                  _c("tr", { staticClass: "odd", attrs: { role: "row" } }, [
-                    _c("td", { staticClass: "sorting_1" }, [
-                      _vm._v("Ashton Cox")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Junior Technical Author")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("San Francisco")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("66")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("2009/01/12")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("$86,000")])
-                  ]),
-                  _c("tr", { staticClass: "even", attrs: { role: "row" } }, [
-                    _c("td", { staticClass: "sorting_1" }, [
-                      _vm._v("Bradley Greer")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Software Engineer")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("London")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("41")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("2012/10/13")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("$132,000")])
-                  ]),
-                  _c("tr", { staticClass: "odd", attrs: { role: "row" } }, [
-                    _c("td", { staticClass: "sorting_1" }, [
-                      _vm._v("Brenden Wagner")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Software Engineer")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("San Francisco")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("28")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("2011/06/07")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("$206,850")])
-                  ]),
-                  _c("tr", { staticClass: "even", attrs: { role: "row" } }, [
-                    _c("td", { staticClass: "sorting_1" }, [
-                      _vm._v("Brielle Williamson")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Integration Specialist")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("New York")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("61")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("2012/12/02")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("$372,000")])
-                  ]),
-                  _c("tr", { staticClass: "odd", attrs: { role: "row" } }, [
-                    _c("td", { staticClass: "sorting_1" }, [
-                      _vm._v("Bruno Nash")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Software Engineer")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("London")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("38")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("2011/05/03")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("$163,500")])
-                  ]),
-                  _c("tr", { staticClass: "even", attrs: { role: "row" } }, [
-                    _c("td", { staticClass: "sorting_1" }, [
-                      _vm._v("Caesar Vance")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Pre-Sales Support")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("New York")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("21")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("2011/12/12")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("$106,450")])
-                  ]),
-                  _c("tr", { staticClass: "odd", attrs: { role: "row" } }, [
-                    _c("td", { staticClass: "sorting_1" }, [
-                      _vm._v("Cara Stevens")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Sales Assistant")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("New York")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("46")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("2011/12/06")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("$145,600")])
-                  ]),
-                  _c("tr", { staticClass: "even", attrs: { role: "row" } }, [
-                    _c("td", { staticClass: "sorting_1" }, [
-                      _vm._v("Cedric Kelly")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Senior Javascript Developer")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Edinburgh")]),
+                    _c("td", [_vm._v("60")]),
                     _vm._v(" "),
                     _c("td", [_vm._v("22")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("2012/03/29")]),
+                    _c("td", [
+                      _c("span", { staticClass: "badge badge-md-danger" }, [
+                        _vm._v("10/6/2019")
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("$433,060")])
+                    _c("td", [
+                      _c("span", { staticClass: "badge badge-xs-danger" }, [
+                        _vm._v("8")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", { staticClass: "odd", attrs: { role: "row" } }, [
+                    _c("td", [_vm._v("0153")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Amoxidal 500 x 10 cpr")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", { staticClass: "badge badge-xs-info" }, [
+                        _vm._v("15")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("60")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("10/6/2020")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", { staticClass: "badge badge-xs-info" }, [
+                        _vm._v("15")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", { staticClass: "odd", attrs: { role: "row" } }, [
+                    _c("td", [_vm._v("00098")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Eritromicina / Susp. 200 mg / 5 ml")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(" 60")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", { staticClass: "badge badge-xs-warning" }, [
+                        _vm._v("8")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("10/6/2020")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", { staticClass: "badge badge-xs-warning" }, [
+                        _vm._v("8")
+                      ])
+                    ])
                   ])
                 ])
               ]
@@ -24653,10 +24503,13 @@ var render = function() {
                               _c("li", [
                                 _c(
                                   "button",
-                                  { on: { click: _vm.paginaAnterior } },
+                                  {
+                                    staticClass: "btn btn-xs btn-dark",
+                                    on: { click: _vm.paginaAnterior }
+                                  },
                                   [
                                     _vm._v(
-                                      "\n\t\t\t\t\t\t\t\t\t\t\tAnterior\n\t\t\t\t\t\t\t\t\t\t"
+                                      "\n\t\t\t\t\t\t\t\t\t\t\t Anterior\n\t\t\t\t\t\t\t\t\t\t"
                                     )
                                   ]
                                 )
@@ -24667,7 +24520,10 @@ var render = function() {
                               _c("li", [
                                 _c(
                                   "button",
-                                  { on: { click: _vm.paginaSiguiente } },
+                                  {
+                                    staticClass: "btn btn-xs btn-dark",
+                                    on: { click: _vm.paginaSiguiente }
+                                  },
                                   [
                                     _vm._v(
                                       "\n\t\t\t\t\t\t\t\t\t\t\tSiguiente\n\t\t\t\t\t\t\t\t\t\t"
@@ -24842,32 +24698,23 @@ var render = function() {
       _c("div", { staticClass: "left_col scroll-view" }, [
         _c(
           "div",
-          { staticClass: "navbar nav_title", staticStyle: { border: "0" } },
+          {
+            staticClass: "profile clearfix",
+            staticStyle: { "margin-top": "25px!important" }
+          },
           [
-            _c(
-              "a",
-              {
-                staticClass: "site_title",
-                on: {
-                  click: function($event) {
-                    return _vm.showView("InicioDashboardComponent")
-                  }
-                }
-              },
-              [
-                _c("i", { staticClass: "fa fa-plus-square" }),
-                _vm._v(" "),
-                _c("span", [
-                  _vm._v("\r\n              Farmacia\r\n            ")
-                ])
-              ]
-            )
+            _c("div", { staticClass: "profile_pic" }, [
+              _c("img", {
+                staticClass: "img-circle profile_img",
+                attrs: { src: _vm.Logotipo, alt: "..." }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
           ]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "clearfix" }),
-        _vm._v(" "),
-        _vm._m(0),
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
@@ -24881,7 +24728,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "menu_section" }, [
-              _c("h3", [_vm._v("General")]),
+              _c("h3", [_vm._v("Gestión de farmacia")]),
               _vm._v(" "),
               _c(
                 "ul",
@@ -24915,14 +24762,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "profile clearfix" }, [
-      _c("div", { staticClass: "profile_pic" }),
+    return _c("div", { staticClass: "profile_info" }, [
+      _c("span", [_vm._v("Bienvenido,")]),
       _vm._v(" "),
-      _c("div", { staticClass: "profile_info" }, [
-        _c("span", [_vm._v("Bienvenido,")]),
-        _vm._v(" "),
-        _c("h2", [_vm._v("Jhon Snow")])
-      ])
+      _c("h2", [_vm._v("Usuario")])
     ])
   },
   function() {
@@ -25024,7 +24867,7 @@ var staticRenderFns = [
                 [
                   _c("img", { attrs: { src: "", alt: "" } }),
                   _vm._v(
-                    "\r\n                      Jhon Snow\r\n                      "
+                    "\n                      Jhon Snow\n                      "
                   ),
                   _c("span", { staticClass: " fa fa-angle-down" })
                 ]
@@ -25061,7 +24904,7 @@ var staticRenderFns = [
                   ]),
                   _vm._v(" "),
                   _c("li", [
-                    _c("a", { attrs: { href: "" } }, [
+                    _c("a", { attrs: { href: "/logaut" } }, [
                       _c("i", { staticClass: "fa fa-sign-out pull-right" }),
                       _vm._v(" Cerrar sesion")
                     ]),
@@ -25374,6 +25217,17 @@ var render = function() {
             _c("div", { staticClass: "clearfix" }),
             _vm._v(" "),
             _c("ul", { staticClass: "nav navbar-left panel_toolbox" }, [
+              "CrearMedicamentoComponent" in _vm.Vue.options.components
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-success",
+                      on: { click: _vm.crearMedicamento }
+                    },
+                    [_vm._v("Nuevo")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
               _c("label", [
                 _vm._v(" Buscar:\n\t\t\t\t\t\t"),
                 _c("input", {
@@ -27737,7 +27591,7 @@ var render = function() {
         ? _c("div", { staticClass: "col-md-12 col-sm-12 col-xs-12" }, [
             _c("div", { staticClass: "x_panel" }, [
               _c("div", { staticClass: "x_title" }, [
-                _c("h3", { staticClass: "StepTitle" }, [
+                _c("h4", { staticClass: "StepTitle" }, [
                   _vm._v("Busqueda de proveedor")
                 ]),
                 _vm._v(" "),
@@ -29161,7 +29015,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "x_title" }, [
-      _c("h4", [_vm._v("Formulario de creacion de médico.")]),
+      _c("h4", [_vm._v("Formulario de creacion de profesional.")]),
       _vm._v(" "),
       _c("div", { staticClass: "clearfix" })
     ])
@@ -29549,7 +29403,7 @@ var render = function() {
       _c("div", { staticClass: "x_panel" }, [
         _c("div", { staticClass: "x_title" }, [
           _c("h4", [
-            _vm._v("Editar médico "),
+            _vm._v("Editar profesional "),
             _c("span", { staticClass: " badge badge-xs-info" }, [
               _vm._v(_vm._s(_vm.form.nombre) + " " + _vm._s(_vm.form.apellido))
             ])
@@ -30380,7 +30234,7 @@ var render = function() {
               _c("div", { staticClass: "x_panel" }, [
                 _c("div", { staticClass: "x_title" }, [
                   _c("h4", { staticClass: "StepTitle" }, [
-                    _vm._v("Listado de medicos")
+                    _vm._v("Listado de profesionales")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "clearfix" }),

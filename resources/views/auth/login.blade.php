@@ -8,15 +8,17 @@
         <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <div>
-                <img src="" alt="">
+                <div class="image-container">
+                    <img src="{{asset('images/iconos-dashboard/logoPrincipal.png')}}" class="img img-responsive" alt="">
                 </div>
+
                 <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                         @csrf
-                <h3>Inicio de sesion </h3>
+                    <h4>Bienvenido al centro de salud Caminal</h4>
+                    <h6>Para utilizar el sistema inicia sesión</h6>
 
-                    <input id="email" placeholder="Ingresa tu email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-
+                    <div class="m-top-5vh"></div>
+                    <input id="email" placeholder="Ingresa tu usuario" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
                     @if ($errors->has('email'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('email') }}</strong>
@@ -29,21 +31,23 @@
                             <strong>{{ $errors->first('password') }}</strong>
                         </span>
                     @endif
+                    <div class="m-top-5vh"></div>
                 <div>
-                <button type="submit" class="btn btn-login">
-                        {{ __('Iniciar sesion') }}
-                </button>
-                <a class="reset_pass" href="javascript:void(0)">Olvidaste tu contraseña?</a>
+                    <a class="forgot-password" href="javascript:void(0)">Olvidaste tu contraseña?</a>
+                    <button type="submit" class="btn btn-login">
+                            {{ __('Iniciar sesion') }}
+                    </button>
+
                 </div>
 
-                <div class="clearfix"></div>
+                <div class="m-top-5vh"></div>
 
                 <div class="separator">
 
-                <div class="clearfix"></div>
+                    <div class="m-top-5vh"></div>
                 <br />
 
-                <div>
+                <div class="login-footer">
                     <span> <img class="img img-responsive loginferior" src="" alt="" srcset=""> </span>
                     <p>©2019 hecho por BV 69. <a>Terminos de uso y privcidad</a></p>
                 </div>

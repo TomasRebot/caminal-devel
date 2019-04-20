@@ -13,32 +13,36 @@
 
 Route::get('/', function () {
     return view('layouts.app');
-});//->middleware('auth');
+})->middleware('auth');
 
+Route::get('/logaut', function(){
+Auth::logout();
+return redirect('/');
+});
 Show::routes(dirname(__FILE__)."/routes");
 
-Route::group(['prefix' => 'administracion' , 'middleware' => [/*'auth' , 'check.ajax'*/]], function () {
-	
-	Route::resource('medicamentos', 'MedicamentosController')->names([
-	    'index' 	=> 'show.all.medicamento',
-	    'create' 	=> 'medicamento.create',
-	    'store' 	=> 'medicamento.store',
-	    'show'  	=> 'medicamento.show',
-	    'destroy' 	=> 'medicamento.deshabilitar' 
-	]);
+// Route::group(['prefix' => 'administracion' , 'middleware' => [/*'auth' , 'check.ajax'*/]], function () {
 
-	Route::resource('stock' , 'StockController')->names([
-	    'store' 	=> 'stock.store',
-	]);
+// 	Route::resource('medicamentos', 'MedicamentosController')->names([
+// 	    'index' 	=> 'show.all.medicamento',
+// 	    'create' 	=> 'medicamento.create',
+// 	    'store' 	=> 'medicamento.store',
+// 	    'show'  	=> 'medicamento.show',
+// 	    'destroy' 	=> 'medicamento.deshabilitar'
+// 	]);
 
-	Route::resource('clientes' , 'ClientesController')->names([
-	    'index' 	=> 'show.all.clientes',
-	]);
+// 	Route::resource('stock' , 'StockController')->names([
+// 	    'store' 	=> 'stock.store',
+// 	]);
 
-	Route::resource('movimientos', 'MovimientosController')->names([
-	    'index' 	=> 'show.all.movimientos',
-	    'create' 	=> 'movimientos.create',
-	    'show'  	=> 'movimientos.detalles.show',
-	    'destroy' 	=> 'movimientos.deshabilitar' 
-	]);
-});
+// 	Route::resource('clientes' , 'ClientesController')->names([
+// 	    'index' 	=> 'show.all.clientes',
+// 	]);
+
+// 	Route::resource('movimientos', 'MovimientosController')->names([
+// 	    'index' 	=> 'show.all.movimientos',
+// 	    'create' 	=> 'movimientos.create',
+// 	    'show'  	=> 'movimientos.detalles.show',
+// 	    'destroy' 	=> 'movimientos.deshabilitar'
+// 	]);
+// });

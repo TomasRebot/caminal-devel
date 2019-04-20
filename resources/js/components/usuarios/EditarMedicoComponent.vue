@@ -3,7 +3,7 @@
     <div class="col-md-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h4>Editar médico <span class=" badge badge-xs-info">{{form.nombre}} {{form.apellido}}</span></h4>
+                <h4>Editar profesional <span class=" badge badge-xs-info">{{form.nombre}} {{form.apellido}}</span></h4>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">

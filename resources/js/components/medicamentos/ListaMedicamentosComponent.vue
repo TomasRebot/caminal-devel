@@ -63,8 +63,8 @@
 							<div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
 								<ul class="pagination">
 									<li>
-										<button @click="paginaAnterior">
-											Anterior
+										<button class="btn btn-xs btn-dark" @click="paginaAnterior">
+											 Anterior
 										</button>
 									</li>
 									<li>
@@ -77,7 +77,7 @@
 										</a-->
 									</li>
 									<li>
-										<button @click="paginaSiguiente">
+										<button class="btn btn-xs btn-dark" @click="paginaSiguiente">
 											Siguiente
 										</button>
 									</li>
