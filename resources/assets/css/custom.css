@@ -2469,7 +2469,12 @@ a.btn-danger {
     background-color:#1ABB9C!important;
 }
 
-
+.badge-xs-info{
+    min-width: 10%!important;
+    margin:auto;
+    color:white!important;
+    background-color:#5bc0de!important;
+}
 
 
 .btn.btn-app>.badge {

@@ -3,13 +3,13 @@
     <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight" v-if="!mostrar_frm_crear_paciente && !mostrar_frm_editar_paciente">
 		<div class="x_panel">
 			<div class="x_title">
-                <h3 class="StepTitle">Listado de pacientes</h3>
+                <h4 class="StepTitle">Listado de pacientes</h4>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
 					<a class="btn btn-sm btn-success" @click="crearPaciente" v-if="'CrearPacienteComponent' in Vue.options.components">Nuevo</a>
 					<a id="deleteMultipleUsers" class="btn btn-sm btn-danger" @click="eliminarPaciente" v-if="'EliminarPacienteComponent' in Vue.options.components " >Eliminar</a>
 					&nbsp;
-					<label> Buscar: 
+					<label> Buscar:
 						<input type="search" class="form-control input-sm" v-model="buscar">
 					</label>
 				</ul>
@@ -33,10 +33,10 @@
                             </tr>
 						</thead>
 						<tbody>
-                            <tr class="even pointer" v-for="(paciente , key) in getLista" :key="key">			
+                            <tr class="even pointer" v-for="(paciente , key) in getLista" :key="key">
                                 <td class="a-center ">
                                     <input type="checkbox" :value="paciente.id" v-model="pacientes_seleccionados">
-                                </td>			
+                                </td>
 								<td @click="editarPaciente(paciente)"><a> {{paciente.apellido}} </a></td>
 								<td @click="editarPaciente(paciente)"><a> {{paciente.nombres}} </a></td>
 								<td class="last" @click="editarPaciente(paciente)"><a> {{paciente.dni}} </a></td>
@@ -93,8 +93,8 @@ export default {
     mounted(){
         //this.form = r.lista_pacientes.sort(this.sort_by('dni', true, function(a){return a}));
         this.form = [
-            {'id':1,'apellido' : 'moreira', 'nombres': 'ezequiel' , 'dni' : 35555555},
-                {'id':2,'apellido' : 'tomas', 'nombres': 'tomas' , 'dni' : 333333333}
+            {'id':1,'apellido' : 'moreira', 'nombre': 'ezequiel' , 'dni' : 35555555},
+                {'id':2,'apellido' : 'tomas', 'nombre': 'tomas' , 'dni' : 333333333}
             ];
         this.datos_filtrados = this.form;
         this.paginar();
@@ -136,19 +136,19 @@ export default {
             this.mostrar_frm_editar_paciente = true;
         },
         crearPaciente: function(){
-            this.mostrar_frm_crear_paciente = true;            
+            this.mostrar_frm_crear_paciente = true;
         },
         guardarPaciente: function(paciente=null){
             if(paciente!=null){
-                this.form.push(paciente);    
+                this.form.push(paciente);
             } else {
                 if(this.mostrar_frm_editar_paciente){
-                    this.form.push(this.editar_paciente);  
+                    this.form.push(this.editar_paciente);
                 }
-            }     
-            this.paginar();   
-            this.mostrar_frm_crear_paciente = false;            
-            this.mostrar_frm_editar_paciente = false;   
+            }
+            this.paginar();
+            this.mostrar_frm_crear_paciente = false;
+            this.mostrar_frm_editar_paciente = false;
             this.editar_paciente = false;
         },
         seleccionarTodo: function(){
@@ -193,7 +193,7 @@ export default {
                                 return false;
                             }
                         });
-                    });    
+                    });
                     this.pacientes_seleccionados = [];
                     this.check_all = false; // destildamos el "marcar todo" para eliminar
                     this.paginar();
@@ -312,8 +312,8 @@ export default {
                             $BOX_PANEL.removeAttr('style');
                     });
             } else {
-                    $BOX_CONTENT.slideToggle(200); 
-                    $BOX_PANEL.css('height', 'auto');  
+                    $BOX_CONTENT.slideToggle(200);
+                    $BOX_PANEL.css('height', 'auto');
             }
             $ICON.toggleClass('fa-chevron-up fa-chevron-down');
         },

@@ -3,13 +3,13 @@
     <div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight" v-if="!mostrar_frm_crear_medico && !mostrar_frm_editar_medico">
 		<div class="x_panel">
 			<div class="x_title">
-                <h3 class="StepTitle">Listado de medicos</h3>
+                <h4 class="StepTitle">Listado de medicos</h4>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
 					<a class="btn btn-sm btn-success" @click="crearMedico" v-if="'CrearMedicoComponent' in Vue.options.components">Nuevo</a>
 					<a id="deleteMultipleUsers" class="btn btn-sm btn-danger" @click="eliminarMedico" v-if="'EliminarMedicoComponent' in Vue.options.components " >Eliminar</a>
 					&nbsp;
-					<label> Buscar: 
+					<label> Buscar:
 						<input type="search" class="form-control input-sm" v-model="buscar">
 					</label>
 				</ul>
@@ -34,10 +34,10 @@
                             </tr>
 						</thead>
 						<tbody>
-                            <tr class="even pointer" v-for="(medico , key) in getLista" :key="key">			
+                            <tr class="even pointer" v-for="(medico , key) in getLista" :key="key">
                                 <td class="a-center ">
                                     <input type="checkbox" :value="medico.id" v-model="medicos_seleccionados">
-                                </td>			
+                                </td>
 								<td @click="editarMedico(medico)"><a> {{medico.matricula}} </a></td>
 								<td @click="editarMedico(medico)"><a> {{medico.apellido}} </a></td>
 								<td @click="editarMedico(medico)"><a> {{medico.nombres}} </a></td>
@@ -95,8 +95,8 @@ export default {
     mounted(){
         //this.form = r.lista_medicos.sort(this.sort_by('dni', true, function(a){return a}));
         this.form = [
-            {'id':1, 'matricula':55, 'apellido' : 'moreira', 'nombres': 'ezequiel' , 'dni' : 35555555},
-                {'id':2, 'matricula':99,'apellido' : 'tomas', 'nombres': 'tomas' , 'dni' : 333333333}
+            {'id':1, 'matricula':55, 'apellido' : 'moreira', 'nombre': 'ezequiel' , 'dni' : 35555555},
+                {'id':2, 'matricula':99,'apellido' : 'tomas', 'nombre': 'tomas' , 'dni' : 333333333}
             ];
         this.datos_filtrados = this.form;
         this.paginar();
@@ -138,19 +138,19 @@ export default {
             this.mostrar_frm_editar_medico = true;
         },
         crearMedico: function(){
-            this.mostrar_frm_crear_medico = true;            
+            this.mostrar_frm_crear_medico = true;
         },
         guardarMedico: function(medico=null){
             if(medico!=null){
-                this.form.push(medico);    
+                this.form.push(medico);
             } else {
                 if(this.mostrar_frm_editar_medico){
-                    this.form.push(this.editar_medico);  
+                    this.form.push(this.editar_medico);
                 }
-            }     
-            this.paginar();   
-            this.mostrar_frm_crear_medico = false;            
-            this.mostrar_frm_editar_medico = false;   
+            }
+            this.paginar();
+            this.mostrar_frm_crear_medico = false;
+            this.mostrar_frm_editar_medico = false;
             this.editar_medico = false;
         },
         seleccionarTodo: function(){
@@ -195,7 +195,7 @@ export default {
                                 return false;
                             }
                         });
-                    });                    
+                    });
                     this.medicos_seleccionados = [];
                     this.check_all = false; // destildamos el "marcar todo" para eliminar
                     this.paginar();
@@ -314,8 +314,8 @@ export default {
                             $BOX_PANEL.removeAttr('style');
                     });
             } else {
-                    $BOX_CONTENT.slideToggle(200); 
-                    $BOX_PANEL.css('height', 'auto');  
+                    $BOX_CONTENT.slideToggle(200);
+                    $BOX_PANEL.css('height', 'auto');
             }
             $ICON.toggleClass('fa-chevron-up fa-chevron-down');
         },
