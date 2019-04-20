@@ -23571,357 +23571,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row", attrs: { id: "crear-medicamento" } }, [
-    _c(
-      "div",
-      { staticClass: "col-md-12 col-sm-12 col-xs-12 animated fadeInRight" },
-      [
-        _c("div", { staticClass: "x_panel" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "x_content" }, [
-            _c(
-              "form",
-              {
-                staticClass: "form-horizontal form-label-left",
-                attrs: { novalidate: "" },
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.agregarMedicamento($event)
-                  }
-                }
-              },
-              [
-                _c("div", { staticClass: "item form-group" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6 col-sm-6 col-xs-12" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.frm.codigo,
-                          expression: "frm.codigo"
-                        }
-                      ],
-                      staticClass: "form-control col-md-7 col-xs-12",
-                      attrs: {
-                        id: "label-CODIGO",
-                        placeholder: "Ingrese el codigo del medicamento.",
-                        required: "required",
-                        type: "number"
-                      },
-                      domProps: { value: _vm.frm.codigo },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.frm, "codigo", $event.target.value)
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "item form-group" }, [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6 col-sm-6 col-xs-12" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.frm.nombre,
-                          expression: "frm.nombre"
-                        }
-                      ],
-                      staticClass: "form-control col-md-7 col-xs-12",
-                      attrs: {
-                        id: "label-NOMBRE",
-                        placeholder: "Ingrese el nombre.",
-                        required: "required",
-                        type: "text"
-                      },
-                      domProps: { value: _vm.frm.nombre },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.frm, "nombre", $event.target.value)
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "item form-group" }, [
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6 col-sm-6 col-xs-12" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.frm.clasificacion,
-                          expression: "frm.clasificacion"
-                        }
-                      ],
-                      staticClass: "form-control col-md-7 col-xs-12",
-                      attrs: {
-                        id: "label-CLASIFICACION",
-                        placeholder: "Ingrese la clasificacion.",
-                        required: "required",
-                        type: "text"
-                      },
-                      domProps: { value: _vm.frm.clasificacion },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.frm,
-                            "clasificacion",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "item form-group" }, [
-                  _vm._m(4),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6 col-sm-6 col-xs-12" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.frm.descripcion,
-                          expression: "frm.descripcion"
-                        }
-                      ],
-                      staticClass: "form-control col-md-7 col-xs-12",
-                      attrs: {
-                        id: "label-DESCRIPCION",
-                        placeholder: "Ingrese la descripcion.",
-                        required: "required",
-                        type: "text"
-                      },
-                      domProps: { value: _vm.frm.descripcion },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.frm, "descripcion", $event.target.value)
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "item form-group" }, [
-                  _vm._m(5),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6 col-sm-6 col-xs-12" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.frm.cant_blister,
-                          expression: "frm.cant_blister"
-                        }
-                      ],
-                      staticClass: "form-control col-md-7 col-xs-12",
-                      attrs: {
-                        id: "label-cant-blister",
-                        placeholder: "Ingrese la cantidad por blister.",
-                        required: "required",
-                        type: "number"
-                      },
-                      domProps: { value: _vm.frm.cant_blister },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.frm, "cant_blister", $event.target.value)
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ln_solid" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("div", { staticClass: "col-md-6 col-md-offset-3" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-sm btn-danger",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.$emit("regresar")
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                Cancelar\n                            "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-sm btn-success",
-                        attrs: { type: "submit" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                Crear\n                            "
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              ]
-            )
-          ])
-        ])
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "x_title" }, [
-      _c("h4", [_vm._v(" Formulario de creacion de nuevo medicamento")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "clearfix" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
-        attrs: { for: "label-CODIGO" }
-      },
-      [
-        _vm._v("\n                            CODIGO "),
-        _c("span", { staticClass: "required" }, [_vm._v("*")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
-        attrs: { for: "label-NOMBRE" }
-      },
-      [
-        _vm._v("\n                            NOMBRE "),
-        _c("span", { staticClass: "required" }, [_vm._v("*")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
-        attrs: { for: "label-CLASIFICACION" }
-      },
-      [
-        _vm._v("\n                            CLASIFICACION "),
-        _c("span", { staticClass: "required" }, [_vm._v("*")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
-        attrs: { for: "label-DESCRIPCION" }
-      },
-      [
-        _vm._v("\n                            DESCRIPCION "),
-        _c("span", { staticClass: "required" }, [_vm._v("*")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
-        attrs: { for: "label-cant-blister" }
-      },
-      [
-        _vm._v("\n                            CANTIDAD POR BLISTER "),
-        _c("span", { staticClass: "required" }, [_vm._v("*")])
-      ]
-    )
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/medicamentos/EditarMedicamentoComponent.vue?vue&type=template&id=183aefb9&":
-/*!******************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/medicamentos/EditarMedicamentoComponent.vue?vue&type=template&id=183aefb9& ***!
-  \******************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "col-md-12 col-sm-12 col-xs-12 animated fadeInRight" },
-    [
+    _c("div", { staticClass: "col-md-12 col-sm-12 col-xs-12" }, [
       _c("div", { staticClass: "x_panel" }, [
         _vm._m(0),
         _vm._v(" "),
@@ -23930,10 +23580,11 @@ var render = function() {
             "form",
             {
               staticClass: "form-horizontal form-label-left",
+              attrs: { novalidate: "" },
               on: {
                 submit: function($event) {
                   $event.preventDefault()
-                  return _vm.editarMedicamento($event)
+                  return _vm.agregarMedicamento($event)
                 }
               }
             },
@@ -23953,10 +23604,10 @@ var render = function() {
                     ],
                     staticClass: "form-control col-md-7 col-xs-12",
                     attrs: {
-                      id: "label-CODIGO",
+                      id: "label-codigo",
                       placeholder: "Ingrese el codigo del medicamento.",
                       required: "required",
-                      type: "number"
+                      type: "text"
                     },
                     domProps: { value: _vm.frm.codigo },
                     on: {
@@ -23980,24 +23631,24 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.frm.perfil.nombre,
-                        expression: "frm.perfil.nombre"
+                        value: _vm.frm.nombre,
+                        expression: "frm.nombre"
                       }
                     ],
                     staticClass: "form-control col-md-7 col-xs-12",
                     attrs: {
-                      id: "label-NOMBRE",
+                      id: "label-nombre",
                       placeholder: "Ingrese el nombre.",
                       required: "required",
                       type: "text"
                     },
-                    domProps: { value: _vm.frm.perfil.nombre },
+                    domProps: { value: _vm.frm.nombre },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.frm.perfil, "nombre", $event.target.value)
+                        _vm.$set(_vm.frm, "nombre", $event.target.value)
                       }
                     }
                   })
@@ -24013,28 +23664,24 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.frm.perfil.clasificacion,
-                        expression: "frm.perfil.clasificacion"
+                        value: _vm.frm.clasificacion,
+                        expression: "frm.clasificacion"
                       }
                     ],
                     staticClass: "form-control col-md-7 col-xs-12",
                     attrs: {
-                      id: "label-CLASIFICACION",
+                      id: "label-clasificacion",
                       placeholder: "Ingrese la clasificacion.",
                       required: "required",
                       type: "text"
                     },
-                    domProps: { value: _vm.frm.perfil.clasificacion },
+                    domProps: { value: _vm.frm.clasificacion },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(
-                          _vm.frm.perfil,
-                          "clasificacion",
-                          $event.target.value
-                        )
+                        _vm.$set(_vm.frm, "clasificacion", $event.target.value)
                       }
                     }
                   })
@@ -24056,7 +23703,7 @@ var render = function() {
                     ],
                     staticClass: "form-control col-md-7 col-xs-12",
                     attrs: {
-                      id: "label-DESCRIPCION",
+                      id: "label-descripcion",
                       placeholder: "Ingrese la descripcion.",
                       required: "required",
                       type: "text"
@@ -24110,16 +23757,21 @@ var render = function() {
               _c("div", { staticClass: "ln_solid" }),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("div", { staticClass: "col-md-12 col-xs-12 col-sm-12" }, [
+                _c("div", { staticClass: "col-md-6 col-md-offset-3" }, [
                   _c(
                     "button",
                     {
                       staticClass: "btn btn-sm btn-danger",
-                      on: { click: _vm.regresarListaMedicamentos }
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$emit("regresar")
+                        }
+                      }
                     },
                     [
                       _vm._v(
-                        "\n                            Cancelar\n                        "
+                        "\n                                Cancelar\n                            "
                       )
                     ]
                   ),
@@ -24132,7 +23784,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                            guardar\n                        "
+                        "\n                                Crear\n                            "
                       )
                     ]
                   )
@@ -24142,8 +23794,344 @@ var render = function() {
           )
         ])
       ])
-    ]
-  )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "x_title" }, [
+      _c("h4", [_vm._v(" Formulario de creacion de nuevo medicamento")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+        attrs: { for: "label-codigo" }
+      },
+      [
+        _vm._v("\n                            Código "),
+        _c("span", { staticClass: "required" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+        attrs: { for: "label-nombre" }
+      },
+      [
+        _vm._v("\n                            Nombre "),
+        _c("span", { staticClass: "required" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+        attrs: { for: "label-clasificacion" }
+      },
+      [
+        _vm._v("\n                            Clasificación "),
+        _c("span", { staticClass: "required" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+        attrs: { for: "label-descripcion" }
+      },
+      [
+        _vm._v("\n                            Descripción "),
+        _c("span", { staticClass: "required" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+        attrs: { for: "label-cant-blister" }
+      },
+      [
+        _vm._v("\n                            Cantidad por blister "),
+        _c("span", { staticClass: "required" }, [_vm._v("*")])
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/medicamentos/EditarMedicamentoComponent.vue?vue&type=template&id=183aefb9&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/medicamentos/EditarMedicamentoComponent.vue?vue&type=template&id=183aefb9& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "col-md-12 col-sm-12 col-xs-12 " }, [
+    _c("div", { staticClass: "x_panel" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "x_content" }, [
+        _c(
+          "form",
+          {
+            staticClass: "form-horizontal form-label-left",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.editarMedicamento($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "item form-group" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6 col-sm-6 col-xs-12" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.frm.codigo,
+                      expression: "frm.codigo"
+                    }
+                  ],
+                  staticClass: "form-control col-md-7 col-xs-12",
+                  attrs: {
+                    id: "label-codigo",
+                    placeholder: "Ingrese el codigo del medicamento.",
+                    required: "required",
+                    type: "text"
+                  },
+                  domProps: { value: _vm.frm.codigo },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.frm, "codigo", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "item form-group" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6 col-sm-6 col-xs-12" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.frm.perfil.nombre,
+                      expression: "frm.perfil.nombre"
+                    }
+                  ],
+                  staticClass: "form-control col-md-7 col-xs-12",
+                  attrs: {
+                    id: "label-nombre",
+                    placeholder: "Ingrese el nombre.",
+                    required: "required",
+                    type: "text"
+                  },
+                  domProps: { value: _vm.frm.perfil.nombre },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.frm.perfil, "nombre", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "item form-group" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6 col-sm-6 col-xs-12" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.frm.perfil.clasificacion,
+                      expression: "frm.perfil.clasificacion"
+                    }
+                  ],
+                  staticClass: "form-control col-md-7 col-xs-12",
+                  attrs: {
+                    id: "label-clasificacion",
+                    placeholder: "Ingrese la clasificacion.",
+                    required: "required",
+                    type: "text"
+                  },
+                  domProps: { value: _vm.frm.perfil.clasificacion },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.frm.perfil,
+                        "clasificacion",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "item form-group" }, [
+              _vm._m(4),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6 col-sm-6 col-xs-12" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.frm.descripcion,
+                      expression: "frm.descripcion"
+                    }
+                  ],
+                  staticClass: "form-control col-md-7 col-xs-12",
+                  attrs: {
+                    id: "label-descripcion",
+                    placeholder: "Ingrese la descripcion.",
+                    required: "required",
+                    type: "text"
+                  },
+                  domProps: { value: _vm.frm.descripcion },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.frm, "descripcion", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "item form-group" }, [
+              _vm._m(5),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6 col-sm-6 col-xs-12" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.frm.cant_blister,
+                      expression: "frm.cant_blister"
+                    }
+                  ],
+                  staticClass: "form-control col-md-7 col-xs-12",
+                  attrs: {
+                    id: "label-cant-blister",
+                    placeholder: "Ingrese la cantidad por blister.",
+                    required: "required",
+                    type: "number"
+                  },
+                  domProps: { value: _vm.frm.cant_blister },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.frm, "cant_blister", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "ln_solid" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("div", { staticClass: "col-md-12 col-xs-12 col-sm-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-danger",
+                    on: { click: _vm.regresarListaMedicamentos }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            Cancelar\n                        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-success",
+                    attrs: { type: "submit" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            guardar\n                        "
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -24163,11 +24151,11 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "control-label col-md-2 col-sm-3 col-xs-12",
-        attrs: { for: "label-CODIGO" }
+        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+        attrs: { for: "label-codigo" }
       },
       [
-        _vm._v("\n                        CODIGO "),
+        _vm._v("\n                        Código "),
         _c("span", { staticClass: "required" }, [_vm._v("*")])
       ]
     )
@@ -24179,11 +24167,11 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "control-label col-md-2 col-sm-3 col-xs-12",
-        attrs: { for: "label-NOMBRE" }
+        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+        attrs: { for: "label-nombre" }
       },
       [
-        _vm._v("\n                        NOMBRE "),
+        _vm._v("\n                        Nombre "),
         _c("span", { staticClass: "required" }, [_vm._v("*")])
       ]
     )
@@ -24195,11 +24183,11 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "control-label col-md-2 col-sm-3 col-xs-12",
-        attrs: { for: "label-CLASIFICACION" }
+        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+        attrs: { for: "label-clasificacion" }
       },
       [
-        _vm._v("\n                        CLASIFICACION "),
+        _vm._v("\n                        Clasificación "),
         _c("span", { staticClass: "required" }, [_vm._v("*")])
       ]
     )
@@ -24211,11 +24199,11 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "control-label col-md-2 col-sm-3 col-xs-12",
-        attrs: { for: "label-DESCRIPCION" }
+        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+        attrs: { for: "label-descripcion" }
       },
       [
-        _vm._v("\n                        DESCRIPCION "),
+        _vm._v("\n                        Descripción "),
         _c("span", { staticClass: "required" }, [_vm._v("*")])
       ]
     )
@@ -24227,11 +24215,11 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "control-label col-md-2 col-sm-3 col-xs-12",
+        staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
         attrs: { for: "label-cant-blister" }
       },
       [
-        _vm._v("\n                        CANTIDAD POR BLISTER "),
+        _vm._v("\n                        Cantidad por blister "),
         _c("span", { staticClass: "required" }, [_vm._v("*")])
       ]
     )

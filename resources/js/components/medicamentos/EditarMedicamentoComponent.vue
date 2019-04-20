@@ -1,5 +1,5 @@
 <template>
-<div class="col-md-12 col-sm-12 col-xs-12 animated fadeInRight">
+<div class="col-md-12 col-sm-12 col-xs-12 ">
     <div class="x_panel">
         <div class="x_title">
             <h4> Formulario de edicion de datos de medicamento</h4>
@@ -9,40 +9,40 @@
             <!-- INICIO FORMULARIO EDITAR MEDICAMENTO -->
             <form class="form-horizontal form-label-left" @submit.prevent="editarMedicamento">
                 <div class="item form-group">
-                    <label class="control-label col-md-2 col-sm-3 col-xs-12" for="label-CODIGO">
-                        CODIGO <span class="required">*</span>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-codigo">
+                        Código <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input id="label-CODIGO" class="form-control col-md-7 col-xs-12" v-model="frm.codigo" placeholder="Ingrese el codigo del medicamento." required="required" type="number">
+                        <input id="label-codigo" class="form-control col-md-7 col-xs-12" v-model="frm.codigo" placeholder="Ingrese el codigo del medicamento." required="required" type="text">
                     </div>
                 </div>
                 <div class="item form-group">
-                    <label class="control-label col-md-2 col-sm-3 col-xs-12" for="label-NOMBRE">
-                        NOMBRE <span class="required">*</span>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-nombre">
+                        Nombre <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input id="label-NOMBRE" class="form-control col-md-7 col-xs-12" v-model="frm.perfil.nombre" placeholder="Ingrese el nombre." required="required" type="text">
+                        <input id="label-nombre" class="form-control col-md-7 col-xs-12" v-model="frm.perfil.nombre" placeholder="Ingrese el nombre." required="required" type="text">
                     </div>
                 </div>
                 <div class="item form-group">
-                    <label class="control-label col-md-2 col-sm-3 col-xs-12" for="label-CLASIFICACION">
-                        CLASIFICACION <span class="required">*</span>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-clasificacion">
+                        Clasificación <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input id="label-CLASIFICACION" class="form-control col-md-7 col-xs-12" v-model="frm.perfil.clasificacion" placeholder="Ingrese la clasificacion." required="required" type="text">
+                        <input id="label-clasificacion" class="form-control col-md-7 col-xs-12" v-model="frm.perfil.clasificacion" placeholder="Ingrese la clasificacion." required="required" type="text">
                     </div>
                 </div>
                 <div class="item form-group">
-                    <label class="control-label col-md-2 col-sm-3 col-xs-12" for="label-DESCRIPCION">
-                        DESCRIPCION <span class="required">*</span>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-descripcion">
+                        Descripción <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input id="label-DESCRIPCION" class="form-control col-md-7 col-xs-12" v-model="frm.descripcion" placeholder="Ingrese la descripcion." required="required" type="text">
+                        <input id="label-descripcion" class="form-control col-md-7 col-xs-12" v-model="frm.descripcion" placeholder="Ingrese la descripcion." required="required" type="text">
                     </div>
                 </div>
                 <div class="item form-group">
-                    <label class="control-label col-md-2 col-sm-3 col-xs-12" for="label-cant-blister">
-                        CANTIDAD POR BLISTER <span class="required">*</span>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label-cant-blister">
+                        Cantidad por blister <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <input id="label-cant-blister" class="form-control col-md-7 col-xs-12" v-model="frm.cant_blister" placeholder="Ingrese la cantidad por blister." required="required" type="number">
