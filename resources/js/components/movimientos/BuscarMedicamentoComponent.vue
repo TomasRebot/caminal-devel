@@ -6,7 +6,7 @@
 				<h4 class="StepTitle">Busqueda de medicamento</h4>
 				<div class="clearfix"></div>
 				<ul class="nav navbar-left panel_toolbox">
-                    <a class="btn btn-sm btn-success" @click="crearMedicamento" v-if="'CrearMedicamentoComponent' in Vue.options.components">Nuevo</a>
+                    <a class="btn btn-sm btn-success" @click="crearMedicamento" v-if="'CrearMedicamentoComponent' in Vue.options.components && alta">Nuevo</a>
 					<label> Buscar:
 						<input type="search" class="form-control input-sm" v-model="buscar">
 					</label>
@@ -94,7 +94,7 @@
 
 	export default {
 		name: 'buscar-medicamento',
-		props: [],
+		props: ['alta'],
 		mounted(){
 			var datos = [
 				{'codigo': 200,

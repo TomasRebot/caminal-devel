@@ -60,7 +60,7 @@
               <!--buscar-proveedor-component-->
             </div>
             <div id="step-3" class="content" :style="{'display': step[2].mostrar?'block':'none'}">
-              <buscar-medicamento-component @medicamentos-seleccionados="guardarMedicamentos" v-if="step[2].mostrar">
+              <buscar-medicamento-component :alta="true" @medicamentos-seleccionados="guardarMedicamentos" v-if="step[2].mostrar">
               </buscar-medicamento-component>
             </div>
             <div id="step-4" class="content" :style="{'display': step[3].mostrar?'block':'none'}">

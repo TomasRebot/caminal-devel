@@ -1,5 +1,5 @@
 <template>
-<div class="container" id="inicio-dashboard">
+<div class="container row" id="inicio-dashboard">
 <div class="col-md-12">
     <div class="row top_tiles">
         <div class="animated fadeInRight col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -49,7 +49,7 @@
         <p class="text-muted font-13 m-b-30">
             Aqui figuran los medicamentos con limites proximos de vencimiento o carencia de stock.
         </p>
-        <table id="datatable-fixed-header" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+        <table id="datatable-fixed-header table-responsive" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
             <thead>
             <tr role="row">
                 <th>Codigo</th>

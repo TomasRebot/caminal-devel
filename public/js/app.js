@@ -3568,7 +3568,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'buscar-medicamento',
-  props: [],
+  props: ['alta'],
   mounted: function mounted() {
     var datos = [{
       'codigo': 200,
@@ -22949,7 +22949,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "container", attrs: { id: "inicio-dashboard" } },
+      { staticClass: "container row", attrs: { id: "inicio-dashboard" } },
       [
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "row top_tiles" }, [
@@ -23064,7 +23064,7 @@ var staticRenderFns = [
                 staticClass:
                   "table table-striped table-bordered dataTable no-footer",
                 attrs: {
-                  id: "datatable-fixed-header",
+                  id: "datatable-fixed-header table-responsive",
                   role: "grid",
                   "aria-describedby": "datatable-fixed-header_info"
                 }
@@ -25217,7 +25217,8 @@ var render = function() {
             _c("div", { staticClass: "clearfix" }),
             _vm._v(" "),
             _c("ul", { staticClass: "nav navbar-left panel_toolbox" }, [
-              "CrearMedicamentoComponent" in _vm.Vue.options.components
+              "CrearMedicamentoComponent" in _vm.Vue.options.components &&
+              _vm.alta
                 ? _c(
                     "a",
                     {
@@ -26088,6 +26089,7 @@ var render = function() {
                       [
                         _vm.step[2].mostrar
                           ? _c("buscar-medicamento-component", {
+                              attrs: { alta: true },
                               on: {
                                 "medicamentos-seleccionados":
                                   _vm.guardarMedicamentos
