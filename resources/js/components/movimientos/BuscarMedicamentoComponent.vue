@@ -89,9 +89,7 @@
 	</div>
 </div>
 </template>
-
 <script>
-
 	export default {
 		name: 'buscar-medicamento',
 		props: ['alta'],
