@@ -16,8 +16,8 @@ Route::get('/', function () {
 })->middleware('auth');
 
 Route::get('/logaut', function(){
-Auth::logout();
-return redirect('/');
+    Auth::logout();
+    return redirect('/');
 });
 Show::routes(dirname(__FILE__)."/routes");
 
