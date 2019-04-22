@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Profesional;
 use Illuminate\Http\Request;
+use DB;
 
 class ProfesionalController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -14,72 +16,58 @@ class ProfesionalController extends Controller
      */
     public function index()
     {
-        //
+        $profesionales = Profesional::whereEstado('activo')->get();
+        return response()->json(['profesionales' => $profesionales, 'status' => 200]);
     }
 
     /**
-     * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+
+        $profesional = Profesional::create($request->all());
+        if($profesional) return response()->json(['mensaje' => 'profesional creado con exito','status' => 200]);
+        return response('something salio mal', 505);
     }
 
     /**
-     * Display the specified resource.
      *
-     * @param  \App\Profesional  $profesional
      * @return \Illuminate\Http\Response
      */
-    public function show(Profesional $profesional)
+    public function update(Request $request)
     {
-        //
+        $profesional = Profesional::find($request->id);
+        $updated = $profesional->update($request->all());
+        if($profesional) return response()->json([ 'mensaje' =>'Profesional actualizado con exito', 'status' => 200]);
+        return response()->json(['something salio mal', 505, 'profesional' => $profesional]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Profesional  $profesional
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Profesional $profesional)
+    public function changeState(Request $request)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Profesional  $profesional
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Profesional $profesional)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Profesional  $profesional
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Profesional $profesional)
-    {
-        //
+        if($request->id){
+            try {
+                $ids = [];
+                foreach($request->id as $profesionalId){
+                    array_push($ids , intval($profesionalId));
+                }
+                try {
+                    DB::beginTransaction();
+                    DB::table('profesionales')->whereIn('id', $ids)->update(['estado' => ($request->operacion === 'eliminar')?'eliminado':'activo']);
+                    DB::commit();
+                    return response()->json(['status' => 200, 'mensaje'=> ($request->operacion === "eliminar") ? 'profesionales eliminados con exito' : "profesionales restaurados con exito"]);
+                    // tudo bom
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    return response()->json(['status' => 409, 'mensaje'=> 'Han ocurrido errores, intente nuevamente mas tarde']);
+                    // quebrou
+                }
+            } catch (\Illuminate\Database\QueryException $e) {
+                return response()->json("error de integridad");
+            }
+        }else{
+            return response()->json("si no me mandas nada que queres que elimine");
+        }
     }
 }

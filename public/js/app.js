@@ -7260,18 +7260,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'lista-pacientes',
   props: [],
   mounted: function mounted() {
-    //this.form = r.lista_pacientes.sort(this.sort_by('dni', true, function(a){return a}));
-    this.form = [{
-      'id': 1,
-      'apellido': 'moreira',
-      'nombre': 'ezequiel',
-      'dni': 35555555
-    }, {
-      'id': 2,
-      'apellido': 'tomas',
-      'nombre': 'tomas',
-      'dni': 333333333
-    }];
+    this.listaPacientes();
     this.datos_filtrados = this.form;
     this.paginar();
   },
@@ -7300,6 +7289,14 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    listaPacientes: function listaPacientes() {
+      var me = this;
+      var url = window.location + '/pacientes/listado-general';
+      axios.get(url).then(function (response) {
+        console.log(response);
+        me.form = response.data.pacientes;
+      });
+    },
     editarPaciente: function editarPaciente(paciente) {
       var eliminar_index = null;
       $(this.form).each(function (index, val) {
@@ -22983,9 +22980,9 @@ var staticRenderFns = [
                   _vm._v(" "),
                   _c("div", { staticClass: "count" }, [_vm._v("90")]),
                   _vm._v(" "),
-                  _c("h3", [_vm._v("Entregas")]),
+                  _c("h3", [_vm._v("Movimientos")]),
                   _vm._v(" "),
-                  _c("p", [_vm._v("Hasta la fecha.")])
+                  _c("p", [_vm._v("Entregas: 23 Ingresos: 23")])
                 ])
               ]
             ),

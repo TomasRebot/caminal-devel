@@ -21,6 +21,8 @@ class CreateInstitucionesTable extends Migration
             $table->string('direccion');
             $table->string('telefono_contacto');
             $table->enum('apto_clearing', ['si', 'no'])->default('no');
+            $table->enum('estado', ['eliminado', 'activo'])->nullable()->default('activo');
+
 
             $table->timestamps();
         });

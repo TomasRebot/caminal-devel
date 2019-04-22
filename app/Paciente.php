@@ -15,6 +15,7 @@ class Paciente extends Model
         'barrio',
         'direccion',
         'email',
+        'estado',
 
     ];
     protected $table = "pacientes";

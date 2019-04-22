@@ -91,11 +91,7 @@ export default {
     name: 'lista-pacientes',
     props: [],
     mounted(){
-        //this.form = r.lista_pacientes.sort(this.sort_by('dni', true, function(a){return a}));
-        this.form = [
-            {'id':1,'apellido' : 'moreira', 'nombre': 'ezequiel' , 'dni' : 35555555},
-                {'id':2,'apellido' : 'tomas', 'nombre': 'tomas' , 'dni' : 333333333}
-            ];
+        this.listaPacientes();
         this.datos_filtrados = this.form;
         this.paginar();
     },
@@ -123,6 +119,14 @@ export default {
         }
     },
     methods: {
+         listaPacientes: function (){
+        let me=this;
+        var url =  window.location+'/pacientes/listado-general';
+        axios.get(url).then(function(response){
+            console.log(response)
+            me.form = response.data.pacientes;
+            })
+        },
         editarPaciente: function(paciente){
             var eliminar_index = null;
             $(this.form).each(function(index,val){

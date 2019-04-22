@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Paciente;
 use Illuminate\Http\Request;
+use DB;
 
 class PacienteController extends Controller
 {
@@ -14,72 +15,58 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        //
+
+        $pacientes = Paciente::whereEstado('activo')->get();
+        return response()->json(['pacientes' => $pacientes, 'status' => 200]);
     }
 
     /**
-     * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $paciente = Paciente::create($request->all());
+        if($paciente) return response()->json(['mensaje' => 'Paciente creado con exito','status' => 200]);
+        return response('something salio mal', 505);
     }
 
     /**
-     * Display the specified resource.
      *
-     * @param  \App\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
-    public function show(Paciente $paciente)
+    public function update(Request $request)
     {
-        //
+        $paciente = Paciente::find($request->id);
+        $updated = $paciente->update($request->all());
+        if($paciente) return response()->json(['Paciente actualizado con exito', 200, 'paciente' => $paciente]);
+        return response()->json(['something salio mal', 505, 'paciente' => $paciente]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Paciente  $paciente
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Paciente $paciente)
+    public function changeState(Request $request)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Paciente  $paciente
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Paciente $paciente)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Paciente  $paciente
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Paciente $paciente)
-    {
-        //
+        if($request->id){
+            try {
+                $ids = [];
+                foreach($request->id as $pacienteId){
+                    array_push($ids , intval($pacienteId));
+                }
+                try {
+                    DB::beginTransaction();
+                    DB::table('pacientes')->whereIn('id', $ids)->update(['estado' => ($request->operacion === 'eliminar')?'eliminado':'activo']);
+                    DB::commit();
+                    return response()->json(['status' => 200, 'mensaje'=> ($request->operacion === "eliminar") ? 'Pacientes eliminados con exito' : "Pacientes restaurados con exito"]);
+                    // tudo bom
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    return response()->json(['status' => 409, 'mensaje'=> 'Han ocurrido errores, intente nuevamente mas tarde']);
+                    // quebrou
+                }
+            } catch (\Illuminate\Database\QueryException $e) {
+                return response()->json("error de integridad");
+            }
+        }else{
+            return response()->json("si no me mandas nada que queres que elimine");
+        }
     }
 }

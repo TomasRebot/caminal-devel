@@ -23,6 +23,8 @@ class CreateProfesionalesTable extends Migration
             $table->string('telefono_contacto')->nullable();
             $table->string('direccion')->nullable();
             $table->enum('atiende_caminal', ['si', 'no'])->nullable();
+            $table->enum('estado', ['eliminado', 'activo'])->nullable()->default('activo');
+
             $table->timestamps();
         });
     }

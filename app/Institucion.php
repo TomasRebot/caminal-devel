@@ -12,7 +12,8 @@ class Institucion extends Model
         'cuit',
         'direccion',
         'telefono_contacto',
-        'apto_clearing'
+        'apto_clearing',
+        'estado',
     ];
     protected $table = "instituciones";
 

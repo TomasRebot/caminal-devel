@@ -15,6 +15,7 @@ class Profesional extends Model
         'email',
         'atiende_caminal',
         'direccion',
+        'estado',
 
     ];
     protected $table = "profesionales";

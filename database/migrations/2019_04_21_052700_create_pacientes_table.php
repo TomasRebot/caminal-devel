@@ -23,6 +23,9 @@ class CreatePacientesTable extends Migration
             $table->string('telefono_contacto')->nullable();
             $table->string('barrio')->nullable();
             $table->string('direccion')->nullable();
+            $table->enum('estado', ['eliminado', 'activo'])->nullable()->default('activo');
+
+
             $table->timestamps();
 
 

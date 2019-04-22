@@ -14,8 +14,8 @@
             <div class="tile-stats">
                 <div class="total-entregas"></div>
                 <div class="count">90</div>
-                <h3>Entregas</h3>
-                <p>Hasta la fecha.</p>
+                <h3>Movimientos</h3>
+                <p>Entregas: 23 Ingresos: 23</p>
             </div>
         </div>
         <div class="animated fadeInRight col-lg-3 col-md-3 col-sm-6 col-xs-12">

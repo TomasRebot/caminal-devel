@@ -20,6 +20,7 @@ class CreateMedicamentosTable extends Migration
             $table->string('presentacion');
             $table->unsignedInteger('cantidad_blister');
             $table->unsignedInteger('cantidad_caja');
+            $table->enum('estado', ['eliminado', 'activo'])->default('activo');
 
 
             $table->timestamps();
