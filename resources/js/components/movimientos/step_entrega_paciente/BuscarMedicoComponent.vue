@@ -128,7 +128,7 @@ export default {
                 title: 'Crear nuevo medico',
                 text: "Ingrese datos personales.",
                 type: 'custom icon',
-                imageUrl: window.location +"/images/iconos-dashboard/dotor.png",
+                imageUrl: window.location +"images/iconos-dashboard/dotor.png",
                 imageWidth: 100,
                 imageHeight:100,
                 width: 400,

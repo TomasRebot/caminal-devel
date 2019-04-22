@@ -127,7 +127,7 @@ export default {
                 title: 'Registrar nuevo proveedor',
                 text: "Ingrese datos de la institucion.",
                 type: 'custom icon',
-                imageUrl: window.location +"/images/iconos-dashboard/hospital.png",
+                imageUrl: window.location +"images/iconos-dashboard/hospital.png",
                 imageWidth: 100,
                 imageHeight:100,
                 width: 500,

@@ -2307,16 +2307,62 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'inicio-dashboard',
   props: [],
   data: function data() {
-    return {};
+    return {
+      info: {
+        total_pacientes: 0,
+        total_profesionales: 0,
+        total_entregas: 0,
+        total_ingresos: 0,
+        medicamentos_riesgo_stock: [],
+        medicamentos_riesgo_vencimiento: [],
+        total_medicamentos_riesgo: 0,
+        total_unidades_en_stock: 0
+      }
+    };
   },
-  mounted: function mounted() {},
-  computed: {}
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('dashboard/listado-general').then(function (response) {
+      _this.info = response.data;
+    });
+  },
+  methods: {
+    getTotalMedicamentoCaminal: function getTotalMedicamentoCaminal(medicamento) {
+      var total = 0;
+      $(medicamento).each(function (index, val) {
+        total += val.stock_caminal;
+      });
+      return total;
+    },
+    getTotalMedicamentosRemediar: function getTotalMedicamentosRemediar(medicamento) {
+      var total = 0;
+      $(medicamento).each(function (index, val) {
+        total += val.stock_remediar;
+      });
+      return total;
+    }
+  },
+  computed: {
+    getListMedicamentosRiesgoStock: function getListMedicamentosRiesgoStock() {
+      return this.info.medicamentos_riesgo_stock;
+    },
+    getListMedicamentosRiesgoVencimiento: function getListMedicamentosRiesgoVencimiento() {
+      return this.info.medicamentos_riesgo_vencimiento;
+    }
+  }
 });
 
 /***/ }),
@@ -4465,7 +4511,7 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Agregar nueva institucion',
         text: "Ingrese datos de la institucion.",
         type: 'custom icon',
-        imageUrl: window.location + "/images/iconos-dashboard/hospital.png",
+        imageUrl: window.location + "images/iconos-dashboard/hospital.png",
         imageWidth: 100,
         imageHeight: 100,
         width: 500,
@@ -4907,7 +4953,7 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Crear nuevo medico',
         text: "Ingrese datos personales.",
         type: 'custom icon',
-        imageUrl: window.location + "/images/iconos-dashboard/dotor.png",
+        imageUrl: window.location + "images/iconos-dashboard/dotor.png",
         imageWidth: 100,
         imageHeight: 100,
         width: 400,
@@ -5244,7 +5290,7 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Crear nuevo paciente',
         text: "Ingrese datos personales.",
         type: 'custom icon',
-        imageUrl: window.location + "/images/iconos-dashboard/addpaciente.png",
+        imageUrl: window.location + "images/iconos-dashboard/addpaciente.png",
         imageWidth: 100,
         imageHeight: 100,
         width: 400,
@@ -5705,7 +5751,7 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Registrar nuevo proveedor',
         text: "Ingrese datos de la institucion.",
         type: 'custom icon',
-        imageUrl: window.location + "/images/iconos-dashboard/hospital.png",
+        imageUrl: window.location + "images/iconos-dashboard/hospital.png",
         imageWidth: 100,
         imageHeight: 100,
         width: 500,
@@ -22936,225 +22982,330 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticClass: "container row", attrs: { id: "inicio-dashboard" } },
+    [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "row top_tiles" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "animated fadeInRight col-lg-3 col-md-3 col-sm-6 col-xs-12"
+            },
+            [
+              _c("div", { staticClass: "tile-stats" }, [
+                _c("div", { staticClass: "total-pacientes" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "count" }, [
+                  _vm._v(" " + _vm._s(_vm.info.total_pacientes) + " ")
+                ]),
+                _vm._v(" "),
+                _c("h3", [_vm._v("Pacientes")]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Registrados.")])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "animated fadeInRight col-lg-3 col-md-3 col-sm-6 col-xs-12"
+            },
+            [
+              _c("div", { staticClass: "tile-stats" }, [
+                _c("div", { staticClass: "total-entregas" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "count" }, [
+                  _vm._v(
+                    " " +
+                      _vm._s(
+                        _vm.info.total_entregas + _vm.info.total_ingresos
+                      ) +
+                      " "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("h3", [_vm._v("Movimientos")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "Entregas: " +
+                      _vm._s(_vm.info.total_entregas) +
+                      " Ingresos: " +
+                      _vm._s(_vm.info.total_ingresos)
+                  )
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "animated fadeInRight col-lg-3 col-md-3 col-sm-6 col-xs-12"
+            },
+            [
+              _c("div", { staticClass: "tile-stats" }, [
+                _c("div", { staticClass: "total-profesionales" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "count" }, [
+                  _vm._v(" " + _vm._s(_vm.info.total_profesionales) + " ")
+                ]),
+                _vm._v(" "),
+                _c("h3", [_vm._v("Profesionales")]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Registrados.")])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "animated fadeInRight col-lg-3 col-md-3 col-sm-6 col-xs-12"
+            },
+            [
+              _c("div", { staticClass: "tile-stats" }, [
+                _c("div", { staticClass: "total-medicamentos" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "count" }, [
+                  _vm._v(" " + _vm._s(_vm.info.total_unidades_en_stock) + " ")
+                ]),
+                _vm._v(" "),
+                _c("h3", [_vm._v("Medicamentos")]),
+                _vm._v(" "),
+                _c("p", [_vm._v("En stock.")])
+              ])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "x_panel animated fadeInRight" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "x_content" }, [
+          _c("p", { staticClass: "text-muted font-13 m-b-30" }, [
+            _vm._v(
+              "\n            Aqui figuran los medicamentos con limites proximos a carencia de stock.\n        "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "table",
+            {
+              staticClass:
+                "table table-striped table-bordered dataTable no-footer",
+              attrs: {
+                id: "datatable-fixed-header table-responsive",
+                role: "grid",
+                "aria-describedby": "datatable-fixed-header_info"
+              }
+            },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.getListMedicamentosRiesgoStock, function(
+                  medicamento,
+                  key
+                ) {
+                  return _c(
+                    "tr",
+                    { key: key, staticClass: "odd", attrs: { role: "row" } },
+                    [
+                      _c("td", [
+                        _vm._v(
+                          " " + _vm._s(medicamento[0].medicamento.id) + " "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          " " +
+                            _vm._s(medicamento[0].medicamento.nombre) +
+                            " " +
+                            _vm._s(medicamento[0].medicamento.presentacion) +
+                            " "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          " " +
+                            _vm._s(
+                              _vm.getTotalMedicamentosRemediar(medicamento)
+                            ) +
+                            " "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          " " +
+                            _vm._s(
+                              _vm.getTotalMedicamentoCaminal(medicamento)
+                            ) +
+                            " "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(2, true)
+                    ]
+                  )
+                }),
+                0
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-muted font-13 m-b-30" }, [
+            _vm._v(
+              "\n            Aqui figuran los medicamentos con limites proximos a vencer.\n        "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "table",
+            {
+              staticClass:
+                "table table-striped table-bordered dataTable no-footer",
+              attrs: {
+                id: "datatable-fixed-header table-responsive",
+                role: "grid",
+                "aria-describedby": "datatable-fixed-header_info"
+              }
+            },
+            [
+              _vm._m(3),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.getListMedicamentosRiesgoVencimiento, function(
+                  medicamento,
+                  key
+                ) {
+                  return _c(
+                    "tr",
+                    { key: key, staticClass: "odd", attrs: { role: "row" } },
+                    [
+                      _c("td", [
+                        _vm._v(" " + _vm._s(medicamento.medicamento.id) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          " " +
+                            _vm._s(medicamento.medicamento.nombre) +
+                            " " +
+                            _vm._s(medicamento.medicamento.presentacion) +
+                            " "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(" " + _vm._s(medicamento.lote) + " ")]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(" " + _vm._s(medicamento.stock_remediar) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(" " + _vm._s(medicamento.stock_caminal) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          " " + _vm._s(medicamento.fecha_vencimiento) + " "
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                0
+              )
+            ]
+          )
+        ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "container row", attrs: { id: "inicio-dashboard" } },
-      [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "row top_tiles" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "animated fadeInRight col-lg-3 col-md-3 col-sm-6 col-xs-12"
-              },
-              [
-                _c("div", { staticClass: "tile-stats" }, [
-                  _c("div", { staticClass: "total-pacientes" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "count" }, [_vm._v("3554")]),
-                  _vm._v(" "),
-                  _c("h3", [_vm._v("Pacientes")]),
-                  _vm._v(" "),
-                  _c("p", [_vm._v("Registrados.")])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "animated fadeInRight col-lg-3 col-md-3 col-sm-6 col-xs-12"
-              },
-              [
-                _c("div", { staticClass: "tile-stats" }, [
-                  _c("div", { staticClass: "total-entregas" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "count" }, [_vm._v("90")]),
-                  _vm._v(" "),
-                  _c("h3", [_vm._v("Movimientos")]),
-                  _vm._v(" "),
-                  _c("p", [_vm._v("Entregas: 23 Ingresos: 23")])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "animated fadeInRight col-lg-3 col-md-3 col-sm-6 col-xs-12"
-              },
-              [
-                _c("div", { staticClass: "tile-stats" }, [
-                  _c("div", { staticClass: "total-profesionales" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "count" }, [_vm._v("33")]),
-                  _vm._v(" "),
-                  _c("h3", [_vm._v("Profesionales")]),
-                  _vm._v(" "),
-                  _c("p", [_vm._v("Registrados.")])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "animated fadeInRight col-lg-3 col-md-3 col-sm-6 col-xs-12"
-              },
-              [
-                _c("div", { staticClass: "tile-stats" }, [
-                  _c("div", { staticClass: "total-medicamentos" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "count" }, [_vm._v("179")]),
-                  _vm._v(" "),
-                  _c("h3", [_vm._v("Medicamentos")]),
-                  _vm._v(" "),
-                  _c("p", [_vm._v("En stock.")])
-                ])
-              ]
-            )
-          ])
+    return _c("div", { staticClass: "x_title" }, [
+      _c("h4", [
+        _vm._v("Próximos medicamentos en limite\n            "),
+        _c("span", { staticClass: "badge badge-xs-danger" }, [
+          _vm._v("Próximo a vencer")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "x_panel animated fadeInRight" }, [
-          _c("div", { staticClass: "x_title" }, [
-            _c("h4", [
-              _vm._v("Próximos medicamentos en limite\n            "),
-              _c("span", { staticClass: "badge badge-xs-danger" }, [
-                _vm._v("Próximo a vencer")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "badge badge-xs-warning" }, [
-                _vm._v("Bajo stock en Caminal")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "badge badge-xs-info" }, [
-                _vm._v("Bajo stock en Remediar")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "clearfix" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "x_content" }, [
-            _c("p", { staticClass: "text-muted font-13 m-b-30" }, [
-              _vm._v(
-                "\n            Aqui figuran los medicamentos con limites proximos de vencimiento o carencia de stock.\n        "
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "table",
-              {
-                staticClass:
-                  "table table-striped table-bordered dataTable no-footer",
-                attrs: {
-                  id: "datatable-fixed-header table-responsive",
-                  role: "grid",
-                  "aria-describedby": "datatable-fixed-header_info"
-                }
-              },
-              [
-                _c("thead", [
-                  _c("tr", { attrs: { role: "row" } }, [
-                    _c("th", [_vm._v("Codigo")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Medicamento")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Stock Remediar")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Stock Caminal")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Fecha vencimiento")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Unidades totales en riesgo")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("tbody", [
-                  _c("tr", { staticClass: "odd", attrs: { role: "row" } }, [
-                    _c("td", [_vm._v("0853")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Ibupirac 600 x 10 cpr")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("60")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("22")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "badge badge-md-danger" }, [
-                        _vm._v("10/6/2019")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "badge badge-xs-danger" }, [
-                        _vm._v("8")
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", { staticClass: "odd", attrs: { role: "row" } }, [
-                    _c("td", [_vm._v("0153")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Amoxidal 500 x 10 cpr")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "badge badge-xs-info" }, [
-                        _vm._v("15")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("60")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("10/6/2020")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "badge badge-xs-info" }, [
-                        _vm._v("15")
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", { staticClass: "odd", attrs: { role: "row" } }, [
-                    _c("td", [_vm._v("00098")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Eritromicina / Susp. 200 mg / 5 ml")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" 60")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "badge badge-xs-warning" }, [
-                        _vm._v("8")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("10/6/2020")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "badge badge-xs-warning" }, [
-                        _vm._v("8")
-                      ])
-                    ])
-                  ])
-                ])
-              ]
-            )
-          ])
+        _c("span", { staticClass: "badge badge-xs-warning" }, [
+          _vm._v("Bajo stock en Caminal")
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "badge badge-xs-info" }, [
+          _vm._v("Bajo stock en Remediar")
         ])
-      ]
-    )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { attrs: { role: "row" } }, [
+        _c("th", [_vm._v("Codigo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Medicamento")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Stock Remediar")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Stock Caminal")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Unidades totales en riesgo")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("span", { staticClass: "badge badge-xs-danger" }, [_vm._v(" 0 ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { attrs: { role: "row" } }, [
+        _c("th", [_vm._v("Codigo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Medicamento")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Lote")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Stock Remediar")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Stock Caminal")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Fecha vencimiento")])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -23219,7 +23370,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\r\n                            NOMBRE:\r\n                        "
+                          "\n                            NOMBRE:\n                        "
                         )
                       ]
                     ),
@@ -23263,7 +23414,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\r\n                            DIRECCION:\r\n                        "
+                          "\n                            DIRECCION:\n                        "
                         )
                       ]
                     ),
@@ -23307,7 +23458,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\r\n                            TELEFONO:\r\n                        "
+                          "\n                            TELEFONO:\n                        "
                         )
                       ]
                     ),
@@ -23355,7 +23506,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\r\n                                Cancelar\r\n                            "
+                            "\n                                Cancelar\n                            "
                           )
                         ]
                       ),
@@ -23368,7 +23519,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\r\n                                Crear\r\n                            "
+                            "\n                                Crear\n                            "
                           )
                         ]
                       )
@@ -28368,7 +28519,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\r\n                            NOMBRE:\r\n                        "
+                          "\n                            NOMBRE:\n                        "
                         )
                       ]
                     ),
@@ -28412,7 +28563,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\r\n                            RAZON SOCIAL:\r\n                        "
+                          "\n                            RAZON SOCIAL:\n                        "
                         )
                       ]
                     ),
@@ -28460,7 +28611,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\r\n                            DIRECCION:\r\n                        "
+                          "\n                            DIRECCION:\n                        "
                         )
                       ]
                     ),
@@ -28508,7 +28659,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\r\n                                Cancelar\r\n                            "
+                            "\n                                Cancelar\n                            "
                           )
                         ]
                       ),
@@ -28521,7 +28672,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\r\n                                Crear\r\n                            "
+                            "\n                                Crear\n                            "
                           )
                         ]
                       )
@@ -45852,7 +46003,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\web\caminal-devel\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\granjero\Desktop\caminal-devel-master\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

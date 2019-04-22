@@ -127,7 +127,7 @@ export default {
                 title: 'Crear nuevo paciente',
                 text: "Ingrese datos personales.",
                 type: 'custom icon',
-                imageUrl: window.location +"/images/iconos-dashboard/addpaciente.png",
+                imageUrl: window.location +"images/iconos-dashboard/addpaciente.png",
                 imageWidth: 100,
                 imageHeight:100,
                 width: 400,
