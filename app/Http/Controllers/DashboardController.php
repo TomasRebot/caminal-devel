@@ -82,22 +82,25 @@ class DashboardController extends Controller
 
 
         return response()->json([
-            'pacientes' =>  $pacientes,
-            'profesionales' =>   $profesionales,
-            'entregas' =>  $entregas,
-            'ingresos' =>  $ingresos,
-            'stock_apto' =>  $stock_apto,
-            'stock_vencido' =>  $stock_vencido,
-            'total_medicamentos' =>  $total_medicamentos_aptos,
-            'total_medicamentos_vencidos' =>  $total_medicamentos_vencidos,
-            'unidades_aptas' =>  $unidades_aptas,
-            'unidades_vencidas' =>  $unidades_vencidas,
-            'medicamentos_con_stock_bajo' =>  $medicamentos_con_stock_bajo,
-            'medicamentos_con_stock_vencido' =>  $medicamentos_con_stock_vencido,
-            'medicamentos_con_stock_por_vencer' =>   $medicamentos_con_stock_por_vencer,
+            'pacientes' =>  $pacientes, //cantidad de pacientes en numero
+            'profesionales' =>   $profesionales,//cantidad de profesionales en numero
+            'entregas' =>  $entregas, //cantidad de entregas realizadas en numero
+            'ingresos' =>  $ingresos,//cantidad de ingresos realizados en numero
+            'stock_apto' =>  $stock_apto,//stock que se encuentra sin vencer, en una collection
+            'stock_vencido' =>  $stock_vencido,//stock que se vencio, ya se vencio murio no sirve, en una collection
+            'total_medicamentos' =>  $total_medicamentos_aptos,//cantidad de medicamentos aptos en numero de medicamentos y no de unidades
+            'total_medicamentos_vencidos' =>  $total_medicamentos_vencidos,//cantidad de medicamentos vencidos en numero de medicamentos y no de unidades
+            'unidades_aptas' =>  $unidades_aptas,//cantidad de medicamentos aptos en numero de unidades (pastillitas)
+            'unidades_vencidas' =>  $unidades_vencidas,//cantidad de medicamentos vencidas en numero de unidades(pastillitas)
+            'medicamentos_con_stock_bajo' =>  $medicamentos_con_stock_bajo,//cantidad de medicamentos aptos  y con bajo stock
+            'medicamentos_con_stock_vencido' =>  $medicamentos_con_stock_vencido, //cantidad de medicamentos aptos  y con stock vencido (yo creo q esto ya va en la coleccion de stock vencido pero bueno por las dudas velo si te parece borralo no creo que llegues a leer esta parte porque esta re super larga jejejejejejeje iiiiiiiiiiiiiiiiiii)
+            'medicamentos_con_stock_por_vencer' =>   $medicamentos_con_stock_por_vencer, // medicamentos en collection cuya fecha de vencimiento es menor al dia que se ejecuta el script + 15 dias
         ]);
     }
 }
+
+
+
 // esta comentada porque puede servir jeje $total_medicamentos = DB::table('stocks')->groupBy('id_medicamento')->select('id_medicamento as medicamento',DB::raw('sum(stock_remediar + stock_caminal) AS stock_actual'))->get();
       // $stock = Stock::where('fecha_vencimiento' ,'<', Carbon::now()->subDays(10))->pluck('fecha_vencimiento');
         // return $stock;
