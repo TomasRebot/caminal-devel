@@ -17,65 +17,84 @@ class DashboardController extends Controller
     public function index()
     {
         $pacientes = Paciente::count();
-        $stock = Stock::with('medicamento')->get(); //
-                                        
-       
-        $medicamentos_riesgo_stock = $stock->groupBy('id_medicamento')
-                                            ->filter(function ($s){
-                                                $cant_caminal = 0;
-                                                $cant_remediar=0;
-                                                $vencimiento = false;
-                                                foreach ($s as $value){
-                                                    $cant_caminal += $value->stock_caminal;
-                                                    $cant_remediar+= $value->stock_remediar;
-                                                }
-                                                return $cant_caminal < 50 || $cant_caminal < 50;
-                                            });
-        $medicamentos_riesgo_vencimiento = $stock->filter(function ($s){
-                                                       return $s->fecha_vencimiento < Carbon::now()->addDays(35);
-                                                    });
-        /*$medicamentos_riesgo = $stock->filter(function ($s){
-                                    return  $s->stock_caminal < 10 || 
-                                            $s->stock_remediar < 10 ||
-                                            $s->fecha_vencimiento < Carbon::now()->subDays(15);
-                                })->groupBy('id_medicamento');*/
-                                
-        $total_medicamentos = $stock->groupBy('id_medicamento')->count();
-        $unidades_en_stock  = $stock->sum(function($s){ return $s['stock_remediar'] + $s['stock_caminal'];});
         $profesionales  = Profesional::count();
-        $pacientes      = Paciente::count();
         $movimientos    = Movimiento::all();
         $entregas       = $movimientos->where('tipo','baja')->count();
         $ingresos       = $movimientos->where('tipo','alta')->count();
 
-       /* $medicamentos_riesgo    = Stock::where('stock_caminal', '<', 50 )
-                                        ->orWhere('stock_remediar', '<', 50 )
-                                        ->orWhere('fecha_vencimiento', '<', Carbon::now()->subDays(15))
-                                        ->with('medicamento')
-                                        ->get();
-        $total_medicamentos     = Stock::all()
-                                        ->groupBy('id_medicamento')
-                                        ->count();
-        $medicamentos_en_stock  = Stock::where('stock_caminal', '>', 0 ) 
-                                        ->where('stock_caminal', '>', 0 )
-                                        ->count();
-        $unidades_en_stock      = DB::table('stocks')
-                                        ->select(DB::raw('sum(stock_remediar + stock_caminal) AS stock_actual'))//4)
-                                        ->get();
-        $profesionales  = Profesional::count();
-        $movimientos    = Movimiento::groupBy('tipo')
-                                        ->selectRaw('count(*) as cantidad_total, tipo')
-                                        ->get();*/
+        $stock = Stock::with('medicamento')->get();
+
+        $stock_apto = $stock->where('fecha_vencimiento', '>' , Carbon::now()); //unidades que no se vencieron
+
+        $stock_vencido= $stock->where('fecha_vencimiento', '<=' , Carbon::now()); //stock que ya se vencio
+
+
+        $total_medicamentos_aptos = $stock_apto->groupBy('id_medicamento')->count(); // total de medicamentos que no se vencieron
+
+        $total_medicamentos_vencidos = $stock_vencido->groupBy('id_medicamento')->count();// total de medicamentos que se vencieron
+
+        $unidades_aptas = $stock_apto->sum(function($stock){
+            return $stock['stock_remediar'] + $stock['stock_caminal'];
+        }); // cantidad de unidades de pastillitas aptas
+
+        $unidades_vencidas = $stock_vencido->sum(function($stock){
+            return $stock['stock_remediar'] + $stock['stock_caminal'];
+        }); // cantidad de unidades de pastillitas vencidas
+
+
+        $medicamentos_con_stock_bajo = $stock_apto->groupBy('id_medicamento')->filter(function ($stock) use($stock_apto){
+            $cant_caminal = 0;
+            $cant_remediar=0;
+            foreach ($stock as  $iterador => $value){
+                $cant_caminal += $value->stock_caminal;
+                $cant_remediar+= $value->stock_remediar;
+                if($iterador === (count($stock)-1))
+                {
+                    $stock[0]['cantidad_remediar'] = $cant_remediar;
+                    $stock[0]['cantidad_caminal'] = $cant_caminal;
+                    $stock[0]['cantidad_total'] = $cant_caminal + $cant_remediar;
+                }
+
+            }
+            return ($cant_remediar < 50)  || ($cant_caminal < 50);
+        });
+
+
+        $medicamentos_con_stock_vencido = $stock_vencido->groupBy('id_medicamento')->filter(function ($stock) use($stock_vencido){
+            $cant_caminal = 0;
+            $cant_remediar=0;
+            foreach ($stock as  $iterador => $value){
+                $cant_caminal += $value->stock_caminal;
+                $cant_remediar+= $value->stock_remediar;
+                if($iterador === (count($stock)-1))
+                {
+                    $stock[0]['cantidad_remediar'] = $cant_remediar;
+                    $stock[0]['cantidad_caminal'] = $cant_caminal;
+                    $stock[0]['cantidad_total'] = $cant_caminal + $cant_remediar;
+                }
+
+            }
+            return ($cant_remediar < 50)  || ($cant_caminal < 50);
+        });
+
+        $medicamentos_con_stock_por_vencer = $stock_apto->where('fecha_vencimiento', '<=', Carbon::now()->addDays(11));
+
+
+
         return response()->json([
-            'total_pacientes'             => $pacientes,    //total pacientes
-            'total_profesionales'         => $profesionales, //total medicos
-            'total_entregas'              => $entregas, //total de entregas
-            'total_ingresos'              => $ingresos, //total de ingresos
-            //'medicamentos_en_stock' => $medicamentos_en_stock, // no se :'(
-            'medicamentos_riesgo_stock'   => $medicamentos_riesgo_stock, //objecto con medicamentos en riesgo de stock
-            'medicamentos_riesgo_vencimiento' => $medicamentos_riesgo_vencimiento->toArray(), 
-            'total_medicamentos_riesgo'   => $medicamentos_riesgo_stock->count() + $medicamentos_riesgo_vencimiento->count(), // cantidad de medicamentos en riesgo
-            'total_unidades_en_stock'     => $unidades_en_stock, //total de stock de medicamentos
+            'pacientes' =>  $pacientes,
+            'profesionales' =>   $profesionales,
+            'entregas' =>  $entregas,
+            'ingresos' =>  $ingresos,
+            'stock_apto' =>  $stock_apto,
+            'stock_vencido' =>  $stock_vencido,
+            'total_medicamentos' =>  $total_medicamentos_aptos,
+            'total_medicamentos_vencidos' =>  $total_medicamentos_vencidos,
+            'unidades_aptas' =>  $unidades_aptas,
+            'unidades_vencidas' =>  $unidades_vencidas,
+            'medicamentos_con_stock_bajo' =>  $medicamentos_con_stock_bajo,
+            'medicamentos_con_stock_vencido' =>  $medicamentos_con_stock_vencido,
+            'medicamentos_con_stock_por_vencer' =>   $medicamentos_con_stock_por_vencer,
         ]);
     }
 }
@@ -87,3 +106,22 @@ class DashboardController extends Controller
         //     ->orWhere('stocks.stock_remediar', '<', 50 )
         //     ->orWhere('stocks.fecha_vencimiento', '<', Carbon::now()->subDays(10) );
         // }])->get();
+  /* $medicamentos_riesgo    = Stock::where('stock_caminal', '<', 50 )
+                                        ->orWhere('stock_remediar', '<', 50 )
+                                        ->orWhere('fecha_vencimiento', '<', Carbon::now()->subDays(15))
+                                        ->with('medicamento')
+                                        ->get();
+        $total_medicamentos     = Stock::all()
+                                        ->groupBy('id_medicamento')
+                                        ->count();
+        $medicamentos_en_stock  = Stock::where('stock_caminal', '>', 0 )
+                                        ->where('stock_caminal', '>', 0 )
+                                        ->count();
+        $unidades_en_stock      = DB::table('stocks')
+                                        ->select(DB::raw('sum(stock_remediar + stock_caminal) AS stock_actual'))//4)
+                                        ->get();
+        $profesionales  = Profesional::count();
+        $movimientos    = Movimiento::groupBy('tipo')
+                                        ->selectRaw('count(*) as cantidad_total, tipo')
+                                        ->get();*/
+        //$stock_apto = Stock::with('medicamento')->where('fecha_vencimiento', '>=' , Carbon::now())->get(); //
