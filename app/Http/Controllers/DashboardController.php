@@ -16,22 +16,14 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $pacientes = Paciente::count();
-        $profesionales  = Profesional::count();
+
         $movimientos    = Movimiento::all();
-        $entregas       = $movimientos->where('tipo','baja')->count();
-        $ingresos       = $movimientos->where('tipo','alta')->count();
 
         $stock = Stock::with('medicamento')->get();
 
         $stock_apto = $stock->where('fecha_vencimiento', '>' , Carbon::now()); //unidades que no se vencieron
 
         $stock_vencido= $stock->where('fecha_vencimiento', '<=' , Carbon::now()); //stock que ya se vencio
-
-
-        $total_medicamentos_aptos = $stock_apto->groupBy('id_medicamento')->count(); // total de medicamentos que no se vencieron
-
-        $total_medicamentos_vencidos = $stock_vencido->groupBy('id_medicamento')->count();// total de medicamentos que se vencieron
 
         $unidades_aptas = $stock_apto->sum(function($stock){
             return $stock['stock_remediar'] + $stock['stock_caminal'];
@@ -68,33 +60,29 @@ class DashboardController extends Controller
                 $cant_remediar+= $value->stock_remediar;
                 if($iterador === (count($stock)-1))
                 {
-                    $stock[0]['cantidad_remediar'] = $cant_remediar;
-                    $stock[0]['cantidad_caminal'] = $cant_caminal;
-                    $stock[0]['cantidad_total'] = $cant_caminal + $cant_remediar;
+                    $stock[0]['cantidad_remediar'] = $cant_remediar;// le mandamo eso al primer stock ya que es el primero que vas a acarrar en la coleccion y podes saber ahi mismo la cantidad
+                    $stock[0]['cantidad_caminal'] = $cant_caminal;// (sigue el comentario de arriba) total de ese medicamento que hay, entre remediar y caminal y por cada uno solo
+                    $stock[0]['cantidad_total'] = $cant_caminal + $cant_remediar;// (sigue el comentario de arriba) y no tener q entrar a todos, se podria hacer $array[0]->cant_remediar o algo asi
                 }
 
             }
             return ($cant_remediar < 50)  || ($cant_caminal < 50);
         });
 
-        $medicamentos_con_stock_por_vencer = $stock_apto->where('fecha_vencimiento', '<=', Carbon::now()->addDays(11));
-
-
-
         return response()->json([
-            'pacientes' =>  $pacientes, //cantidad de pacientes en numero
-            'profesionales' =>   $profesionales,//cantidad de profesionales en numero
-            'entregas' =>  $entregas, //cantidad de entregas realizadas en numero
-            'ingresos' =>  $ingresos,//cantidad de ingresos realizados en numero
+            'pacientes' =>  Paciente::count(), //cantidad de pacientes en numero
+            'profesionales' =>   Profesional::count(),//cantidad de profesionales en numero
+            'entregas' =>  $movimientos->where('tipo','baja')->count(), //cantidad de entregas realizadas en numero
+            'ingresos' =>  $movimientos->where('tipo','alta')->count(),//cantidad de ingresos realizados en numero
             'stock_apto' =>  $stock_apto,//stock que se encuentra sin vencer, en una collection
             'stock_vencido' =>  $stock_vencido,//stock que se vencio, ya se vencio murio no sirve, en una collection
-            'total_medicamentos' =>  $total_medicamentos_aptos,//cantidad de medicamentos aptos en numero de medicamentos y no de unidades
-            'total_medicamentos_vencidos' =>  $total_medicamentos_vencidos,//cantidad de medicamentos vencidos en numero de medicamentos y no de unidades
+            'total_medicamentos_aptos' =>  $stock_apto->groupBy('id_medicamento')->count(),//cantidad de medicamentos aptos en numero de medicamentos y no de unidades
+            'total_medicamentos_vencidos' =>  $stock_vencido->groupBy('id_medicamento')->count(),//cantidad de medicamentos vencidos en numero de medicamentos y no de unidades
             'unidades_aptas' =>  $unidades_aptas,//cantidad de medicamentos aptos en numero de unidades (pastillitas)
             'unidades_vencidas' =>  $unidades_vencidas,//cantidad de medicamentos vencidas en numero de unidades(pastillitas)
             'medicamentos_con_stock_bajo' =>  $medicamentos_con_stock_bajo,//cantidad de medicamentos aptos  y con bajo stock
             'medicamentos_con_stock_vencido' =>  $medicamentos_con_stock_vencido, //cantidad de medicamentos aptos  y con stock vencido (yo creo q esto ya va en la coleccion de stock vencido pero bueno por las dudas velo si te parece borralo no creo que llegues a leer esta parte porque esta re super larga jejejejejejeje iiiiiiiiiiiiiiiiiii)
-            'medicamentos_con_stock_por_vencer' =>   $medicamentos_con_stock_por_vencer, // medicamentos en collection cuya fecha de vencimiento es menor al dia que se ejecuta el script + 15 dias
+            'medicamentos_con_stock_por_vencer' =>   $stock_apto->where('fecha_vencimiento', '<=', Carbon::now()->addDays(11)), // medicamentos en collection cuya fecha de vencimiento es menor al dia que se ejecuta el script + 15 dias
         ]);
     }
 }
